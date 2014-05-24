@@ -1,0 +1,16 @@
+<Alloy>
+	<Window id="profileAddWindow" class="container">
+		<ScrollView id="profileInputForm" layout="vertical">
+				<TextField id="nameTextField" ></TextField>
+				<View id="inputView" layout="horizontal">
+					<Label id="gradeLabelField" />
+					<Slider id="gradeFieldSlider" />
+				</View>
+				<Picker id="schoolPickerField" selectionIndicator="true" useSpinner="true" />
+				<Label> * App will retrieve events and other useful info for the selected school</Label>
+				<TextField id="teacherTextField"></TextField>
+				<Label>* App will retrieve e-mail and phone number from school directory</Label>
+				<Button id="saveButton"></Button>
+		</ScrollView>
+	</Window>
+</Alloy>

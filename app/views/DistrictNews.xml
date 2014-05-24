@@ -1,0 +1,5 @@
+<Alloy>
+    <Window id="districtNews" title="District News" class='container' modal="false">
+        <WebView id="newsDetailsWebview" />
+    </Window>
+</Alloy>

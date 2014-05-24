@@ -1,0 +1,26 @@
+<Alloy>
+    <Window id="registerForm" fullscreen="false">
+        <ScrollView id="registerView" layout="vertical">
+        	<TextField id="firstName" />
+        	<TextField id="lastName" />
+            <TextField id="emailAddress" />
+            <TextField id="inputPassword" passwordMask="true" />
+            <TextField id="confirmPassword" passwordMask="true" />
+            <Label id="pushNotificationSelection"/>
+             <View layout="horizontal"  height="Ti.UI.SIZE">
+	            	<Label text="School Announcements"/>
+            		<Switch id="recivePushFromSBSD"/>
+             </View>
+             <View layout="horizontal"  height="Ti.UI.SIZE">
+             		 <Label  text="PTA Annoncements"/>
+           			 <Switch id="recivePushFromPTA"/>
+             </View>
+             <View layout="horizontal"  height="Ti.UI.SIZE">
+             	<Label  text="Sports Anouncements"/>
+            	<Switch id="recivePushFromSports"/>
+             </View>
+            <Button id="buttonRegister" onClick="actionRegister" /> 
+            <ActivityIndicator id="activityIndicator" />
+        </ScrollView>
+    </Window>
+</Alloy>

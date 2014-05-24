@@ -1,0 +1,32 @@
+<Alloy>
+    <Window id="sportsWindow" backgroundColor="white" class='container'>
+    	<!--
+        <TableView id="sportsTableView" top="0" left="0" layout="vertical">
+				 	<TableViewRow onClick="displayTennis">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+	   						<Label id="row_label">Tennis</Label>
+	   						<Label id="right_arrow"></Label>
+	   					</View>
+				 	</TableViewRow>
+				 	<TableViewRow onClick="displayGolf">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+	   						<Label id="row_label">Golf</Label>
+	   						<Label id="right_arrow"></Label>
+	   					</View>	
+				 	</TableViewRow>
+				 	<TableViewRow  onClick="displaySoccer">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+	   						<Label id="row_label">Soccer</Label>
+	   						<Label id="right_arrow"></Label>
+	   					</View>
+				 	</TableViewRow>
+				 	<TableViewRow  onClick="displaySportsCamps">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+	   						<Label id="row_label">Sports Camps</Label>
+	   						<Label id="right_arrow"></Label>
+	   					</View>
+				 	</TableViewRow>
+		</TableView>
+		-->
+    </Window>
+</Alloy>

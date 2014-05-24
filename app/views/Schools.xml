@@ -1,0 +1,8 @@
+<Alloy>
+    <Collection src="school" />
+        <Window id="schoolsListWindow"  title="Schools" class='container'>
+            <TableView id="schoolsTableView" dataCollection="school" dataFilter="dofilter" dataTransform="dataTransformation" top="0" left="0" layout="vertical">
+            	<Require src="SchoolRow"/>
+            </TableView>
+        </Window>
+</Alloy>

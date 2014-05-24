@@ -1,0 +1,10 @@
+<Alloy>
+    <!-- have to use alloy_id since I did not specify an id in the schema -->
+	<TableViewRow id="row" dataId="" model="{notificationid}" layout="vertical" >
+		<View class="vgroup" layout="vertical">
+			<Label id="minus_sign" data="{notificationid}" />
+			<Label id="dateLabel" text="{datetime}" />
+			<Label id="msgLabel" text="{message}" />
+		</View>
+	</TableViewRow>
+</Alloy>

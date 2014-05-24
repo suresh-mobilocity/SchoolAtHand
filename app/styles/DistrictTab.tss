@@ -1,0 +1,60 @@
+"#news_icon" : {
+	top: 20,
+	left: 10,
+   	text: Alloy.Globals.icons.list_alt,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+},
+"#calendar_icon" : {
+	top: 20,
+	left:  10,
+   	text: Alloy.Globals.icons.calendar,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+},
+"#events_icon" : {
+	top: 20,
+	left:  10,
+   	text: Alloy.Globals.icons.calendar,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+},
+"#lunch_icon" : {
+	top: 20,
+	left:  10,
+   	text: Alloy.Globals.icons.food,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+},
+"#community_icon" : {
+	top: 20,
+	left:  10,
+   	text: Alloy.Globals.icons.group_alt,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+},
+"#contacts_icon" : {
+	top: 20,
+	left:  10,
+   	text: Alloy.Globals.icons.book_alt,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+}

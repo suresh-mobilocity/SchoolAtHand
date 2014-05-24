@@ -1,0 +1,138 @@
+".container": {
+	backgroundColor: "white"
+},
+"Window" :{
+	backgroundColor: "white"   
+}
+"#firstName" : {
+		top:40,
+		left: 20,
+		width:"80%",
+		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		returnKeyType:Titanium.UI.RETURNKEY_DONE,
+		//borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+		height:Ti.UI.SIZE,
+		font:{fontSize:14,fontWeight:'bold', fontFamily:'Helvetica',  fontStyle: 'normal'},
+		color: "black",
+		hintText:'First Name'
+},
+"#lastName" : {
+		top:20,
+		left: 20,
+		height:40,
+		width:"80%",
+		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		returnKeyType:Titanium.UI.RETURNKEY_DONE,
+		//borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+		font:{fontSize:14,fontWeight:'bold', fontFamily:'Helvetica',  fontStyle: 'normal'},
+		color: "black",
+		hintText:'Last Name'
+},
+"#emailAddress" : {
+		top:20,
+		left: 20,
+		width:"80%",
+		height:40,
+		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		returnKeyType:Titanium.UI.RETURNKEY_DONE,
+		//borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+		font:{fontSize:14,fontWeight:'bold', fontFamily:'Helvetica',  fontStyle: 'normal'},
+		color: "black",
+		hintText:'Email Address'
+},
+"#inputPassword" : {
+		top:20,
+		left: 20,
+		width:"80%",
+		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		returnKeyType:Titanium.UI.RETURNKEY_DONE,
+		//borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+		height:40,
+		font:{fontSize:14,fontWeight:'bold', fontFamily:'Helvetica',  fontStyle: 'normal'},
+		color: "black",
+		hintText:'Password min 4 characters'
+},
+"#confirmPassword" : {
+		top:20,
+		left: 20,
+		width:"80%",
+		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		returnKeyType:Titanium.UI.RETURNKEY_DONE,
+		//borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+		height:40,
+		font:{fontSize:14,fontWeight:'bold', fontFamily:'Helvetica',  fontStyle: 'normal'},
+		color: "black",
+		hintText:'Confirm Password'
+},
+"#buttonRegister" : {
+	title:  'Signup',
+	backgroundColor: '#336699',
+	top: 20,
+	left: "10%",
+	width: "80%",
+ 	height: Ti.UI.SIZE,
+ 	font:{fontSize:12,fontWeight:'bold'},
+ 	color: "white",
+ 	borderRadius: 10
+},
+"#buttonRegister[platform=ios]" : {
+	title:  'Signup',	
+	top: "50dp"
+},
+"#pushNotificationSelection" : {
+	top: 20,
+	left: 20,
+    textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+    text: 'I agreee to reive push notifications for',
+    width: Ti.UI.SIZE,
+    height: Ti.UI.SIZE
+},
+"Label" : {
+	top: 20,
+	left: 20,
+	width: "70%",
+	height: Ti.UI.SIZE,
+	font:{fontSize:14,fontWeight:'normal', fontFamily:'Helvetica',  fontStyle: 'normal'},
+    color: "blue"
+},
+"#recivePushFromSBSD" : {
+	top: 20,
+	left: 20,
+	width: Ti.UI.SIZE,
+    height: Ti.UI.SIZE,
+    textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
+    color: 'blue',
+    value:true
+},
+"#recivePushFromSBSD[platform=android]" : {
+    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX
+},
+"#recivePushFromPTA" : {
+	top: 20,
+	left: 20,
+    width: Ti.UI.SIZE,
+    height: Ti.UI.SIZE,
+    textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+    color: 'blue',
+    value:true
+},
+"#recivePushFromPTA[platform=android]" : {
+	style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX
+},
+"#recivePushFromSports" : {
+	top: 20,
+	left: 20,
+	width: Ti.UI.SIZE,
+    height: Ti.UI.SIZE,
+    textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
+    color: 'blue',
+    value:true
+},
+"#recivePushFromSports[platform=android]" : {
+    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX
+}

@@ -1,0 +1,6 @@
+<Alloy>
+    <Window id="lunchMenu" title="Lunch Menu" class='container' modal="false" layout="vertical">
+        <WebView id="lunchMenuWebView" />
+        <View ns="Admob" id="adView" />
+    </Window>
+</Alloy>

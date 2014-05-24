@@ -1,0 +1,7 @@
+<Alloy>
+	<TableViewRow id="row" dataId="" model="{id}" hasChild="true">
+		<View class="vgroup" height="50">
+			<ImageView id="schoolBanner" image="{logofile}" />
+		</View>
+	</TableViewRow>
+</Alloy>

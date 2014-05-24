@@ -1,0 +1,4 @@
+<Alloy>
+    <Window id="districtNewsMain" title="District News" class = '.container' modal="false" onOpen="displayProgress">
+    </Window>
+</Alloy>

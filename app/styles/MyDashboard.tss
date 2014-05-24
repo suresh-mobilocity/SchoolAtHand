@@ -1,0 +1,102 @@
+".container": {
+	backgroundColor: "white"
+	//backgroundColor: '#336699'
+},
+"#MyDashboardWindow" : {
+	backgroundColor: "white"
+},
+"#mainView" : {
+	layout: 'vertical',
+	height: '100%',
+	width: Ti.UI.SIZE
+	//borderColor: 'gray',
+	//borderWidth: 2,
+},  		
+"#profileView" : {
+	color: "blue",
+	top: '3%',
+	left: '3%',
+	right: '5%',
+	height: Ti.UI.SIZE,
+	width: Ti.UI.SIZE,
+	layout: 'horizontal'
+},		    	
+"#profileImage" : {
+	left: 10,
+	width:64,
+	height:64,
+	autorotate: true
+},
+"#profileDetailsLabel" : {
+	textAlign: 'Ti.UI.TEXT_ALIGNMENT_RIGHT',
+	verticalAlign: 'TEXT_VERTICAL_ALIGNMENT_TOP',
+	font:{fontSize:12,fontWeight:'bold'},
+	color: 'blue',
+	left:  50,
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE
+},	
+"#contactTeacher" : {
+	backgroundColor: '#336699',
+	top: 2, 
+	height: 25,
+	width: 150 ,
+	style: 'Titanium.UI.iPhone.SystemButtonStyle.BAR'
+},
+"#contentButtonBar" : {
+	backgroundColor: 'maroon',
+	top: 5,
+	height: 25,
+	width: 300,
+	style: 'Titanium.UI.iPhone.SystemButtonStyle.BAR',
+	font:{fontSize:16,fontWeight:'normal'},
+	color: 'blue'
+},
+"#contentsScrollView" : {
+			layout: 'vertical',
+			scrollType: "vertical",
+			showVerticalScrollIndicator: true,
+			left: '2%',
+			right: '2%',
+			height: 150,
+			width: Ti.UI.FILL
+},
+"#contentsView" : {
+			top: 0,
+			width: Ti.UI.FILL,
+	//		backgroundColor: "gray",
+			borderColor: 'gray',
+			borderWidth: 1,
+			borderRadius: 8
+},
+"#contentsViewLabel" : {   
+	font:{fontSize:12,fontWeight:'normal'},
+	color: 'blue',
+	textAlign: 'Ti.UI.TEXT_ALIGNMENT_LEFT',
+	verticalAlign: 'Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP'
+},
+'#announcementsScrollView' : {
+			layout: 'vertical',
+			top: 5,
+			left: '2%',
+			right: '2%',
+			height: 100,
+			scrollType: "vertical",
+			showVerticalScrollIndicator: true,
+			width: Ti.UI.FILL
+},
+"#districtAnnouncementsView" : {
+			layout: 'vertical',
+			top: 0,
+			width: Ti.UI.FILL,
+			borderColor: 'gray',
+			borderWidth: 1,
+			borderRadius: 8
+},
+"#districtAnnouncementsLabel" : {   
+	color: 'red',
+	left: 5,
+	font:{fontSize:12,fontWeight:'normal'},
+	textAlign: 'Ti.UI.TEXT_ALIGNMENT_LEFT',
+	verticalAlign: 'Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP'
+}

@@ -1,0 +1,45 @@
+".container" : {
+  backgroundColor:  "#33B5E5"
+}
+"TableView" : {
+	height: "85%",
+	backgroundColor: "#33B5E5"
+},
+"Label": {
+	top: 20,
+	left: "10%",
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	color: "white",
+	font: {
+		fontSize: 24,
+		fontWight: "bold",
+		fontFamily: 'Helvetica Neue'
+	},
+	textAlign: 'center'
+}
+"#profilesView": {
+	layout: "vertical",
+	height: "85%"
+}
+"#addButton[platform=ios]" :{
+	backgroundColor: '#336699',
+	left: "10%",
+ 	width: "85%",
+ 	height: Ti.UI.SIZE,
+ 	font:{fontSize:14,fontWeight:'bold'},
+ 	color: "white",
+	bottom: 20,
+	borderRadius: 10,
+	style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
+}
+"#addButton[platform=android]" :{
+	backgroundColor: '#336699',
+	left: "10%",
+ 	width: "85%",
+ 	height: Ti.UI.SIZE,
+ 	font:{fontSize:14,fontWeight:'bold'},
+ 	color: "white",
+	bottom: 20,
+	borderRadius: 10
+}

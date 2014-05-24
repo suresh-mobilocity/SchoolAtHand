@@ -1,0 +1,6 @@
+<Alloy>
+    <Window id="progressWindow" onOpen="showIndicator" class="container" fullScreen="true">
+        <!-- Define the styling properties in the TSS file -->
+        <ActivityIndicator id="activityIndicator" message="Loading Data..."/>
+    </Window>
+</Alloy>

@@ -1,0 +1,51 @@
+".container": {
+	backgroundColor: "white"
+},
+"#namelabel" : {
+		//top:12,
+		//textAlign:'center',
+		font: {
+			fontSize:18
+		},
+		color: '#000'
+},
+"#addresslabel" : {
+		//top:12,
+		//textAlign:'left',
+		font: {
+			fontSize:14
+		},
+		color: '#000'
+},
+"#citylabel" : {
+		//top:14,
+		//textAlign:'left',
+		font: {
+			fontSize:14
+		},
+		color: '#000'
+},
+"#stateandziplabel" : {
+		//textAlign:'left',
+		font: {
+			fontSize:14
+		},
+		color: '#000'
+},
+"#phonelabel" : {
+	//textAlign:'left',
+		font: {
+			fontSize:14
+		},
+		color: '#000'
+},
+"#phonebutton[platform=ios]" : {
+    width: 32,
+    height:32,
+	backgroundImage: "images/phone.png"
+},
+"#phonebutton[platform=android]" : {
+    width: 32,
+    height:32,
+	backgroundImage: "/images/phone.png"
+}

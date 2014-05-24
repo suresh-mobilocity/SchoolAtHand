@@ -1,0 +1,7 @@
+".container": {
+	backgroundColor: "white"
+}
+"#DisclaimerWin" : {
+		title:"Disclaimer",
+		layout:'vertical'	
+}

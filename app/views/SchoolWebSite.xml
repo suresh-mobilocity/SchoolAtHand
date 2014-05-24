@@ -1,0 +1,5 @@
+<Alloy>
+    <Window id="schoolWebSite" title="School Web Site" class = 'container' modal="flase">
+        <WebView id="schoolWebView" url="http://www.sbschools.org" />
+    </Window>
+</Alloy>

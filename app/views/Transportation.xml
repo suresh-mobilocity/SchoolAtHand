@@ -1,0 +1,37 @@
+<Alloy>
+	   <Window id="transportationWindow" class="container">
+	   	<TableView separatorColor='#000000'>
+	   		<TableViewRow id="department">
+				<Label id="namelabel" text="Department of Transportation" ></Label>
+				<View id="contactsView" layout="horizontal" height="Ti.UI.SIZE">
+						<View id="address" layout="vertical" width="200" height="Ti.UI.SIZE" top="2">
+							<Label id="addresslabel"  left="10"></Label>
+							<Label id="citylabel"  left="10" ></Label>
+							<Label id="stateandziplabel" left="10" ></Label>
+							<Label id="phonelabel" left="10" onClick="dialPhoneNumber"></Label>
+						</View>
+						<View id="Buttons" top="20" left="10" width="Ti.UI.SIZE" height="Ti.UI.SIZE">
+							<Button id="phonebutton" onClick="dialPhoneNumber" ></Button>
+						</View>
+				</View>
+			 </TableViewRow>
+				<TableViewRow id="supervisorView">
+					<Label id="supervisorlabel" top="10" text="Supervisor of Transportation"></Label>
+					<View id="supervisor" layout="horizontal" >
+						<Label id="supervisorname" ></Label>
+						<Button id="emailsupervisor"></Button>
+					</View>
+				</TableViewRow>
+				<TableViewRow id="secretaryView">
+					<Label id="secretarylabel" text="Transportation Secretary"></Label>
+					<View id="secretary" layout="horizontal">
+						<Label id="secretaryname" ></Label>
+						<Button id="emailsecretary"></Button>
+					</View>
+				</TableViewRow>
+			</TableView>
+				<!-->
+				<View id="ads" />
+				-->
+		</Window>
+</Alloy>

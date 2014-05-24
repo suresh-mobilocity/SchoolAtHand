@@ -1,0 +1,4 @@
+<Alloy>
+    <Window id="schoolEventsWin" title="Events" class='container' modal="false">
+    </Window>
+</Alloy>

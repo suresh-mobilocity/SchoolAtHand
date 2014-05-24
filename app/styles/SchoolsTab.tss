@@ -1,0 +1,20 @@
+"#school_icon" : {
+	top: 20,
+	left: 10,
+   	text: Alloy.Globals.icons.building,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+},
+"#search_icon" : {
+	top: 20,
+	left: 10,
+   	text: Alloy.Globals.icons.search,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+}

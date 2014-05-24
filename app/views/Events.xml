@@ -1,0 +1,8 @@
+<Alloy>
+    <Collection src="school" />
+        <Window id="eventsWindow"  title="Select School" class='container'>
+            <TableView id="schoolsTableView" dataCollection="school" dataTransform="dataTransformation">
+            	<Require src="SchoolRow"/>
+            </TableView>
+        </Window>
+</Alloy>

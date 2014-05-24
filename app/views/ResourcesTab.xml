@@ -1,0 +1,39 @@
+<Alloy>
+<Tab id="resourcesTab" title="More">
+			<Window id="resourcesWindow" title="Resources">
+				<TableView id="resourcesView" top="0" left="0" layout="vertical">
+				 	<TableViewRow  onClick="displayTransportation">
+				 		<View id="buttonView" top="0" layout="horizontal">
+				 			<!--
+				 			<ImageView  image="/images/schoolbus.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="bus_icon"></Label>
+	   						<Label id="row_label">Transportation</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>
+				 	<TableViewRow  onClick="displaySports">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+				 			<!--
+				 			<ImageView  image="/images/sports.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="sports_icon"></Label>
+	   						<Label id="row_label">Sports</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>
+				 	<TableViewRow  onClick="displayPTA">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+				 			<!--
+				 			<ImageView  image="/images/sports.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="pta_icon"></Label>
+	   						<Label id="row_label">PTA / PTO</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>
+				</TableView>
+				<View ns="Admob" id="adView"/>
+			</Window>
+		</Tab>
+</Alloy>

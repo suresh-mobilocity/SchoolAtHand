@@ -1,0 +1,17 @@
+<Alloy>
+    <Model src="profile" instance="true" id="profileDetail" /> 
+    <!-- dataTransform is not wired up yet, but i hacked it into my code -->
+	<Window id="detailWindow" model="$.profileDetail" class="container" dataTransform="dataTransformation" >
+		<View id="profileView">
+			<Label id="nameLabel" text="{$.profileDetail.name}" ></Label>
+			<Label id="schoolLabel" text="{$.profileDetail.school}" ></Label>
+			<Label id="gradeLabel" text="{$.profileDetail.grade}" ></Label>
+			<Label id="teacherLabel" text="{$.profileDetail.teacher}" ></Label>
+			<Label id="classnameLabel" text="{$.profileDetail.classname}" ></Label>
+			<ImageView id="image" image="{$.profileDetail.image}" ></ImageView>
+			<Button id="photoButton"></Button>
+			<Button id="deleteButton"></Button>
+		</View>
+		<View ns="Admob" id="adView" />
+	</Window>
+</Alloy>

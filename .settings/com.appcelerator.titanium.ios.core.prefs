@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+iosLaunchConfigurationAttributes/ATTR_MINIFY=true
+iosLaunchConfigurationAttributes/ATTR_PROJECT_NAME=SchoolAtHand
+iosLaunchConfigurationAttributes/appid=com.mobilocity.schoolathand
+iosLaunchConfigurationAttributes/certificate=Suresh Velagaleti (X6C548N2T2)
+iosLaunchConfigurationAttributes/keychain=
+iosLaunchConfigurationAttributes/sdk_version=7.0.3
+iosLaunchConfigurationAttributes/uuid=2B595962-881D-48B2-BCF8-FE7757C164E7
+provisioning_profiles/development/2B595962-881D-48B2-BCF8-FE7757C164E7/appid=com.mobilocity.*
+provisioning_profiles/development/2B595962-881D-48B2-BCF8-FE7757C164E7/name=MobilocityTesting
+provisioning_profiles/development/2B595962-881D-48B2-BCF8-FE7757C164E7/uuid=2B595962-881D-48B2-BCF8-FE7757C164E7
+provisioning_profiles/development/45EB3589-5751-436E-821D-41B82FCC63FB/appid=com.mobilocity.*
+provisioning_profiles/development/45EB3589-5751-436E-821D-41B82FCC63FB/name=MobilocityTesting
+provisioning_profiles/development/45EB3589-5751-436E-821D-41B82FCC63FB/uuid=45EB3589-5751-436E-821D-41B82FCC63FB

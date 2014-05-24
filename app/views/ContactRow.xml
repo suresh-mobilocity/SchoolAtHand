@@ -1,0 +1,18 @@
+`<Alloy>
+	<TableViewRow id="contactRecord" dataId="" model="{id}" filter="{name}">
+		<View id="contactLabels">
+			<Label id="Name" text="{name}"/>
+		</View>
+		<View id="department">
+			<Label id="Title" text="{title}"/>
+			<Label id="sep" text="/"/>	
+			<Label id="Department" text="{department}"/>
+		</View>
+		<View id="phoneNo">
+			<Label id="Phone" text="{phonenum}"/>
+			<Label id="Extention" text="{ext}"/> 
+			<Button id="phoneButton" phonenum="{phonenum}" extension="{ext}" onClick="dialContactNumber"></Button>
+			<Button id="emailButton" emailaddr="{emailaddr}" onClick="sendEmail"></Button>
+		</View>
+	</TableViewRow>
+</Alloy>

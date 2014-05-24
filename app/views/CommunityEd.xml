@@ -1,0 +1,31 @@
+<Alloy>
+    <Window id="communityEdWindow" backgroundColor="white" class='container' layout="vertical">
+    	<View id="communityEdMainView" layout="vertical" height="20%" width="Ti.UI.FILL" borderWidth="2"
+    			color="black" >
+    		<Label id="namelabel" >Community Education Dept</Label>
+    		<View id="contactsView" layout="horizontal" >
+				<View id="address" layout="vertical" width="70%">
+							<Label id="addresslabel" left="10"> Address </Label>
+							<Label id="citylabel" left="10" > City </Label>
+							<Label id="stateandziplabel" left="10" > 08852 </Label>
+							<Label id="phonelabel" left="10"> phonenumber </Label>
+				</View>		
+				<View id="Buttons">
+							<Button id="phonebutton"></Button>
+				</View>
+        	 </View>
+		</View>
+		<!-->
+		<TableView id="communityEdTableView" top="30%">
+        </TableView>
+       -->
+ 	</Window>
+</Alloy>
+          	
+				
+					<!--
+						
+				</View>
+       
+   			-->
+   

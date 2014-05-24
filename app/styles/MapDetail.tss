@@ -1,0 +1,16 @@
+".container": {
+	backgroundColor: "white"
+},
+"#mapWindow":{
+	title : "School Location",
+	barColor: '#6d0a0c',
+	backgroundColor:'#fff'
+},
+"#mapView" : {
+	mapType: 1,
+	animate:true,
+	regionFit:true,
+	userLocation: true,
+	userLocationButton: true,
+	annotations:[]
+}

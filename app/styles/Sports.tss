@@ -1,0 +1,42 @@
+".container" : {
+  backgroundColor: "white"
+}
+"Window": {
+	backgroundColor: "#fff"
+},
+"TableView" :{
+	separatorColor: '#000000'
+},
+"TableViewRow" : {
+	layout: "vertical",
+	borderColor: "white",
+	borderWidth: "4",
+	height: 80,
+	left: "1%",
+	width: "98%",
+	color: "white",
+	backgroundColor: '#336699',
+}
+"#row_label": {
+	top: 20,
+	left: "10%",
+	width: "60%",
+	height: Ti.UI.SIZE,
+	backgroundColor: '#336699',
+	color: "white",
+	font: {
+		fontSize: 24,
+		fontWight: "bold",
+		fontFamily: 'Helvetica Neue'
+	},
+	textAlign: 'left'
+},
+"#right_arrow" : {
+	top: 20,
+	left:  20,
+   	text: Alloy.Globals.right_arrow,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	color: '#fff',
+	width: "15%",
+	textAlign: 'right'
+}

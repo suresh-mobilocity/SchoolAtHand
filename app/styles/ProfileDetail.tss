@@ -1,0 +1,76 @@
+".container" : {
+	backgroundColor: "white"
+},
+"Label" : {
+	top: "2%",
+	height: Ti.UI.SIZE,
+	left: "5%",
+	right: "5%",
+	font: {
+		fontSize: 14,
+		fontWight: "bold",
+		fontFamily: 'Helvetica Neue'
+	},
+	color: 'black'
+},
+"#detailWindow" : {
+		title:"Profile Details",
+		layout:'vertical'
+},
+"#profileView" : {
+	layout: "vertical",
+	height: "90%"
+},
+
+"#image[platform=ios]" : {
+		height:80,
+		width:60,
+		top:10
+},
+"#image[platform=android]" : {
+		height:128,
+		width:128,
+		top:10,
+		autorotate: true
+},
+"#photoButton" :{
+		title:'Add Photo',
+		top:10,
+		height:Ti.UI.SIZE,
+		left: "25%",
+		width:"50%",
+		color: 'white',
+		backgroundColor: '#336699',
+		borderColor: '#336699',
+		borderRadius: 8
+},
+"#deleteButton" :{
+		title:'Delete  Profile',
+		top:20,
+		height:Ti.UI.SIZE,
+		left: "25%",
+		width:"50%",
+		color: 'white',
+		backgroundColor: '#336699',
+		borderColor: '#336699',
+		borderRadius: 8
+},
+"#adView[platform=android]" : {
+	publisherId: "ca-app-pub-3665132116722377/6561150840",
+	bottom: 0
+},
+"#adView[platform=ios]" : {
+	publisherId: "ca-app-pub-3665132116722377/2467198443",
+	height: "10%",
+	bottom: 0
+},
+"#adView": {
+	keywords: "K-12 SAT tutuion education graduation kids student school books science  math toys sports parent teacher cars bikes",
+	testing: false, // default is false
+	adBackgroundColor: "FF8855", // optional
+	backgroundColorTop: "738000", //optional - Gradient background color at top
+	borderColor: "#000000", // optional - Border color
+	textColor: "#000000", // optional - Text color
+	urlColor: "#00FF00", // optional - URL color
+	linkColor: "#0000FF" //optional -  Link text color
+}

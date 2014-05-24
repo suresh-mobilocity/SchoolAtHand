@@ -1,0 +1,10 @@
+android/ATTR_MINIFY=true
+android/ATTR_PROJECT_NAME=SchoolAtHand
+android/abi=armeabi
+android/distribute_path=/Users/Suresh/Mobilocity/S@H-Publsih
+android/keystore_alias=mobilocity
+android/keystore_password=fledgesoft123
+android/keystore_path=/Users/Suresh/Mobilocity/S@H-Publsih/prod_keystore
+android/recent_output=/Users/Suresh/Mobilocity/S@H-Publsih
+android/sdk_version=2.3.3
+eclipse.preferences.version=1

@@ -1,0 +1,38 @@
+<Alloy>
+	<Model src="profile" instance="true" id="myProfile" /> 
+	 <Window id="MyDashboardWindow" title="Dashboard" class="container">
+	 	<Require type="widget" src="com.appcelerator.drawer" id="drawer"/>
+		<View id="mainView">	
+	   		 <View id= "profileView"> 
+	   			<ImageView id="profileImage" ></ImageView>
+	   			<Label id="profileDetailsLabel"/>
+			</View> 
+			<View id="teacherView" layout="vertical" left="50" top="2" width="Ti.UI.FILL" height="50">
+				<ButtonBar id="contactTeacher">
+					<Labels>
+						<Label id="phoneButton">Call</Label>
+						<Label id="emailButton">Email</Label>
+					</Labels>
+				</ButtonBar>	
+			</View>	 
+			<ButtonBar id="contentButtonBar">
+					<Labels>
+						<Label>Events</Label>
+						<Label>Fri.Folder</Label>
+						<Label>Lunch</Label>
+						<Label>Sports</Label>
+					</Labels>
+			</ButtonBar>
+			<ScrollView id= "contentsScrollView">
+				<View id="contentsView">
+	   				<Label id="contentsViewLabel" /> 
+	   			</View>
+	   		</ScrollView>
+			<ScrollView id= "announcementsScrollView" >
+				<View id="districtAnnouncementsView" >
+					<Label id ="districtAnnouncementsLabel" />
+				</View>
+			</ScrollView>
+		 </View>
+	</Window>
+</Alloy>

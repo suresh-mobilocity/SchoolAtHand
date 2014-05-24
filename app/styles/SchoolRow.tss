@@ -1,0 +1,13 @@
+"vgroup": {
+	layout: "vertical",
+	width: Ti.UI.FILL
+},
+"#row": {
+	className: "loc_row",
+	dataId : "",
+	height: 50
+},
+"#schoolBanner": {
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL
+}

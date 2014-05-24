@@ -1,0 +1,182 @@
+".container":{
+	backgroundColor: "white"
+},
+"#MyDashboardWindow" : {
+	backgroundColor: "white"
+},
+"#mainView" : {
+	layout: 'vertical',
+	//color: "gray",
+	borderColor: 'gray',
+	borderWidth: 2,
+	//backgroundColor: "#E3E3E3",
+	//borderRadius: 16,
+	height: '100%',
+	width: Ti.UI.FILL
+},  		
+"#profileView" : {
+	//color: "gray",
+	top: '3%',
+	left: '3%',
+	right: '5%',
+	height: Ti.UI.SIZE,
+	width: Ti.UI.SIZE,
+	layout: 'horizontal'
+},		    	
+"#profileImage" : {
+	left: 10,
+	width:64,
+	height:64,
+	autorotate: true
+},
+"#profileDetailsLabel" : {
+	textAlign: 'Ti.UI.TEXT_ALIGNMENT_RIGHT',
+	verticalAlign: 'TEXT_VERTICAL_ALIGNMENT_TOP',
+	font:{fontSize:12,fontWeight:'bold'},
+	color: 'black',
+	left:  50,
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE
+},	
+"#contactTeacher" : {
+	backgroundColor: "white",
+	top: 2, 
+	height: 50,
+	width: 200,
+	left: 120
+//style: 'Titanium.UI.iPhone.SystemButtonStyle.BAR'
+},
+"#callButton": {
+ 	//backgroundColor: '#336699',
+ 	//width: 75,
+ 	//height: 50,
+ 	//font:{fontSize:12,fontWeight:'bold'},
+ 	//color: "white",
+ 	//borderRadius: 8
+ 	font: {
+			fontFamily: 'AppIcons',
+			fontSize: '50dp',
+			fontWeight: 'normal'
+	},
+	color: '#336699',
+	backgroundColor:'white',
+	height: '50',
+	width: '50',
+	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+	verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER
+},
+"#emailButton": {
+	left:25,
+ 	backgroundColor: 'white',
+ 	width: 50,
+ 	height: 50,
+ 	//font:{fontSize:12,fontWeight:'bold'},
+ 	color: "#336699",
+ 	borderRadius: 8,
+ 	font: {
+			fontFamily: 'AppIcons',
+			fontSize: '50dp',
+			fontWeight: 'normal'
+	},
+
+	//height: '72dp',
+	//width: '72dp',
+	textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+	verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER
+},
+"#contentButtonBar": {
+	layout: "horizontal",
+	backgroundColor: '#336699',
+	left: "2%",
+	right: "2%",
+	top: 20,
+	height: 50,
+	width: Ti.UI.FILL
+},
+"#eventsButton": {
+	height: 50,
+	width: 'auto',
+	backgroundColor: '#336699',
+	font:{fontSize:14,fontWeight:'normal'},
+	color: 'white',
+	selectedColor: 'red'
+},
+"#lunchButton": {
+	left: 10,
+	height: 50,
+	width: 'auto',
+	backgroundColor: '#336699',
+	font:{fontSize:14,fontWeight:'normal'},
+	color: 'white',
+	selectedColor: 'red'
+},
+"#friFolderButton": {
+	left: 10,
+	height: 50,
+	width: 'auto',
+	backgroundColor: '#336699',
+	font:{fontSize:14,fontWeight:'normal'},
+	color: 'white',
+	selectedColor: 'red'
+},
+"#sportsButton": {
+	left: 10,
+	height: 50,
+	width: 'auto',
+	backgroundColor: '#336699',
+	font:{fontSize:14,fontWeight:'normal'},
+	color: 'white',
+	selectedColor: 'red'
+},
+
+"#contentsScrollView" : {
+	layout: 'vertical',
+	left: '2%',
+	right: '2%',
+	height: 150,
+	showVerticalScrollIndicator: "true",
+	scrollType: "vertical",
+	borderColor: 'gray',
+	contentHeight:'auto',
+	borderWidth: 1,
+	borderRadius: 8
+},
+/*
+"#contentsView" : {
+			layout: 'vertical',
+			top: 0,
+			width: Ti.UI.FILL		
+},
+*/
+"#contentsViewLabel" : {   
+	font:{fontSize:12,fontWeight:'normal'},
+	color: 'blue',
+	textAlign: "Ti.UI.TEXT_ALIGNMENT_LEFT",
+	verticalAlign: "Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP"
+},
+"#announcementsScrollView" :{
+	top: 5,
+	layout: 'vertical',
+	showVerticalScrollIndicator: "true",
+	scrollType: "vertical",
+	left: '2%',
+	right: '2%',
+	height: 100,
+	contentHeight:'auto',
+	borderWidth: 1,
+	borderColor: 'gray',
+	borderRadius: 8
+},
+"#districtAnnouncementsView" : {
+			layout: 'vertical',
+			top: 0,
+			width: Ti.UI.FILL
+			//backgroundColor: "gray"
+},
+"#districtAnnouncementsLabel" : {   
+	font:{fontSize:12,fontWeight:'normal'},
+	color: 'red',
+	left: 5,
+	textAlign: "Ti.UI.TEXT_ALIGNMENT_LEFT",
+	verticalAlign: "Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP"
+}

@@ -1,0 +1,30 @@
+"#sports_icon" : {
+	top: 20,
+	left: 10,
+   	text: Alloy.Globals.icons.dribble,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+},
+"#bus_icon" : {
+	top: 20,
+	left: 10,
+   	text: Alloy.Globals.icons.bus_sign,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+},
+"#pta_icon" : {
+	top: 20,
+	left: 10,
+   	text: Alloy.Globals.icons.group,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: "15%",
+	textAlign: 'right'
+}

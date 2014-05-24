@@ -1,0 +1,36 @@
+<Alloy>
+	<Model src="profile" instance="true" id="myProfile" /> 
+	 <Window id="MyDashboardWindow" title="Dashboard" class="container">
+		<View id="mainView">	
+	   		 <View id= "profileView"> 
+	   			<ImageView id="profileImage" ></ImageView>
+	   			<Label id="profileDetailsLabel"/>
+			</View> 
+			<View id="contactTeacher" layout="horizontal">
+						<Label id="callButton"></Label>
+						<Label id="emailButton"></Label>
+			</View>	 
+			<View id="contentButtonBar" >
+					<Button id="eventsButton" title="Events"/>
+					<Button id="friFolderButton" title="Fri.Folder"  />
+					<Button id="lunchButton" title="Lunch"/>
+					<Button id="sportsButton" title="Sports"/>
+			</View>
+			
+			<ScrollView id="contentsScrollView">
+				<!--
+				<View id="contentsView">
+	   				<Label id="contentsViewLabel" /> 
+	   			</View>
+	   		-->
+	   		</ScrollView>	
+	   
+	   		
+	   		<ScrollView id="announcementsScrollView">
+				<View id="districtAnnouncementsView" >
+					<Label id ="districtAnnouncementsLabel" />
+				</View>
+			</ScrollView>
+		 </View>
+	</Window>
+</Alloy>

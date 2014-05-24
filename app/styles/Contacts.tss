@@ -1,0 +1,16 @@
+"#districtContacts": {
+	backgroundColor: '#fff',
+	layout: 'vertical'
+},
+"#contactsTable" : {
+	//backgroundColor: 'transparent',
+	separatorColor: '#000000'
+},
+"#searchContacts": {
+	barColor: "#000",
+	color: '#fff',
+	showCancel: "true" ,
+	height: "43" ,
+	top: 0, 
+	hintText: "Enter title or name or school",
+}

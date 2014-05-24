@@ -1,0 +1,9 @@
+<Alloy>
+    <Window id="DisclaimerWin" fullscreen="true" class="container" exitOnClone="true">
+        <WebView id="webSiteView"  url="/disclaimer.html"  />
+		  <!--
+            The OptionDialog tag declares an option dialog,
+            which will need to be opened by the controller.
+        -->
+    </Window>
+</Alloy>

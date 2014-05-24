@@ -1,0 +1,251 @@
+".container": {
+	backgroundColor: "white"
+},
+"#detailWindow" : {
+		title:"School Details",
+		layout:'vertical'
+		/*
+		barColor: '#6d0a0c',
+		backgroundColor: 'transparent',
+		backgroundImage: 'images/grain.png'
+		*/
+},
+"#schoolAddress" : {
+	top: '2%',
+	left: '2%',
+	right: '2%',
+	//width: 300,
+	height:'50%',
+	backgroundColor: '#E3E3E3',
+	borderRadius: 16,
+	borderColor: 'gray',
+	borderWidth: 2,
+	layout: "vertical"
+	
+},
+"#schoolImage" :{
+		top: 5,
+		width:64,
+		height:64
+},
+"#namelabel" : {
+		//top:10,
+		textAlign:'center',
+		font: {
+			fontWeight:'bold',
+			fontSize:18
+		},
+		color: '#000'
+},
+"#addresslabel" : {
+		//top:12,
+		textAlign:'center',
+		font: {
+			fontSize:12
+		},
+		color: '#000'
+},
+"#citylabel" : {
+		//top:14,
+		textAlign:'center',
+		font: {
+			fontSize:12
+		},
+		color: '#000'
+},
+"#stateandziplabel" : {
+		textAlign:'center',
+		font: {
+			fontSize:12
+		},
+		color: '#000'
+},
+"#phonelabel" : {
+	textAlign:'center',
+		font: {
+			fontSize:12
+		},
+		color: '#000'
+},
+".schoolHours" : {
+	textAlign:'center',
+		font: {
+			fontSize:12
+		},
+		color: '#000'
+}
+"#schoolButtons" : {
+	top: 10,
+	layout: 'horizontal',
+	height: Ti.UI.SIZE,
+    width: 'auto',
+    left: "20%"
+},
+/*
+"#phonebutton" : {
+		color: 'white',
+		backgroundColor: '#336699',
+		width: 60,
+		height:Ti.UI.SIZE
+},
+*/
+"#phonebutton" : {
+		left: 10,
+		color: 'white',
+		backgroundColor: '#336699',
+		width: 50,
+		height:50,
+		font: {fontFamily: 'AppIcons', fontSize:'50dp'},
+		text: Alloy.Globals.icons.phone,
+		textAlign: 'center',
+		borderRadius: 4
+},
+/*
+"#mapbutton" :{
+		left: 2,
+		color: 'white',
+		backgroundColor: '#336699',
+		width: 60,
+		height:Ti.UI.SIZE
+},
+*/
+"#mapbutton" :{
+		left: 10,
+		color: 'white',
+		backgroundColor: '#336699',
+		width: 50,
+		height: 50,
+	    font: {fontFamily: 'AppIcons', fontSize:'50dp'},
+	    text: Alloy.Globals.icons.map,
+	    textAlign: 'center',
+	    borderRadius: 4
+},
+/*
+"#webbutton" :{
+		left: 2,
+		color: 'white',
+		backgroundColor: '#336699',
+		width: 60,
+		height:Ti.UI.SIZE
+},
+*/
+"#webbutton" :{
+		left: 10,
+		color: 'white',
+		backgroundColor: '#336699',
+		width: 50,
+		height:50,
+	    font: {fontFamily: 'AppIcons', fontSize:'50dp'},
+	    text: Alloy.Globals.icons.globe_alt,
+	    textAlign: 'center',
+	    borderRadius: 4
+},
+"#schoolContacts" : {
+	left: '2%',
+	right: '2%',
+	top: '2%',
+	bottom: '2%',
+		//width: 300,
+	backgroundColor: '#E3E3E3',
+	borderRadius: 16,
+	borderColor: 'gray',
+	borderWidth: 2,
+	layout: "vertical",
+	height: "40%"
+},
+"#principal" :{
+	left: "5%",
+	height: 50,
+	layout: "horizontal"
+},
+"#principallabel" : {
+		textAlign:'left',
+		font: {
+			fontWeight:'normal',
+			fontSize:14
+		},
+		color: 'black'
+		//height: 20
+},
+"#principalname" : {
+		textAlign:'center',
+		font: {
+			fontWeight:'normal',
+			fontSize:14
+		},
+		color: 'blue',
+		height: 20
+},
+"#emailPrincipal" : {
+	left: 5,
+	height: 24,
+	width: 24,
+	backgroundImage: "images/email.png"
+},
+"#emailPrincipal[platform=android]" : {
+	backgroundImage: "/images/email.png"
+},
+"#assistantprincipal" :{
+	left: "5%",
+	height: 50,
+	layout: "horizontal"
+},
+"#assistantprincipallabel" : {
+		textAlign:'left',
+		font: {
+			fontWeight:'normal',
+			fontSize:14
+		},
+		color: 'black',
+		height: 20
+},
+"#emailAsstPrincipal" : {
+    left: 5,
+	height: 24,
+	width: 24,
+	backgroundImage: "images/email.png"
+},
+"#emailAsstPrincipal[platform=android]" : {
+	backgroundImage: "/images/email.png"
+}
+"#assistantprincipalname" : {
+		textAlign:'center',
+		font: {
+			fontWeight:'normal',
+			fontSize:14
+		},
+		color: 'blue',
+		height: 20
+},
+"#abspecialist" :{
+	left: "5%",
+	height: 50,
+	layout: "horizontal"
+}
+"#abspecialistlabel" : {
+		textAlign:'left',
+		font: {
+			fontWeight:'normal',
+			fontSize:14
+		},
+		color: 'black',
+		height: 20
+},
+"#abspecialistname" : {
+		textAlign:'center',
+		font: {
+			fontWeight:'normal',
+			fontSize:14
+		},
+		color: 'blue',
+		height: 20
+},
+"#emailABSpecialist" : {
+	left: 5,
+	height: 24,
+	width: 24,
+	backgroundImage: "images/email.png"
+},
+"#emailABSpecialist[platform=android]" : {
+	backgroundImage: "/images/email.png"
+}

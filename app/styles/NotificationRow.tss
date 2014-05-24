@@ -1,0 +1,41 @@
+"#row": {
+	height: 100,
+	width: Ti.UI.FILL,
+	left: 0,
+	color: "black",
+	borderWidth: 8,
+	backgroundColor: 'white'
+},
+"#minus_sign" : {
+	top: 10,
+	left: "80%",
+   	text: Alloy.Globals.icons.minus_sign,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	color: 'red',
+	width: "10%",
+	textAlign: 'right'
+},
+"#dateLabel": {
+	left: "2%",
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	color: "blue",
+	font: {
+		fontSize: 16,
+		fontWight: "bold",
+		fontFamily: 'Helvetica Neue'
+	},
+	textAlign: 'left'
+},
+"#msgLabel": {
+	left: "2%",
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	color: "black",
+	font: {
+		fontSize: 16,
+		fontWight: "bold",
+		fontFamily: 'Helvetica Neue'
+	},
+	textAlign: 'left'
+}

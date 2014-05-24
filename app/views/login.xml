@@ -1,0 +1,4 @@
+<Alloy>
+    <!-- Android -->
+    <Require src="login_form" id="loginForm" />   
+</Alloy>

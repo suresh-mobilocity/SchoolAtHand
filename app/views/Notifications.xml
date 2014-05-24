@@ -1,0 +1,9 @@
+<Alloy>
+       <Collection src="notification" />
+	       <Window id="notificationsWindow"  title="Notification Center" class="container" layout="vertical">
+		      	<TableView id="notificationTable" dataCollection="notification">
+			               <Require src="NotificationRow">
+			    </TableView>
+			    <View ns="Admob" id="adView"/>
+	       </Window>
+</Alloy>

@@ -1,0 +1,126 @@
+".container": {
+	backgroundColor: "white"
+},
+"#transportationWindow" : {
+		title:"Transportation",
+		layout:'vertical'
+},
+"#namelabel" : {
+		font: {
+			fontWeight:'normal',
+			fontSize:18
+		},
+		color: 'black',
+		height: Ti.UI.SIZE
+}
+"#department" : {
+	left: '2%',
+	right: '2%',
+	//width: 300,
+	layout: 'vertical'
+},
+"Label" : {
+		//top:12,
+		//textAlign:'center',
+		font: {
+			fontSize:14
+		},
+		color: '#000'
+},
+"#phonebutton" : {
+	width: 32,
+	height:32,
+	backgroundImage: "images/phone.png"
+},
+"#phonebutton[platform=android]" : {
+	backgroundImage: "/images/phone.png"
+},
+"#supervisorView" :{
+	left: "5%",
+	right: "5%",
+	top: 5,
+	height: Ti.UI.SIZE,
+	layout: "vertical"
+},
+"#supervisor" :{
+	top: 5,
+	height: 32,
+	layout: "horizontal"
+},
+"#supervisorlabel" : {
+		//left: 10,
+		font: {
+			fontWeight:'normal',
+			fontSize:18
+		},
+		color: 'black',
+		height: Ti.UI.SIZE
+},
+"#supervisorname" : {
+		left: "5%",
+		font: {
+			fontWeight:'normal',
+			fontSize:14
+		},
+		color: 'blue',
+		height: Ti.UI.SIZE,
+		width: 100
+},
+"#emailsupervisor" : {
+	left: 50,
+	height: 32,
+	width: 32,
+	backgroundImage: "images/email.png"
+},
+"#emailsupervisor[platform=android]" : {
+	backgroundImage: "/images/email.png"
+},
+"#secretaryView" :{
+	left: "5%",
+	right: "5%",
+	top: 5,
+	height:  Ti.UI.SIZE,
+	layout: "vertical",
+},
+"#secretary" :{
+//	left: "5%",
+	top: 5,
+	height:  Ti.UI.SIZE,
+	layout: "horizontal"
+	
+},
+"#secretarylabel" : {
+		font: {
+			fontWeight:'normal',
+			fontSize:18
+		},
+		color: 'black',
+		height: Ti.UI.SIZE
+},
+"#secretaryname" : {
+		left: "5%",
+		font: {
+			fontWeight:'normal',
+			fontSize:14
+		},
+		color: 'blue',
+		height:  Ti.UI.SIZE,
+		width: 100
+},
+"#emailsecretary" : {
+    left: 50,
+	height: 32,
+	width: 32,
+	backgroundImage: "images/email.png"
+},
+"#emailsecretary[platform=android]" : {
+	backgroundImage: "/images/email.png"
+}
+//"#ads" : {
+//top: '2%',
+//left: '2%',
+//right: '2%',
+//width: 300,
+//height:'30%',
+//layout: 'vertical'
+//}

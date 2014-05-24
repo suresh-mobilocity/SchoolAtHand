@@ -1,0 +1,13 @@
+<Alloy>
+    <Window id="findMySchoolWindow" title="Check School Allotment" class='container'>
+    	<View id="findMySchoolView">
+    	<Label id="streetnamelabel" text="Enter Street Name" textAlign="left"></Label>
+    	<View id="inputView">
+        	<TextField id="streetNameInput"  />
+        	<Button id="schoolFinderButton" title="Check" />
+        </View>
+         <TableView id="listOfSchoolsByStreet" title="List of Schools for St:"  visible="false">
+        </TableView>
+       </View>
+    </Window>
+</Alloy>

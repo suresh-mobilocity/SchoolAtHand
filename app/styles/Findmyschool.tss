@@ -1,0 +1,61 @@
+"#findMySchoolWindow": {
+	backgroundColor: '#fff',
+	layout: 'vertical'
+},
+"#findMySchoolView" : {
+	layout: "vertical",
+	backgroundColor: "#E3E3E3",
+	borderColor: "gray",
+	borderWidth: 2,
+	borderRadius: 16,
+	left: 5,
+	top: 5,
+	right: 5,
+	height: Ti.UI.SIZE
+},
+"#streetnamelabel" : {
+	left: 5,
+	top: 5,
+	right: 5,
+	height: Ti.UI.SIZE
+},
+"#inputView" : {
+	layout: "horizontal",
+	backgroundColor: "lightgray",
+	//left: 5,
+	top: 5,
+	//right: 5,
+	height: 50
+},
+"#streetNameInput" : {
+ 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+ 	color: "black",
+ 	top: 5,
+    left: 5,
+    width: 250,
+    height: 40
+},
+"#schoolFinderButton[platform=ios]" : {
+	color: "black",
+	top: 5,
+	width: 50,
+    height: 40 
+},
+"#schoolFinderButton[platform=android]" : {
+	backgroundColor: '#336699',
+ 	width: 75,
+ 	height: 50,
+ 	font:{fontSize:12,fontWeight:'bold'},
+ 	color: "white",
+	bottom: "50dp"
+},
+'#listOfSchoolsByStreet': {
+	top: 0,
+//	left: '5',
+//right: '5',
+	backgroundColor: '#E3E3E3',
+	borderColor: 'gray',
+	borderWidth: 2,
+	layout: "veritcal",
+	height: Ti.UI.SIZE
+}

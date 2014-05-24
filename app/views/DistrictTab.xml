@@ -1,0 +1,68 @@
+<Alloy>
+<Tab id="districtTab" title="District">
+			<Window id="districtWindow" title="District">	
+				<TableView id="districtView" top="0" left="0" layout="vertical">
+				 	<TableViewRow id="news" onClick="displayNews">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+				 				<!--
+				 			<ImageView id="newsImg" image="/images/news.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="news_icon"></Label>
+	   						<Label id="row_label">District News</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>
+				 	<TableViewRow id="events"  onClick="displayEvents">
+				 		<View id="buttonView" top="0" layout="horizontal">
+				 			<!--
+				 			<ImageView id="eventImg" image="/images/events.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="events_icon"></Label>
+	   						<Label id="row_label">Events</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>
+				 	<TableViewRow id="lunchmenu"  onClick="displayLunchMenu">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+				 			<!--
+				 			<ImageView id="lunchMenuImg"  image="/images/lunchmenu.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="lunch_icon"></Label>
+	   						<Label id="row_label">Lunch Menu</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>
+				 	<TableViewRow id="contacts"  onClick="displayContacts">
+				 		<View id="buttonView" top="0" layout="horizontal">
+				 			<!--
+				 			<ImageView id="contactsImg" image="/images/contacts.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="contacts_icon"></Label>
+	   						<Label id="row_label">Contacts</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>
+				 	<TableViewRow id="calendar" onClick="displayCalendar">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+				 			<!--
+				 			<ImageView id="calendarImg" image="/images/calendar.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="calendar_icon"></Label>
+	   						<Label id="row_label">District Calendar</Label>
+	   						<Label id="right_arrow"></Label>
+				 		</View>
+				 	</TableViewRow>
+				 	<TableViewRow id="communityEdLabel" onClick="displayCommunityEd">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+				 			<!--
+				 			<ImageView image="/images/communityed.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="community_icon"></Label>
+	   						<Label id="row_label">Community Ed</Label>
+	   						<Label id="right_arrow"></Label>
+				 		</View>
+				 	</TableViewRow>
+				</TableView>
+			</Window>
+		</Tab>
+	</Alloy>

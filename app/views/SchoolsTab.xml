@@ -1,0 +1,49 @@
+<Alloy>
+<Tab id="schoolsTab" title="Schools">
+			<Window id="schoolsWindow" title="Schools">     
+				<TableView id="schoolsView" top="0" left="0" layout="vertical">	
+				 	<TableViewRow onClick="displayElementarySchools">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+				 			<!--
+				 			<ImageView image="/images/elementary.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="school_icon"></Label>
+	   						<Label id="row_label">Elementary Schools</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>
+				 	<TableViewRow onClick="displayMiddleSchools">
+				 		<View id="buttonView" top="0" layout="horizontal">
+				 			<!--
+				 			<ImageView  image="/images/middle.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="school_icon"></Label>
+	   						<Label id="row_label">Middle Schools</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>
+				 	<TableViewRow onClick="displayHighSchools">
+				 		<View id="buttonView" top="0" layout="horizontal" >
+				 			<!--
+				 			<ImageView image="/images/hschoolbld.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="school_icon"></Label>
+	   						<Label id="row_label">High Schools</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>	
+				 	<TableViewRow  onClick="findMySchool">
+				 		<View id="buttonView" top="0" layout="horizontal">
+				 			<!-->
+				 			<ImageView  image="/images/findmyschool.png" left="10" height="64" width="64"></ImageView>
+				 			-->
+				 			<Label id="search_icon"></Label>
+	   						<Label id="row_label">Find My Schools</Label>
+	   						<Label id="right_arrow" ></Label>
+				 		</View>
+				 	</TableViewRow>
+				</TableView>
+				<View ns="Admob" id="adView"/>
+			</Window>
+		</Tab>
+</Alloy>

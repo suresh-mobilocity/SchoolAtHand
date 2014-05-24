@@ -1,0 +1,5 @@
+<Alloy>
+    <Window id="viewWebSiteWin" title="School Web Site" class = 'container' modal="flase">
+        <WebView id="webSiteView" />
+    </Window>
+</Alloy>

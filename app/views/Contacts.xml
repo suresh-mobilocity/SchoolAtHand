@@ -1,0 +1,10 @@
+<Alloy>
+	<Collection src="contacts" />
+    <Window id="districtContacts" title="Contacts" class='container'>
+    	<SearchBar id="searchContacts" />
+        <TableView id="contactsTable" dataCollection="contacts" filterAttribute="filter" >
+            <Require src="ContactRow"/>
+        </TableView>
+        <Require id="loading" type="widget" src="com.appcelerator.loading" message="loading"/>
+    </Window>
+</Alloy>

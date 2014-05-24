@@ -1,0 +1,28 @@
+<Alloy>
+	<!--
+    <Window id="DisclaimerWin" fullscreen="true" class="container" onClick="showOptions" exitOnClone="true">
+    -->
+    <Window id="DisclaimerWin" fullscreen="true" class="container" exitOnClone="true">
+        <WebView id="disclaimerView"  url="/disclaimer.html"   />
+		  <!--
+            The OptionDialog tag declares an option dialog,
+            which will need to be opened by the controller.
+          -->
+        <View id="buttonLayout">
+        	<Button id="buttonAccept" /> 
+        	<Button id="buttonDeny"  /> 
+        </View>
+        <!--
+        <OptionDialog id="dialog" title="Please click one of these options">
+            <Options>
+                <Option>Accept</Option>
+                <Option>Deny</Option>
+                <Option>Cancel</Option>
+            </Options>
+            <ButtonNames>
+                <ButtonName>Confirm</ButtonName>
+            </ButtonNames>
+        </OptionDialog>
+        -->
+    </Window>
+</Alloy>

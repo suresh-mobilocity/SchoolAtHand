@@ -1,0 +1,43 @@
+".container": {
+	backgroundColor: "white"
+}
+"#DisclaimerWin": {
+		title:"Disclaimer",
+		layout:'vertical'	
+},
+"#disclaimerView[platform=ios]": {
+	willHandleTouches: false,
+	
+},
+"#disclaimerView": {
+	height: "90%",
+	top: 0
+},
+"#buttonLayout": {
+	layout: "horizontal",
+	borderColor: '#336699'
+}  
+"#buttonAccept": {
+    title:  'Accept',
+	backgroundColor: '#336699',
+	top: "2%",
+ 	width: "40%",
+ 	left: "5%",
+ 	height: Ti.UI.SIZE,
+ 	font:{fontSize:12,fontWeight:'bold'},
+ 	color: "white",
+ 	borderColor:  '#336699',
+ 	borderRadius: 8
+},
+"#buttonDeny": {
+    title:  'Deny',
+	backgroundColor: '#336699',
+ 	width: "40%",
+ 	top: "2%",
+ 	left: "5%",
+ 	height: Ti.UI.SIZE,
+ 	font:{fontSize:12,fontWeight:'bold'},
+ 	color: "white",
+ 	borderColor:  '#336699',
+ 	borderRadius: 8
+}

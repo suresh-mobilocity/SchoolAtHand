@@ -1,0 +1,110 @@
+".container" : {
+  backgroundColor: "white"
+},
+"#changeOptions" :{
+	top: "5%",
+	layout: "vertical"
+}
+"Label" : {
+	top: 20,
+	left: 20,
+	width: "70%",
+	height: Ti.UI.SIZE,
+	font:{fontSize:14,fontWeight:'normal', fontFamily:'Helvetica',  fontStyle: 'normal'},
+    color: "blue"
+},
+"#disableAds" :{
+	top: 20,
+	left: 20,
+    width: Ti.UI.SIZE,
+    height: Ti.UI.SIZE,
+    textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+ //   title: 'Disable Ads',
+    color: "blue",
+},
+"#disableAds[platform=android]" :{
+    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
+},
+"#pushNotificationSelection" : {
+	top: 20,
+	left: 20,
+	width: Ti.UI.SIZE,
+    height: Ti.UI.SIZE,
+    textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
+    text: 'Change Push Notification Selection',
+    font:{fontSize:14,fontWeight:'bold', fontFamily:'Helvetica',  fontStyle: 'normal'},
+    color: "black"
+},
+"#recivePushFromSchools" : {
+	top: 20,
+	left: 20,
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+    textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+ //   title:'Recieve School District Alerts',
+    color: "blue",
+    value:true,   
+},
+"#recivePushFromSchools[platform=android]" : {
+    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,   
+},
+
+"#recivePushFromPTA" : {
+	top: 20,
+	left: 20,
+	width: Ti.UI.SIZE,
+    height: Ti.UI.SIZE,
+    textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
+   // title:'Recieve PTA Announcements',
+    value:true,
+    color: "blue",
+},
+"#recivePushFromPTA[platform=android]" : {
+    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
+},
+"#recivePushFromSports" : {
+	top: 20,
+	left: 20,
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+    textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
+ //   title:'Recieve Sports Events',
+    value:true,
+    color: "blue",
+},
+"#recivePushFromSports[platform=android]" : {
+    style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
+},
+"#buttonSaveChanges" : {
+	title:  'Save Changes',
+	backgroundColor: '#336699',
+	top: 20,
+	left: "10%",
+	width: "80%",
+ 	height: Ti.UI.SIZE,
+ 	font:{fontSize:12,fontWeight:'bold'},
+ 	color: "white",
+ 	borderRadius: 10
+},
+"#buttonChangePassword" : {
+	title:  'Change Password',
+	backgroundColor: '#336699',
+	top: 20,
+	left: "10%",
+	width: "80%",
+ 	height: Ti.UI.SIZE,
+ 	font:{fontSize:12,fontWeight:'bold'},
+ 	color: "white",
+ 	borderRadius: 10
+},
+"#buttonChangeSchoolDistrict" : {
+	title:  'Change School District',
+	backgroundColor: '#336699',
+	top: 20,
+	left: "10%",
+	width: "80%",
+ 	height: Ti.UI.SIZE,
+ 	font:{fontSize:12,fontWeight:'bold'},
+ 	color: "white",
+ 	borderRadius: 10
+}

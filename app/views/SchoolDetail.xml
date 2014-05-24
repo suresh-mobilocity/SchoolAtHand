@@ -1,0 +1,43 @@
+<Alloy>
+	<Model id="schoolDetail" instance="true" src = "school"> 
+	   <Window id="detailWindow" model="$.schoolDetail" class="container">
+	   		<View id="schoolAddress" height='60%'>
+	   			<ImageView id="schoolImage" image="{$.schoolDetail.imagefile}"/>
+				<Label id="namelabel" text="{$.schoolDetail.name}" ></Label>
+				<Label id="addresslabel" text="{$.schoolDetail.address1}"></Label>
+				<Label id="citylabel" text="{$.schoolDetail.city}"></Label>
+				<Label id="stateandziplabel" text="{$.schoolDetail.stateandzip}" ></Label>
+				<Label id="phonelabel" text="{$.schoolDetail.phone}" ></Label>
+				<Label class="schoolHours" text="{$.schoolDetail.regular_hours}"></Label>
+				<Label class="schoolHours" text="{$.schoolDetail.delayed_hours}"></Label>
+				<Label class="schoolHours" text="{$.schoolDetail.earlyrelease_hours}"></Label>
+				<View id="schoolButtons" >
+					<!--
+					<Button id="phonebutton" title="Call" onClick="dialPhoneNumber" ></Button>
+					<Button id="mapbutton" title="Map"></Button>
+					<Button id="webbutton" title="Web"></Button>
+					-->
+					<Label id="phonebutton" onClick="dialPhoneNumber"></Label>
+					<Label id="mapbutton"></Label>
+					<Label id="webbutton"></Label>
+				</View>
+			</View>
+			<View id="schoolContacts" height="30%">
+				<View id="principal" layout="horizontal" >
+					<Label id="principallabel" text="Principal:"></Label>
+					<Label id="principalname" text="{$.schoolDetail.principal}"></Label>
+					<Button id="emailPrincipal"></Button>
+				</View>
+				<View id="assistantprincipal">
+					<Label id="assistantprincipallabel" text="Asst. Principal:"></Label>
+					<Label id="assistantprincipalname" text="{$.schoolDetail.assistantprincipal}" ></Label>
+					<Button id="emailAsstPrincipal"></Button>
+				</View>
+				<View id="abspecialist">
+					<Label id="abspecialistlabel" text="Anti Bullying Specialist:"></Label>
+					<Label id="abspecialistname" text="{$.schoolDetail.antibullyingspecialist}" ></Label>
+					<Button id="emailABSpecialist"></Button>
+				</View>
+			</View>
+		</Window>
+</Alloy>

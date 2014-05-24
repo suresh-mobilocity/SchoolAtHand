@@ -1,0 +1,66 @@
+"Window" : {
+	backgroundColor: "#000"
+},
+"TabGroup[platform=ios]" : {
+	navBarHidden: true
+},
+"TableView" : {
+	//separatorColor: 'white',
+	//top: 0,
+	separatorColor: '#336699',
+	//width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	//backgroundColor: '#336699'
+	//backgroundColor: "#B2FFFF"
+	backgroundColor: "#33B5E5"
+},
+"TableViewRow" : {
+	layout: "vertical",
+	//left: "2%",
+	width: Ti.UI.FILL,
+	//borderWidth: "8",
+	height: 80,
+	//backgroundColor: '#336699',
+},
+"#row_label" : {
+	top: 20,
+	left: "5%",
+	width: "60%",
+	height: Ti.UI.SIZE,
+// backgroundColor: '#336699',
+	color: "white",
+	font: {
+		fontSize: 24,
+		fontWight: "bold",
+		fontFamily: 'Helvetica Neue'
+	},
+	textAlign: 'left'
+},
+"#right_arrow" : {
+	top: 20,
+	left:  0,
+   	text: Alloy.Globals.right_arrow,
+	font: {fontFamily: 'AppIcons', fontSize:'24dp'},
+	//color: '#fff',
+	color: 'white',
+	width: 50,
+	textAlign: 'left'
+},
+"#adView" : {
+	testing:false, // default is false
+	keywords: "K-12, education, graduation, kids student school books science  math toys sports parent teacher cars bikes",
+	bottom: 0, // optional
+	adBackgroundColor: "FF8855", // optional
+	backgroundColorTop: "738000", //optional - Gradient background color at top
+	borderColor: "#000000", // optional - Border color
+	textColor: "#000000", // optional - Text color
+	urlColor: "#00FF00", // optional - URL color
+	linkColor: "#0000FF" //optional -  Link text color
+},
+"#adView[platform=android]" : {
+        publisherId: "ca-app-pub-3665132116722377/6561150840",
+},
+"#adView[platform=ios]" : {
+        publisherId: "ca-app-pub-3665132116722377/2467198443",
+        height: "10%"
+}

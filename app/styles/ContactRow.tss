@@ -1,0 +1,110 @@
+"#contactRecord": {
+	backgroundColor: '#ffffff',
+	layout: 'vertical',
+	color: 'black',
+	borderWidth: 10,
+	height: Ti.UI.SIZE
+},
+"#contactLabels" : {
+	layout: "vertical",
+	height: Ti.UI.SIZE,
+	color: 'black',
+},
+"#Name": {
+	//top: '10dp',
+	left: '7',
+	height: Ti.UI.SIZE,
+	font: {
+		fontSize: 14,
+		fontWeight: 'bold',
+		fontColor: '#000000'
+	},
+	color: 'black',
+	height: Ti.UI.SIZE
+},
+"#department": {
+	layout: "horizontal",
+	height: Ti.UI.SIZE,
+	color: 'black',
+},
+"#Title": {
+	left: '7',
+	font: {
+		fontSize: 12,
+		fontWeight: 'normal',
+		fontColor: '#000000'
+	},
+	color: 'black',
+	height: Ti.UI.SIZE
+},
+"#Department": {
+	left: '7',
+	font: {
+		fontSize: 12,
+		fontWeight: 'normal',
+		fontColor: '#000'
+	},
+	color: 'black',
+	height: Ti.UI.SIZE
+},
+"#phoneNo": {
+	layout: "horizontal",
+	color: 'blue',
+	height: Ti.UI.SIZE,
+	width: Ti.UI.FILL
+},
+"#Phone": {
+	left: '7',
+	font: {
+		fontSize: 12,
+		fontWeight: 'bold',
+		fontColor: '#000'
+	},
+	color: 'blue',
+	height: Ti.UI.SIZE
+},
+"#Extention": {
+	left: 10,
+	font: {
+		fontSize: 12,
+		fontWeight: 'bold',
+		fontColor: '#000'
+	},
+	height: Ti.UI.SIZE,
+	color: 'blue',
+	width: 50
+},
+"#phoneButton": {
+	left: 20,
+	//width: 50,
+	//height:50,
+	//backgroundImage: "images/phone.png"
+	
+	color: 'green',
+	backgroundColor: 'white',
+	width: 50,
+	height:50,
+	font: {fontFamily: 'AppIcons', fontSize:'50dp'},
+	title: Alloy.Globals.icons.phone,
+	borderRadius: 8
+},
+"#phoneButton[platform=android]": {
+	//backgroundImage: "/images/phone.png"
+},
+"#emailButton": {
+	left: 20,
+	//width: 50,
+	//height: 50,
+	//backgroundImage: "images/email.png"
+	
+	color: '#336699',
+	backgroundColor: 'white',
+	width: Ti.UI.SIZE,
+	height:50,
+	font: {fontFamily: 'AppIcons', fontSize:'50dp'},
+	title: Alloy.Globals.icons.envelope_alt,
+	borderRadius: 8
+},
+"#emailButton[platform=android]": {
+	//backgroundImage: "/images/email.png"
+}

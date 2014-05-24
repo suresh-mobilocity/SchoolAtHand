@@ -1,0 +1,13 @@
+<Alloy>
+    <Window id="loginForm" >  
+        <View id="loginView" layout="vertical">
+        	<Label id="signinLabel" />
+            <TextField id="inputUsername" />
+            <TextField id="inputPassword" passwordMask="true" />
+            <Button id="buttonLogin" /> 
+            <Label id="registerLabel" />
+            <Button id="buttonSignup" onClick="openRegistration" />
+            <ActivityIndicator id="activityIndicator" />
+        </View>
+    </Window>
+</Alloy>

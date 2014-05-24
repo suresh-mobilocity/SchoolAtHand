@@ -1,0 +1,11 @@
+<Alloy>
+	<Window id="mapWindow" >
+		<!-->
+		<View ns="Ti.Map" id="mapView"/>
+	-->
+		<View ns="MapModule" id="mapView" opacity="1" userLocation="true"/>
+		<!--
+		<Button id="getDirections" title="Get Directions" bottom="50" height="50" width="Ti.UI.SIZE"/>
+		-->
+	</Window>
+</Alloy>

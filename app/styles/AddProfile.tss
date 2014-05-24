@@ -1,0 +1,117 @@
+".container": {
+	backgroundColor: "white"
+},
+"#profileAddWindow" : {
+		title:"Add Student Profile",
+		layout:'vertical',
+	 	//backgroundColor: 'transparent',
+		//backgroundImage: 'images/grain.png'
+		//barColor: '#6d0a0c',
+},
+"#nameTextField" : {
+		top:40,
+		left: "10%",
+		width:"80%",
+		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		returnKeyType:Titanium.UI.RETURNKEY_DONE,
+		//borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+		hintText:'Enter Student or Profile Name',
+		color: "black"
+},
+
+"#nameTextField[platform=android]" : {
+		height:Ti.UI.SIZE,
+		font:{fontSize:14,fontWeight:'bold', fontFamily:'Helvetica',  fontStyle: 'normal'},
+},
+"#nameTextField[platform=ios]" : {
+		height: 30
+},
+
+"#inputView[platform=ios]" : {
+	top: 5,
+	height: 30
+},
+"#inputView[platform=android]" : {
+	top: 20,
+	height: Ti.UI.SIZE
+},
+
+"#gradeLabelField" : {
+		//top:2,
+		left: "10%",
+		width:"80%",
+	//	height: 30
+		font:{fontSize:14,fontWeight:'bold', fontFamily:'Helvetica',  fontStyle: 'normal'},
+},
+
+"#gradeFieldSlider" : {
+		min:0,
+		max:12,
+		value:5,
+	
+		//top: 2,
+		left: "5%"
+},
+"#gradeFieldSlider[platform=android]": {
+			top: 20,
+			width: "80%",
+			height: Ti.UI.SIZE
+},
+"#gradeFieldSlider[platform=ios]": {
+			width: 150,
+			height: 20,
+},
+"#schoolPickerField[platform=android]" : {
+	top: 20,
+	height: Ti.UI.SIZE,
+	width: "80%",
+	useSpinner: true
+	//height: 30,
+	//visibleItems: 3
+},
+"#schoolPickerField[platform=ios]" : {
+	top: 10
+	//height: 30,
+	//visibleItems: 3
+},
+"#teacherTextField" : {
+		left: "10%",
+		width:"80%",
+		keyboardType:Titanium.UI.KEYBOARD_DEFAULT,
+		returnKeyType:Titanium.UI.RETURNKEY_DONE,
+	//	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+		borderWidth: 2,
+		font:{fontSize:14,fontWeight:'bold', fontFamily:'Helvetica',  fontStyle: 'normal'},
+		hintText:'Enter Teacher Name',
+		color: "black"
+},
+"#teacherTextField[platform=android]" : {
+		top:20,
+		height:Ti.UI.SIZE,
+		
+},
+"#teacherTextField[platform=ios]" : {
+		top:10,
+		height: 30
+},
+"#saveButton[platform=android]" : {
+	title:  'Save',
+	backgroundColor: '#336699',
+	borderRadius: 8,
+	top: 20,
+ 	width: "80%",
+ 	height: 50,
+ 	font:{fontSize:14,fontWeight:'bold'},
+ 	color: "white"
+},
+"#saveButton[platform=ios]" : {
+	title:  'Save',	
+	top: "50dp"
+}
+"Label" : {
+	left: "10%",
+	color: "blue",
+	height: Ti.UI.SIZE,
+	width: Ti.UI.FILL,
+	font:{fontSize:10,fontWeight:'normal', fontFamily:'Helvetica'},
+}
