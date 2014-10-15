@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function sendFeedback() {
         var emailDialog = Ti.UI.createEmailDialog();
@@ -5,7 +14,14 @@ function Controller() {
         emailDialog.toRecipients = [ "mobilocityinc@gmail.com" ];
         emailDialog.open();
     }
-    function displayHelp() {}
+    function displayHelp(e) {
+        var args_t = {
+            parentTab: e,
+            wintitle: "User Guide",
+            url: "./help_android.html"
+        };
+        e.open(Alloy.createController("ViewWebSite", args_t).getView());
+    }
     function displayAboutSH(e) {
         e.open(Alloy.createController("AboutSHApp", {
             parentTab: e
@@ -112,6 +128,7 @@ function Controller() {
             backgroundColor: "orange",
             borderRadius: 8,
             color: "white",
+            style: "",
             textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
         });
         notificationCenterButton.addEventListener("click", function() {
@@ -124,52 +141,60 @@ function Controller() {
         headerView.add(notificationCenterButton);
         recentNotificationsView.add(headerView);
         if (Ti.App.Properties.hasProperty("ACSDeviceToken")) {
-            if (notificationCount > 0) while (notificationCount > rowId && 2 > rowId) {
-                var datetime = notificationCollection.at(rowId).get("datetime");
-                var message = notificationCollection.at(rowId).get("message");
-                var notificationIcon = Ti.UI.createImageView({
-                    left: 5,
-                    image: "/images/push_msg_icon.png",
-                    height: 32,
-                    width: 32
+            if (notificationCount > 0) {
+                while (notificationCount > rowId && 2 > rowId) {
+                    var datetime = notificationCollection.at(rowId).get("datetime");
+                    var message = notificationCollection.at(rowId).get("message");
+                    var notificationIcon = Ti.UI.createImageView({
+                        left: 5,
+                        image: "/images/push_msg_icon.png",
+                        height: 32,
+                        width: 32
+                    });
+                    var messageView = Ti.UI.createView({
+                        height: Ti.UI.SIZE,
+                        width: Ti.UI.FILL,
+                        borderColor: "white",
+                        borderWidth: 1
+                    });
+                    var datetimeLabel = Ti.UI.createLabel({
+                        top: 0,
+                        left: 50,
+                        text: datetime,
+                        font: {
+                            fontSize: 14,
+                            fontWeight: "normal"
+                        },
+                        height: 30,
+                        width: Ti.UI.SIZE,
+                        color: "blue",
+                        textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+                    });
+                    var messageLabel = Ti.UI.createLabel({
+                        top: 32,
+                        left: 50,
+                        text: message,
+                        font: {
+                            fontSize: 14,
+                            fontWeight: "normal"
+                        },
+                        height: 30,
+                        width: Ti.UI.SIZE,
+                        color: "blue",
+                        textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+                    });
+                    messageLabel.setWordWrap(false);
+                    messageView.add(notificationIcon);
+                    messageView.add(datetimeLabel);
+                    messageView.add(messageLabel);
+                    recentNotificationsView.add(messageView);
+                    rowId++;
+                }
+                recentNotificationsView.addEventListener("click", function() {
+                    $.dashboardTab.open(Alloy.createController("Notifications", {
+                        parentTab: $.dashboardTab
+                    }).getView());
                 });
-                var messageView = Ti.UI.createView({
-                    height: Ti.UI.SIZE,
-                    width: Ti.UI.FILL,
-                    borderColor: "white",
-                    borderWidth: 1
-                });
-                var datetimeLabel = Ti.UI.createLabel({
-                    top: 0,
-                    left: 50,
-                    text: datetime,
-                    font: {
-                        fontSize: 14,
-                        fontWeight: "normal"
-                    },
-                    height: 30,
-                    width: Ti.UI.SIZE,
-                    color: "blue",
-                    textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-                });
-                var messageLabel = Ti.UI.createLabel({
-                    top: 32,
-                    left: 50,
-                    text: message,
-                    font: {
-                        fontSize: 14,
-                        fontWeight: "normal"
-                    },
-                    height: 30,
-                    width: Ti.UI.SIZE,
-                    color: "blue",
-                    textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-                });
-                messageView.add(notificationIcon);
-                messageView.add(datetimeLabel);
-                messageView.add(messageLabel);
-                recentNotificationsView.add(messageView);
-                rowId++;
             }
         } else {
             recentNotificationsView.add(notRegisteredLabel);
@@ -186,6 +211,7 @@ function Controller() {
                 backgroundColor: "orange",
                 borderRadius: 8,
                 color: "white",
+                style: "",
                 textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
             });
             signupButton.addEventListener("click", function() {
@@ -238,21 +264,22 @@ function Controller() {
             height: Ti.UI.SIZE,
             width: "100%"
         });
-        JSON.parse('{ "address1": "341 black horse lane", "city": "North Brunswick", "name": "district office" }');
         var distPhone = Ti.UI.createButton({
             top: "5%",
             left: 0,
             color: "white",
-            backgroundColor: "#33B5E5",
+            backgroundColor: "orange",
             width: Ti.UI.SIZE,
             height: Ti.UI.SIZE,
+            borderRadius: 8,
             font: {
                 fontFamily: "AppIcons",
                 fontSize: "40dp"
             },
             title: Alloy.Globals.icons.phone,
             textAlign: "center",
-            data: getDistrictPhone()
+            data: getDistrictPhone(),
+            style: ""
         });
         distPhone.addEventListener("click", function(e) {
             Ti.Platform.openURL("tel:" + e.source.data);
@@ -261,16 +288,18 @@ function Controller() {
             top: "5%",
             left: "5%",
             color: "white",
-            backgroundColor: "#33B5E5",
+            backgroundColor: "orange",
             width: Ti.UI.SIZE,
             height: Ti.UI.SIZE,
+            borderRadius: 8,
             font: {
                 fontFamily: "AppIcons",
                 fontSize: "40dp"
             },
             title: Alloy.Globals.icons.globe_alt,
             textAlign: "center",
-            data: getDistrictWebSiteUrl()
+            data: getDistrictWebSiteUrl(),
+            style: ""
         });
         distWeb.addEventListener("click", function(e) {
             var args_t = {
@@ -285,7 +314,8 @@ function Controller() {
             bottom: "2%",
             color: "white",
             left: "5%",
-            backgroundColor: "#33B5E5",
+            backgroundColor: "orange",
+            borderRadius: 8,
             width: Ti.UI.SIZE,
             height: Ti.UI.SIZE,
             font: {
@@ -294,6 +324,7 @@ function Controller() {
             },
             title: Alloy.Globals.icons.direction,
             textAlign: "center",
+            style: "",
             data: JSON.parse(getDistOfficeLocation())
         });
         distLocationButton.addEventListener("click", function(e) {
@@ -345,7 +376,9 @@ function Controller() {
             }
         }, function(e) {
             if (e.success) {
-                for (var i = 0; e.files.length > i; i++) e.files[i];
+                for (var i = 0; i < e.files.length; i++) {
+                    e.files[i];
+                }
                 if (Ti.App.Properties.getString("dbversion") == e.files[0].updated_at) ; else {
                     updateDBProgress = Alloy.createController("ProgressIndicator", {
                         message: "Checking for updates.."
@@ -396,14 +429,14 @@ function Controller() {
             top: "30%",
             height: "30%",
             width: "95%",
-            backgroundColor: "white",
+            backgroundColor: "transparent",
             borderRadius: 8
         });
         var numberOfProfiles = profileCollection.length;
         if (numberOfProfiles > 0) {
             Ti.App.Properties.hasProperty("noUserProfilesLabelSet") && Ti.App.Properties.removeProperty("noUserProfilesLabelSet");
             var rowId = 0;
-            while (profileCollection.length > rowId) {
+            while (rowId < profileCollection.length) {
                 var pSelected = profileCollection.at(rowId);
                 var profileid = pSelected.get("profile_id");
                 var url = pSelected.get("url");
@@ -411,16 +444,16 @@ function Controller() {
                     top: 5,
                     left: 5,
                     layout: "vertical",
-                    backgroundColor: "#33B5E5",
+                    backgroundColor: "white",
                     height: Ti.UI.SIZE,
-                    width: Ti.UI.SIZE,
+                    width: 480 == Ti.Platform.displayCaps.platformHeight ? 90 : 110,
                     borderRadius: 8,
                     id: profileid
                 });
                 var profileImage = Ti.UI.createImageView({
                     top: 5,
-                    height: 100,
-                    width: 100,
+                    height: 480 == Ti.Platform.displayCaps.platformHeight ? 80 : 100,
+                    width: 480 == Ti.Platform.displayCaps.platformHeight ? 80 : 100,
                     image: url,
                     autorotate: true,
                     id: profileid
@@ -455,18 +488,23 @@ function Controller() {
                 top: 5,
                 left: 5,
                 layout: "vertical",
-                backgroundColor: "#33B5E5",
+                backgroundColor: "white",
                 height: Ti.UI.SIZE,
-                width: Ti.UI.SIZE,
+                width: 480 == Ti.Platform.displayCaps.platformHeight ? 90 : 110,
                 borderRadius: 8,
                 id: profileid
             });
             var profileImage = Ti.UI.createButton({
                 top: 5,
-                height: 100,
-                width: 100,
+                height: 480 == Ti.Platform.displayCaps.platformHeight ? 80 : 100,
+                width: 480 == Ti.Platform.displayCaps.platformHeight ? 80 : 100,
                 title: "Add Profile",
-                backgroundColor: "gray"
+                font: {
+                    fontSize: 14,
+                    fontWeight: "bold"
+                },
+                backgroundColor: "gray",
+                style: ""
             });
             var profileName = Ti.UI.createLabel({
                 top: 5,
@@ -484,14 +522,38 @@ function Controller() {
             });
             noprofileView.add(profileImage);
             noprofileView.add(profileName);
+            var hintView = Ti.UI.createView({
+                top: 5,
+                left: 10,
+                layout: "vertical",
+                height: 100,
+                width: Ti.UI.SIZE,
+                borderRadius: 8,
+                id: profileid
+            });
+            var hintLabel = Ti.UI.createLabel({
+                top: 5,
+                text: "Profiles help to view events and links specific to a student's class. All data is saved locally on your device",
+                font: {
+                    fontSize: 12,
+                    fontWeight: "normal"
+                },
+                height: Ti.UI.SIZE,
+                width: 180,
+                color: "black"
+            });
+            hintView.add(hintLabel);
             scrollView.add(noprofileView);
+            scrollView.add(hintView);
             $.dashboardMainView.add(scrollView);
             Ti.App.Properties.setString("noUserProfilesLabelSet", "true");
             noProfileLabel = true;
         }
         Ti.App.Properties.hasProperty("ACS-StoredSessionId") && null != Ti.App.Properties.getString("ACS-StoredSessionId") ? Cloud.Users.showMe(function(e) {
             if (e.success) {
-                e.users[0];
+                {
+                    e.users[0];
+                }
                 Ti.App.Properties.setBool("LoggedIn", true);
             } else Ti.App.Properties.setBool("LoggedIn", false);
         }) : Ti.App.Properties.setBool("LoggedIn", false);
@@ -576,7 +638,6 @@ function Controller() {
         CloudPush.focusAppOnPush = false;
         CloudPush.showAppOnTrayClick = true;
         CloudPush.addEventListener("callback", function(evt) {
-            JSON.stringify(evt);
             var payload = JSON.parse(evt.payload).android;
             var notificationModel = Alloy.createModel("notification", {
                 datetime: new Date().toLocaleString(),
@@ -610,14 +671,22 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
-    var __alloyId91 = [];
+    var __alloyId93 = [];
     $.__views.dashboardMain = Ti.UI.createWindow({
-        backgroundColor: "#000",
+        backgroundColor: "#33B5E5",
         id: "dashboardMain",
         title: "Dashboard"
     });
@@ -629,36 +698,14 @@ function Controller() {
     $.__views.dashboardTab = Ti.UI.createTab({
         window: $.__views.dashboardMain,
         id: "dashboardTab",
-        title: "Home"
+        title: "Home",
+        icon: "home.png"
     });
-    __alloyId91.push($.__views.dashboardTab);
-    $.__views.__alloyId92 = Alloy.createController("DistrictTab", {
-        id: "__alloyId92"
-    });
-    __alloyId91.push($.__views.__alloyId92.getViewEx({
-        recurse: true
-    }));
-    $.__views.__alloyId93 = Alloy.createController("SchoolsTab", {
-        id: "__alloyId93"
-    });
-    __alloyId91.push($.__views.__alloyId93.getViewEx({
-        recurse: true
-    }));
-    $.__views.__alloyId95 = Alloy.createController("MyProfiles", {
-        id: "__alloyId95"
-    });
-    __alloyId91.push($.__views.__alloyId95.getViewEx({
-        recurse: true
-    }));
-    $.__views.__alloyId96 = Alloy.createController("ResourcesTab", {
-        id: "__alloyId96"
-    });
-    __alloyId91.push($.__views.__alloyId96.getViewEx({
-        recurse: true
-    }));
+    __alloyId93.push($.__views.dashboardTab);
     $.__views.tabGroup = Ti.UI.createTabGroup({
-        tabs: __alloyId91,
-        id: "tabGroup"
+        tabs: __alloyId93,
+        id: "tabGroup",
+        backgroundColor: "#00FFFF"
     });
     $.__views.tabGroup && $.addTopLevelView($.__views.tabGroup);
     exports.destroy = function() {};
@@ -692,7 +739,7 @@ function Controller() {
             break;
 
           case "Help" === menuOptionsEvent.rowData.title:
-            displayHelp();
+            displayHelp($.tabGroup.activeTab);
             break;
 
           case "About" === menuOptionsEvent.rowData.title:
@@ -708,6 +755,7 @@ function Controller() {
         }
     });
     $.tabGroup.addEventListener("open", function() {
+        Ti.API.info("Inside TabGroup open event listener");
         var activity = $.tabGroup.activity;
         if (Alloy.Globals.Android.Api >= 11) {
             activity.actionBar.title = "School@Hand";
@@ -719,10 +767,9 @@ function Controller() {
                     showAsAction: Ti.Android.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW | Ti.Android.SHOW_AS_ACTION_ALWAYS
                 });
                 menuItem.addEventListener("click", function() {
-                    Ti.API.info("In menuItem event listener");
                     if (true == isMenuWindowOpen) {
                         var tabs = $.tabGroup.getTabs();
-                        for (var i = 0; tabs.length > i; i++) tabs[i].getWindow().animate({
+                        for (var i = 0; i < tabs.length; i++) tabs[i].getWindow().animate({
                             left: 0,
                             duration: 100
                         });
@@ -790,11 +837,15 @@ function Controller() {
         }
     });
     $.dashboardMain.addEventListener("open", function() {
+        Ti.API.info("Opened dashboardMain view");
         Ti.App.Properties.hasProperty("AppDisclaimerAccepted") && "false" != Ti.App.Properties.getString("AppDisclaimerAccepted") || displayDisclaimer();
         if ("true" == Ti.App.Properties.getString("AppDisclaimerAccepted")) {
             Ti.App.Properties.hasProperty("UserSchoolDistrict") || selectSchoolDistrict();
             if (Ti.App.Properties.hasProperty("UserSchoolDistrict") && Ti.App.Properties.hasProperty("dbinstalled") && checkandupdateDb()) {
-                isTabsDisabledTabs && $.tabGroup.remove(disableTabsImage);
+                if (isTabsDisabledTabs) {
+                    $.tabGroup.remove(disableTabsImage);
+                    isTabsDisabledTabs = false;
+                }
                 openDashboard();
             }
         }

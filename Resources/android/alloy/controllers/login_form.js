@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function actionLogin() {
         if (false == validateInputFields()) return;
@@ -12,9 +21,10 @@ function Controller() {
         }, function(e) {
             if (e.success) {
                 $.activityIndicator.hide();
-                e.users[0];
+                var user = e.users[0];
                 Ti.App.Properties.setString("ACS-StoredSessionId", Cloud.sessionId);
                 Ti.App.Properties.setBool("LoggedIn", true);
+                Ti.App.Properties.setString("username", user.username);
                 loginLabel = "SignOut";
                 retrieveDeviceToken();
                 $.loginForm.close();
@@ -103,9 +113,17 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "login_form";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
@@ -114,23 +132,32 @@ function Controller() {
         id: "loginForm"
     });
     $.__views.loginForm && $.addTopLevelView($.__views.loginForm);
-    $.__views.loginView = Ti.UI.createView({
-        top: 20,
-        id: "loginView",
-        layout: "vertical"
-    });
+    $.__views.loginView = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {
+            top: 20
+        });
+        IS_iPhone4SmallScreen && _.extend(o, {
+            top: 0
+        });
+        _.extend(o, {
+            id: "loginView",
+            layout: "vertical"
+        });
+        return o;
+    }());
     $.__views.loginForm.add($.__views.loginView);
     $.__views.signinLabel = Ti.UI.createLabel({
-        top: 20,
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "blue",
+        top: 20,
         left: 20,
         text: "Enter your email address, and password for this to login",
         font: {
             fontSize: 12,
             fontWeight: "bold"
         },
-        color: "blue",
-        width: Ti.UI.SIZE,
         id: "signinLabel"
     });
     $.__views.loginView.add($.__views.signinLabel);
@@ -151,53 +178,77 @@ function Controller() {
         passwordMask: "true"
     });
     $.__views.loginView.add($.__views.inputPassword);
-    $.__views.buttonLogin = Ti.UI.createButton({
-        title: "Log In",
-        backgroundColor: "#336699",
-        top: 20,
-        width: "80%",
-        left: "10%",
-        height: Ti.UI.SIZE,
-        font: {
-            fontSize: 12,
-            fontWeight: "bold"
-        },
-        color: "white",
-        borderColor: "#336699",
-        borderRadius: 8,
-        id: "buttonLogin"
-    });
+    $.__views.buttonLogin = Ti.UI.createButton(function() {
+        var o = {};
+        _.extend(o, {
+            title: "Log In",
+            backgroundColor: "#336699",
+            top: 20,
+            width: "80%",
+            left: "10%",
+            height: Ti.UI.SIZE,
+            font: {
+                fontSize: 12,
+                fontWeight: "bold"
+            },
+            color: "white",
+            borderColor: "#336699",
+            borderRadius: 8
+        });
+        IS_iPhone4SmallScreen && _.extend(o, {
+            style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+            height: "50dp"
+        });
+        _.extend(o, {
+            id: "buttonLogin"
+        });
+        return o;
+    }());
     $.__views.loginView.add($.__views.buttonLogin);
     $.__views.registerLabel = Ti.UI.createLabel({
-        top: 20,
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "blue",
+        top: 20,
         left: 20,
         text: "Don't have an account to Login? Signup by clicking Signup button.\nYou can receive Alerts, Updates and Push Notifications.\n We don't share any of the information with third parties ",
         font: {
             fontSize: 12,
             fontWeight: "bold"
         },
-        color: "blue",
-        width: Ti.UI.SIZE,
         id: "registerLabel"
     });
     $.__views.loginView.add($.__views.registerLabel);
-    $.__views.buttonSignup = Ti.UI.createButton({
-        title: "Sign Up",
-        backgroundColor: "#336699",
-        top: 20,
-        width: "80%",
-        left: "10%",
-        height: Ti.UI.SIZE,
-        font: {
-            fontSize: 12,
-            fontWeight: "bold"
-        },
-        color: "white",
-        borderColor: "#336699",
-        borderRadius: 8,
-        id: "buttonSignup"
-    });
+    $.__views.buttonSignup = Ti.UI.createButton(function() {
+        var o = {};
+        _.extend(o, {
+            title: "Sign Up",
+            backgroundColor: "#336699",
+            top: 20,
+            width: "80%",
+            left: "10%",
+            height: Ti.UI.SIZE,
+            font: {
+                fontSize: 12,
+                fontWeight: "bold"
+            },
+            color: "white",
+            borderColor: "#336699",
+            borderRadius: 8
+        });
+        IS_iPhone4SmallScreen && _.extend(o, {
+            style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+            font: {
+                fontSize: 12,
+                fontWeight: "bold"
+            },
+            height: "50dp"
+        });
+        _.extend(o, {
+            id: "buttonSignup"
+        });
+        return o;
+    }());
     $.__views.loginView.add($.__views.buttonSignup);
     openRegistration ? $.__views.buttonSignup.addEventListener("click", openRegistration) : __defers["$.__views.buttonSignup!click!openRegistration"] = true;
     $.__views.activityIndicator = Ti.UI.createActivityIndicator({
@@ -216,7 +267,7 @@ function Controller() {
     $.inputUsername.hintText = "email address";
     $.inputPassword.hintText = "Password";
     $.buttonLogin.title = "SignIn";
-    $.inputUsername.value = Ti.App.Properties.getString("username") ? Ti.App.Properties.getString("username") : "";
+    Ti.App.Properties.hasProperty("username") && ($.inputUsername.value = Ti.App.Properties.getString("username"));
     $.buttonLogin.addEventListener("click", actionLogin);
     $.loginForm.addEventListener("focus", refreshLoginStatus);
     $.loginForm.addEventListener("close", destroy);

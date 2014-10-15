@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function dataTransformation(_model) {
         return {
@@ -12,9 +21,17 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "ProfileDetail";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.profileDetail = Alloy.createModel("profile");
@@ -34,8 +51,10 @@ function Controller() {
     });
     $.__views.detailWindow.add($.__views.profileView);
     $.__views.nameLabel = Ti.UI.createLabel({
-        top: "2%",
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "black",
+        top: "2%",
         left: "5%",
         right: "5%",
         font: {
@@ -43,13 +62,14 @@ function Controller() {
             fontWight: "bold",
             fontFamily: "Helvetica Neue"
         },
-        color: "black",
         id: "nameLabel"
     });
     $.__views.profileView.add($.__views.nameLabel);
     $.__views.schoolLabel = Ti.UI.createLabel({
-        top: "2%",
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "black",
+        top: "2%",
         left: "5%",
         right: "5%",
         font: {
@@ -57,13 +77,14 @@ function Controller() {
             fontWight: "bold",
             fontFamily: "Helvetica Neue"
         },
-        color: "black",
         id: "schoolLabel"
     });
     $.__views.profileView.add($.__views.schoolLabel);
     $.__views.gradeLabel = Ti.UI.createLabel({
-        top: "2%",
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "black",
+        top: "2%",
         left: "5%",
         right: "5%",
         font: {
@@ -71,13 +92,14 @@ function Controller() {
             fontWight: "bold",
             fontFamily: "Helvetica Neue"
         },
-        color: "black",
         id: "gradeLabel"
     });
     $.__views.profileView.add($.__views.gradeLabel);
     $.__views.teacherLabel = Ti.UI.createLabel({
-        top: "2%",
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "black",
+        top: "2%",
         left: "5%",
         right: "5%",
         font: {
@@ -85,13 +107,14 @@ function Controller() {
             fontWight: "bold",
             fontFamily: "Helvetica Neue"
         },
-        color: "black",
         id: "teacherLabel"
     });
     $.__views.profileView.add($.__views.teacherLabel);
     $.__views.classnameLabel = Ti.UI.createLabel({
-        top: "2%",
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "black",
+        top: "2%",
         left: "5%",
         right: "5%",
         font: {
@@ -99,7 +122,6 @@ function Controller() {
             fontWight: "bold",
             fontFamily: "Helvetica Neue"
         },
-        color: "black",
         id: "classnameLabel"
     });
     $.__views.profileView.add($.__views.classnameLabel);
@@ -110,65 +132,84 @@ function Controller() {
         id: "image"
     });
     $.__views.profileView.add($.__views.image);
-    $.__views.photoButton = Ti.UI.createButton({
-        title: "Add Photo",
-        top: 10,
-        height: Ti.UI.SIZE,
-        left: "25%",
-        width: "50%",
-        color: "white",
-        backgroundColor: "#336699",
-        borderColor: "#336699",
-        borderRadius: 8,
-        id: "photoButton"
-    });
+    $.__views.photoButton = Ti.UI.createButton(function() {
+        var o = {};
+        _.extend(o, {
+            title: "Add Photo",
+            top: 10,
+            height: Ti.UI.SIZE,
+            left: "25%",
+            width: "50%",
+            color: "white",
+            backgroundColor: "#336699",
+            borderColor: "#336699",
+            borderRadius: 8
+        });
+        IS_iPhone4SmallScreen && _.extend(o, {
+            style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+            font: {
+                fontSize: 12,
+                fontWeight: "bold"
+            },
+            height: "50dp"
+        });
+        _.extend(o, {
+            id: "photoButton"
+        });
+        return o;
+    }());
     $.__views.profileView.add($.__views.photoButton);
-    $.__views.deleteButton = Ti.UI.createButton({
-        title: "Delete  Profile",
-        top: 20,
-        height: Ti.UI.SIZE,
-        left: "25%",
-        width: "50%",
-        color: "white",
-        backgroundColor: "#336699",
-        borderColor: "#336699",
-        borderRadius: 8,
-        id: "deleteButton"
-    });
+    $.__views.deleteButton = Ti.UI.createButton(function() {
+        var o = {};
+        _.extend(o, {
+            title: "Delete  Profile",
+            top: 20,
+            height: Ti.UI.SIZE,
+            left: "25%",
+            width: "50%",
+            color: "white",
+            backgroundColor: "#336699",
+            borderColor: "#336699",
+            borderRadius: 8
+        });
+        IS_iPhone4SmallScreen && _.extend(o, {
+            top: 10,
+            style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+            font: {
+                fontSize: 12,
+                fontWeight: "bold"
+            },
+            height: "50dp"
+        });
+        _.extend(o, {
+            id: "deleteButton"
+        });
+        return o;
+    }());
     $.__views.profileView.add($.__views.deleteButton);
-    $.__views.adView = Admob.createView({
-        testing: false,
-        keywords: "K-12 SAT tutuion education graduation kids student school books science  math toys sports parent teacher cars bikes",
-        bottom: 0,
-        adBackgroundColor: "FF8855",
-        backgroundColorTop: "738000",
-        borderColor: "#000000",
-        textColor: "#000000",
-        urlColor: "#00FF00",
-        linkColor: "#0000FF",
-        publisherId: "ca-app-pub-3665132116722377/2467198443",
-        height: "10%",
-        ns: "Admob",
-        id: "adView"
-    });
-    $.__views.detailWindow.add($.__views.adView);
-    var __alloyId70 = function() {
-        $.nameLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["name"] : $.profileDetail.get("name");
-        $.nameLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["name"] : $.profileDetail.get("name");
-        $.schoolLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["school"] : $.profileDetail.get("school");
-        $.schoolLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["school"] : $.profileDetail.get("school");
-        $.gradeLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["grade"] : $.profileDetail.get("grade");
-        $.gradeLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["grade"] : $.profileDetail.get("grade");
-        $.teacherLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["teacher"] : $.profileDetail.get("teacher");
-        $.teacherLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["teacher"] : $.profileDetail.get("teacher");
-        $.classnameLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["classname"] : $.profileDetail.get("classname");
-        $.classnameLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["classname"] : $.profileDetail.get("classname");
-        $.image.image = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["image"] : $.profileDetail.get("image");
-        $.image.image = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["image"] : $.profileDetail.get("image");
+    var __alloyId71 = function() {
+        $.nameLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["name"] : _.template("<%=profileDetail.name%>", {
+            profileDetail: $.profileDetail.toJSON()
+        });
+        $.schoolLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["school"] : _.template("<%=profileDetail.school%>", {
+            profileDetail: $.profileDetail.toJSON()
+        });
+        $.gradeLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["grade"] : _.template("<%=profileDetail.grade%>", {
+            profileDetail: $.profileDetail.toJSON()
+        });
+        $.teacherLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["teacher"] : _.template("<%=profileDetail.teacher%>", {
+            profileDetail: $.profileDetail.toJSON()
+        });
+        $.classnameLabel.text = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["classname"] : _.template("<%=profileDetail.classname%>", {
+            profileDetail: $.profileDetail.toJSON()
+        });
+        $.image.image = _.isFunction($.profileDetail.transform) ? $.profileDetail.transform()["image"] : _.template("<%=profileDetail.image%>", {
+            profileDetail: $.profileDetail.toJSON()
+        });
     };
-    $.profileDetail.on("fetch change destroy", __alloyId70);
+    $.profileDetail.on("fetch change destroy", __alloyId71);
     exports.destroy = function() {
-        $.profileDetail.off("fetch change destroy", __alloyId70);
+        $.profileDetail.off("fetch change destroy", __alloyId71);
     };
     _.extend($, $.__views);
     var args = arguments[0] || {};
@@ -178,9 +219,13 @@ function Controller() {
             return dataTransformation(this);
         }
     });
+    if (Ti.App.Properties.getBool("DisplayAds")) {
+        var _admobview = require("admobview");
+        var adMobView = _admobview.getaddview();
+        $.detailWindow.add(adMobView);
+    }
     $.profileDetail.set(args.data.attributes);
     $.photoButton.addEventListener("click", function() {
-        Ti.API.info("Adding Photo");
         var cameraOptions = {
             success: function(event) {
                 var image = event.media;
@@ -197,7 +242,7 @@ function Controller() {
                 var a = Ti.UI.createAlertDialog({
                     title: "Camera Error"
                 });
-                error.code == Ti.Media.NO_CAMERA ? a.setMessage("MISSING CAMERA") : a.setMessage("Unexpected error: " + error.code);
+                a.setMessage(error.code == Ti.Media.NO_CAMERA ? "MISSING CAMERA" : "Unexpected error: " + error.code);
                 a.show();
             },
             saveToPhotoGallery: true,

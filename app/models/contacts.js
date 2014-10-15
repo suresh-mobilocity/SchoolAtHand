@@ -51,7 +51,7 @@ exports.definition = {
                 db.close();
  
                 collection.trigger('sync');
- 				Ti.API.info("Deleting all recors from contacts");
+ 				Ti.API.info("Deleting all records from contacts");
             },
  
             saveAll : function() {

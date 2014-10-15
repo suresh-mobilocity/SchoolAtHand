@@ -1,6 +1,6 @@
 <Alloy>
 	   <Window id="transportationWindow" class="container">
-	   	<TableView separatorColor='#000000'>
+	   	<TableView height="90%">
 	   		<TableViewRow id="department">
 				<Label id="namelabel" text="Department of Transportation" ></Label>
 				<View id="contactsView" layout="horizontal" height="Ti.UI.SIZE">

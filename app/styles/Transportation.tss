@@ -1,5 +1,5 @@
 ".container": {
-	backgroundColor: "white"
+	backgroundColor: "#33B5E5"
 },
 "#transportationWindow" : {
 		title:"Transportation",

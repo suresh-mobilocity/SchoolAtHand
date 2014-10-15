@@ -1,10 +1,6 @@
 ".container" : {
   backgroundColor:  "#33B5E5"
 }
-"TableView" : {
-	height: "85%",
-	backgroundColor: "#33B5E5"
-},
 "Label": {
 	top: 20,
 	left: "10%",
@@ -18,28 +14,21 @@
 	},
 	textAlign: 'center'
 }
-"#profilesView": {
+"#profilesView[platform=android]": {
 	layout: "vertical",
+	//backgroundColor: "orange",
+	top: 0,
+	height: "78%"
+}
+"#profilesView[if=IS_iPhoneTall]": {
+	layout: "vertical",
+	//backgroundColor: "orange",
+	top: 0,
+	height: "90%"
+}
+"#profilesView[if=IS_iPhone4SmallScreen]": {
+	layout: "vertical",
+	//backgroundColor: "orange",
+	top: 0,
 	height: "85%"
-}
-"#addButton[platform=ios]" :{
-	backgroundColor: '#336699',
-	left: "10%",
- 	width: "85%",
- 	height: Ti.UI.SIZE,
- 	font:{fontSize:14,fontWeight:'bold'},
- 	color: "white",
-	bottom: 20,
-	borderRadius: 10,
-	style: Titanium.UI.iPhone.SystemButtonStyle.PLAIN
-}
-"#addButton[platform=android]" :{
-	backgroundColor: '#336699',
-	left: "10%",
- 	width: "85%",
- 	height: Ti.UI.SIZE,
- 	font:{fontSize:14,fontWeight:'bold'},
- 	color: "white",
-	bottom: 20,
-	borderRadius: 10
 }

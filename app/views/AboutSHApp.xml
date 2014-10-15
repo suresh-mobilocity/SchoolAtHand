@@ -1,5 +1,5 @@
 <Alloy>
     <Window id="aboutWindow">
-        <WebView id="content" url="/aboutshapp.html" />
+        <WebView id="aboutView" url="/aboutshapp.html" />
     </Window>
 </Alloy>

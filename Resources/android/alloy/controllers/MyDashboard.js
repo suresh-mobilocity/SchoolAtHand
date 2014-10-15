@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function getEventsFromDistrictCalendarAsTableRows(school) {
         var rdata = [];
@@ -8,7 +17,7 @@ function Controller() {
             scode = sqlRS.fieldByName("shortname");
             sqlRS.close();
         }
-        var eventsQuery = "SELECT strftime('%m/%d', eventdate) as eventdate , strftime('%w', eventdate) as weekday, eventdescription from districtcalendar where schoolcode like '" + scode.toUpperCase() + "' " + " and eventdate between date('now') and date('now', '+7 day')" + " UNION SELECT strftime('%m/%d', eventdate) as eventdate , strftime('%w', eventdate) as weekday, eventdescription from districtcalendar where schoolcode like ''" + " and eventdate between date('now') and date('now', '+7 day')" + " order by 1";
+        var eventsQuery = "SELECT strftime('%m/%d', eventdate) as eventdate , strftime('%w', eventdate) as weekday, eventdescription from districtcalendar where schoolcode like '" + scode.toUpperCase() + "'  and eventdate between date('now') and date('now', '+7 day') UNION SELECT strftime('%m/%d', eventdate) as eventdate , strftime('%w', eventdate) as weekday, eventdescription from districtcalendar where schoolcode like '' and eventdate between date('now') and date('now', '+7 day') order by 1";
         Ti.API.info("eventsQuery: " + eventsQuery);
         var eventResults = schoolDB.execute(eventsQuery);
         if (eventResults.getRowCount() > 0) {
@@ -57,8 +66,14 @@ function Controller() {
         return rdata;
     }
     function getTeacherContacts() {
-        var contactsQuery = "SELECT phonenum, emailaddr FROM contacts where name like '%" + teacherName + "%'" + " AND building like '" + school + "%'";
-        Ti.API.info("contacts: " + contactsQuery);
+        var contactsQuery = null;
+        if ("" === teacherName || null === teacherName) {
+            Ti.API.info("teacherName is empty");
+            contactsQuery = "SELECT phone as phonenum, principal_emailaddr as emailaddr FROM schools where name like '%" + school + "%'";
+        } else {
+            Ti.API.info("teacherName is empty" + teacherName);
+            contactsQuery = "SELECT phonenum, emailaddr FROM contacts where name like '%" + teacherName + "%' AND building like '" + school + "%'";
+        }
         var contactResults = schoolDB.execute(contactsQuery);
         if (contactResults.getRowCount() > 0 && contactResults.isValidRow()) {
             teacherPhoneno = contactResults.fieldByName("phonenum");
@@ -69,9 +84,17 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "MyDashboard";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.myProfile = Alloy.createModel("profile");
@@ -110,16 +133,16 @@ function Controller() {
     });
     $.__views.profileView.add($.__views.profileImage);
     $.__views.profileDetailsLabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "black",
         textAlign: "Ti.UI.TEXT_ALIGNMENT_RIGHT",
         verticalAlign: "TEXT_VERTICAL_ALIGNMENT_TOP",
         font: {
             fontSize: 12,
             fontWeight: "bold"
         },
-        color: "black",
         left: 50,
-        width: Ti.UI.SIZE,
-        height: Ti.UI.SIZE,
         id: "profileDetailsLabel"
     });
     $.__views.profileView.add($.__views.profileDetailsLabel);
@@ -135,26 +158,26 @@ function Controller() {
     });
     $.__views.mainView.add($.__views.contactTeacher);
     $.__views.callButton = Ti.UI.createLabel({
+        width: "50",
+        height: "50",
+        color: "#336699",
         font: {
             fontFamily: "AppIcons",
             fontSize: "50dp",
             fontWeight: "normal"
         },
-        color: "#336699",
         backgroundColor: "white",
-        height: "50",
-        width: "50",
         textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
         verticalAlign: Ti.UI.TEXT_VERTICAL_ALIGNMENT_CENTER,
         id: "callButton"
     });
     $.__views.contactTeacher.add($.__views.callButton);
     $.__views.emailButton = Ti.UI.createLabel({
-        left: 25,
-        backgroundColor: "white",
         width: 50,
         height: 50,
         color: "#336699",
+        left: 25,
+        backgroundColor: "white",
         borderRadius: 8,
         font: {
             fontFamily: "AppIcons",
@@ -284,6 +307,8 @@ function Controller() {
     });
     $.__views.announcementsScrollView.add($.__views.districtAnnouncementsView);
     $.__views.districtAnnouncementsLabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
         color: "red",
         left: 5,
         font: {
@@ -310,7 +335,7 @@ function Controller() {
     var school = myProfile.get("school");
     var grade = myProfile.get("grade");
     var teacherName = myProfile.get("teacher");
-    $.profileDetailsLabel.text = myProfile.get("name") + "\n" + grade + "\n" + school + "\n" + "Teacher: " + teacherName;
+    $.profileDetailsLabel.text = myProfile.get("name") + "\n" + grade + "\n" + school + "\nTeacher: " + teacherName;
     $.callButton.text = Alloy.Globals.icons["phone"];
     $.emailButton.text = Alloy.Globals.icons["envelope_alt"];
     var eventsList = getEventsFromDistrictCalendarAsTableRows(school);

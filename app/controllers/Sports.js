@@ -2,7 +2,7 @@ var args = arguments[0] || {};
 
 $.parentController = args.parentTab;
 $.sportsWindow.title = "District Sports";
-
+var _admobview = require("admobview");
 
 function loadSportsView(){
 var rdata=[];
@@ -16,13 +16,13 @@ var rowId = 0;
 		{
 			var row = Ti.UI.createTableViewRow({
 							layout: "vertical",
-							borderColor: "white",
-							borderWidth: 4,
+							//borderColor: "white",
+							//borderWidth: 4,
 							height: 80,
 							left: "1%",
 							width: "98%",
 							color: "white",
-							backgroundColor: '#336699',
+							//backgroundColor: '#336699',
 							category: sqlRS.fieldByName('category'),
 							url:  sqlRS.fieldByName('website')
 						});
@@ -36,7 +36,7 @@ var rowId = 0;
 									left: "10%",
 									width: "60%",
 									height: Ti.UI.SIZE,
-									backgroundColor: '#336699',
+									//backgroundColor: '#336699',
 									color: "white",
 									font: {
 										fontSize: 24,
@@ -62,13 +62,23 @@ var rowId = 0;
 		}
 		sqlRS.close();
 	}
-		var sportsTableView = Titanium.UI.createTableView({data: rdata, separatorColor: '#000000', top: 0 , left: 0, layout: 'vertical'});
+		var sportsTableView = Titanium.UI.createTableView({data: rdata, 
+								separatorColor: '#336699', 
+								top: 0 , 
+								left: 0, 
+								layout: 'vertical',
+								height: "90%",
+								backgroundColor: '#33B5E5'});
 		
 		sportsTableView.addEventListener('click', function(e) {
 			displaySportsPage ( e.rowData.title, e.rowData.url);
 		});
 		
 		$.sportsWindow.add(sportsTableView);
+		if ( Ti.App.Properties.getBool("DisplayAds")) {
+			adMobView = _admobview.getaddview();
+			$.sportsWindow.add(adMobView);
+		}
 }
 
 function getSportsURL(catergory) {

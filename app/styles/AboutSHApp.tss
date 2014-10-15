@@ -1,3 +1,6 @@
 ".container": {
 	backgroundColor: "white"
 }
+"#aboutView[platform=android]": {
+	softKeyboardOnFocus: Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
+}

@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function loadSportsView() {
         var rdata = [];
@@ -7,13 +16,10 @@ function Controller() {
             while (sqlRS.isValidRow()) {
                 var row = Ti.UI.createTableViewRow({
                     layout: "vertical",
-                    borderColor: "white",
-                    borderWidth: 4,
                     height: 80,
                     left: "1%",
                     width: "98%",
                     color: "white",
-                    backgroundColor: "#336699",
                     category: sqlRS.fieldByName("category"),
                     url: sqlRS.fieldByName("website")
                 });
@@ -27,7 +33,6 @@ function Controller() {
                     left: "10%",
                     width: "60%",
                     height: Ti.UI.SIZE,
-                    backgroundColor: "#336699",
                     color: "white",
                     font: {
                         fontSize: 24,
@@ -58,15 +63,21 @@ function Controller() {
         }
         var sportsTableView = Titanium.UI.createTableView({
             data: rdata,
-            separatorColor: "#000000",
+            separatorColor: "#336699",
             top: 0,
             left: 0,
-            layout: "vertical"
+            layout: "vertical",
+            height: "90%",
+            backgroundColor: "#33B5E5"
         });
         sportsTableView.addEventListener("click", function(e) {
             displaySportsPage(e.rowData.title, e.rowData.url);
         });
         $.sportsWindow.add(sportsTableView);
+        if (Ti.App.Properties.getBool("DisplayAds")) {
+            adMobView = _admobview.getaddview();
+            $.sportsWindow.add(adMobView);
+        }
     }
     function displaySportsPage(title, url) {
         var args_t = {
@@ -78,13 +89,21 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "Sports";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.sportsWindow = Ti.UI.createWindow({
-        backgroundColor: "white",
+        backgroundColor: "#33B5E5",
         id: "sportsWindow"
     });
     $.__views.sportsWindow && $.addTopLevelView($.__views.sportsWindow);
@@ -93,6 +112,7 @@ function Controller() {
     var args = arguments[0] || {};
     $.parentController = args.parentTab;
     $.sportsWindow.title = "District Sports";
+    var _admobview = require("admobview");
     loadSportsView();
     _.extend($, exports);
 }

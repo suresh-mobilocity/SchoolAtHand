@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function sendFeedback() {
         var emailDialog = Ti.UI.createEmailDialog();
@@ -5,11 +14,23 @@ function Controller() {
         emailDialog.toRecipients = [ "mobilocityinc@gmail.com" ];
         emailDialog.open();
     }
-    function displayHelp() {}
+    function displayHelp(e) {
+        var args_t = {
+            parentTab: e,
+            wintitle: "User Guide",
+            url: "/help_ios.html"
+        };
+        e.open(Alloy.createController("ViewWebSite", args_t).getView());
+    }
     function displayAboutSH(e) {
         e.open(Alloy.createController("AboutSHApp", {
             parentTab: e
         }).getView());
+    }
+    function ReferToFriend() {
+        var emailDialog = Ti.UI.createEmailDialog();
+        emailDialog.subject = "Try School@Hand Mobile App I like it";
+        emailDialog.open();
     }
     function displayOptions(e) {
         e.open(Alloy.createController("ChangeSettings", {
@@ -106,6 +127,7 @@ function Controller() {
             backgroundColor: "orange",
             borderRadius: 8,
             color: "white",
+            style: true && 480 == Ti.Platform.displayCaps.platformHeight ? Ti.UI.iPhone.SystemButtonStyle.PLAIN : "",
             textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
         });
         notificationCenterButton.addEventListener("click", function() {
@@ -118,54 +140,59 @@ function Controller() {
         headerView.add(notificationCenterButton);
         recentNotificationsView.add(headerView);
         if (Ti.App.Properties.hasProperty("ACSDeviceToken")) {
-            if (notificationCount > 0) while (notificationCount > rowId && 2 > rowId) {
-                var datetime = notificationCollection.at(rowId).get("datetime");
-                var message = notificationCollection.at(rowId).get("message");
-                Ti.API.info("datetime: " + datetime);
-                Ti.API.info("message: " + message);
-                var notificationIcon = Ti.UI.createImageView({
-                    left: 5,
-                    image: "images/push_msg_icon.png",
-                    height: 32,
-                    width: 32
+            if (notificationCount > 0) {
+                while (notificationCount > rowId && 2 > rowId) {
+                    var datetime = notificationCollection.at(rowId).get("datetime");
+                    var message = notificationCollection.at(rowId).get("message");
+                    var notificationIcon = Ti.UI.createImageView({
+                        left: 5,
+                        image: "images/push_msg_icon.png",
+                        height: 32,
+                        width: 32
+                    });
+                    var messageView = Ti.UI.createView({
+                        height: Ti.UI.SIZE,
+                        width: Ti.UI.FILL,
+                        borderColor: "white",
+                        borderWidth: 1
+                    });
+                    var datetimeLabel = Ti.UI.createLabel({
+                        top: 0,
+                        left: 50,
+                        text: datetime,
+                        font: {
+                            fontSize: 14,
+                            fontWeight: "normal"
+                        },
+                        height: 30,
+                        width: Ti.UI.SIZE,
+                        color: "blue",
+                        textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+                    });
+                    var messageLabel = Ti.UI.createLabel({
+                        top: 32,
+                        left: 50,
+                        text: message,
+                        font: {
+                            fontSize: 14,
+                            fontWeight: "normal"
+                        },
+                        height: 30,
+                        width: Ti.UI.SIZE,
+                        color: "blue",
+                        textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
+                    });
+                    messageView.add(notificationIcon);
+                    messageView.add(datetimeLabel);
+                    messageView.add(messageLabel);
+                    recentNotificationsView.add(messageView);
+                    rowId++;
+                }
+                recentNotificationsView.addEventListener("click", function() {
+                    $.dashboardTab.open(Alloy.createController("Notifications", {
+                        parentTab: $.dashboardTab
+                    }).getView());
                 });
-                var messageView = Ti.UI.createView({
-                    height: Ti.UI.SIZE,
-                    width: Ti.UI.FILL,
-                    borderColor: "white",
-                    borderWidth: 1
-                });
-                var datetimeLabel = Ti.UI.createLabel({
-                    top: 0,
-                    left: 50,
-                    text: datetime,
-                    font: {
-                        fontSize: 14,
-                        fontWeight: "normal"
-                    },
-                    height: 30,
-                    width: Ti.UI.SIZE,
-                    color: "blue",
-                    textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-                });
-                var messageLabel = Ti.UI.createLabel({
-                    top: 32,
-                    left: 50,
-                    text: message,
-                    font: {
-                        fontSize: 14,
-                        fontWeight: "normal"
-                    },
-                    height: 30,
-                    width: Ti.UI.SIZE,
-                    color: "blue",
-                    textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT
-                });
-                messageView.add(notificationIcon);
-                messageView.add(datetimeLabel);
-                messageView.add(messageLabel);
-                recentNotificationsView.add(messageView);
-                rowId++;
             }
         } else {
             recentNotificationsView.add(notRegisteredLabel);
@@ -182,6 +209,7 @@ function Controller() {
                 backgroundColor: "orange",
                 borderRadius: 8,
                 color: "white",
+                style: true && 480 == Ti.Platform.displayCaps.platformHeight ? Ti.UI.iPhone.SystemButtonStyle.PLAIN : "",
                 textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER
             });
             signupButton.addEventListener("click", function() {
@@ -234,22 +262,22 @@ function Controller() {
             height: Ti.UI.SIZE,
             width: "100%"
         });
-        var mdata = JSON.parse('{ "address1": "341 black horse lane", "city": "North Brunswick", "name": "district office" }');
-        Ti.API.info("My Data" + mdata.name + mdata.address1 + mdata.city);
         var distPhone = Ti.UI.createButton({
             top: "5%",
             left: "5%",
             color: "white",
-            backgroundColor: "#33B5E5",
-            width: Ti.UI.SIZE,
-            height: Ti.UI.SIZE,
+            backgroundColor: "orange",
+            width: 40,
+            height: 40,
+            borderRadius: 8,
             font: {
                 fontFamily: "AppIcons",
                 fontSize: "40dp"
             },
             title: Alloy.Globals.icons.phone,
             textAlign: "center",
-            data: getDistrictPhone()
+            data: getDistrictPhone(),
+            style: true && 480 == Ti.Platform.displayCaps.platformHeight ? Ti.UI.iPhone.SystemButtonStyle.PLAIN : ""
         });
         distPhone.addEventListener("click", function(e) {
             Ti.Platform.openURL("tel:" + e.source.data);
@@ -258,16 +286,18 @@ function Controller() {
             top: "5%",
             left: "15%",
             color: "white",
-            backgroundColor: "#33B5E5",
-            width: Ti.UI.SIZE,
-            height: Ti.UI.SIZE,
+            backgroundColor: "orange",
+            width: 40,
+            height: 40,
+            borderRadius: 8,
             font: {
                 fontFamily: "AppIcons",
                 fontSize: "40dp"
             },
             title: Alloy.Globals.icons.globe_alt,
             textAlign: "center",
-            data: getDistrictWebSiteUrl()
+            data: getDistrictWebSiteUrl(),
+            style: true && 480 == Ti.Platform.displayCaps.platformHeight ? Ti.UI.iPhone.SystemButtonStyle.PLAIN : ""
         });
         distWeb.addEventListener("click", function(e) {
             var args_t = {
@@ -282,19 +312,20 @@ function Controller() {
             bottom: "2%",
             color: "white",
             left: "15%",
-            backgroundColor: "#33B5E5",
-            width: Ti.UI.SIZE,
-            height: Ti.UI.SIZE,
+            backgroundColor: "orange",
+            borderRadius: 8,
+            width: 40,
+            height: 40,
             font: {
                 fontFamily: "AppIcons",
                 fontSize: "40dp"
             },
             title: Alloy.Globals.icons.direction,
             textAlign: "center",
+            style: true && 480 == Ti.Platform.displayCaps.platformHeight ? Ti.UI.iPhone.SystemButtonStyle.PLAIN : "",
             data: JSON.parse(getDistOfficeLocation())
         });
         distLocationButton.addEventListener("click", function(e) {
-            Ti.API.info("Inside the distlocationbutton event listener " + e.source.data);
             var mapController = Alloy.createController("MapDetail", {
                 data: e.source.data
             });
@@ -313,12 +344,11 @@ function Controller() {
         var splitStr = cityandstate.split(" - ");
         var city = splitStr[0];
         var state = splitStr[1];
-        var _weatherController = require("weatherview");
-        var weatherView = _weatherController.fillWeatherReport(city, state);
+        var weatherController = require("weatherview");
+        var weatherView = weatherController.fillWeatherReport(city, state);
         return weatherView;
     }
     function selectSchoolDistrict() {
-        Ti.API.info("Calling Select School District View");
         $.dashboardTab.open(Alloy.createController("SelectSchoolDistrict", {
             parentTab: $.dashboardTab
         }).getView());
@@ -346,35 +376,23 @@ function Controller() {
             }
         }, function(e) {
             if (e.success) {
-                for (var i = 0; e.files.length > i; i++) {
-                    var file = e.files[i];
-                    Ti.API.info("id: " + file.id + "\n" + "name: " + file.name + "\n" + "updated_at: " + file.updated_at);
+                for (var i = 0; i < e.files.length; i++) {
+                    e.files[i];
                 }
-                Ti.API.info("db version installed: " + Ti.App.Properties.getString("dbversion"));
-                Ti.API.info("db version on the server: " + e.files[0].updated_at);
-                if (Ti.App.Properties.getString("dbversion") == e.files[0].updated_at) Ti.API.info("UPDATES| Database is upto date"); else {
-                    Ti.API.info("UPDATES| Found updated DB, downloading and installing new database");
+                if (Ti.App.Properties.getString("dbversion") == e.files[0].updated_at) ; else {
                     updateDBProgress = Alloy.createController("ProgressIndicator", {
                         message: "Checking for updates.."
                     }).getView();
                     updateDBProgress.open();
                     var databaseDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "databases");
-                    if (!databaseDir.exists()) {
-                        Ti.API.info("UPDATES| Directory not exists:" + databaseDir.getNativePath());
-                        databaseDir.createDirectory();
-                    }
+                    databaseDir.exists() || databaseDir.createDirectory();
                     var databaseFile = Ti.Filesystem.getFile(databaseDir.resolve(), "schooldatabase.sqlite");
                     var xhr = Ti.Network.createHTTPClient();
                     xhr.onload = function() {
                         databaseFile.write(this.responseData);
                         updateDBProgress.fireEvent("close");
-                        true === databaseFile.exists() && Ti.API.info("UPDATES| schooldatabase.sqlite file has been downloaded " + databaseFile.getNativePath() + "Size:" + databaseFile.getSize());
-                        if (schoolDB) {
-                            schoolDB.remove();
-                            Ti.API.info("Removed old instance of schoolDB");
-                        }
+                        schoolDB && schoolDB.remove();
                         schoolDB = Ti.Database.install(databaseFile.getNativePath(), "schoolDBDownloaded");
-                        Ti.API.info("UPDATES| New version of schooldatabase is installed successfully");
                         Ti.App.Properties.setString("dbversion", e.files[0].updated_at);
                         updateContacts();
                         updateSchools();
@@ -383,7 +401,7 @@ function Controller() {
                     xhr.open("GET", e.files[0].url);
                     xhr.send();
                 }
-            } else Ti.API.info("Error: in querying supported schools :\n" + (e.error && e.message || JSON.stringify(e)));
+            }
         });
         updateDBProgress = null;
         return true;
@@ -411,17 +429,14 @@ function Controller() {
             top: "30%",
             height: "30%",
             width: "95%",
-            backgroundColor: "white",
+            backgroundColor: "transparent",
             borderRadius: 8
         });
         var numberOfProfiles = profileCollection.length;
         if (numberOfProfiles > 0) {
-            if (Ti.App.Properties.hasProperty("noUserProfilesLabelSet")) {
-                Ti.App.Properties.removeProperty("noUserProfilesLabelSet");
-                $.dashboardMain.remove($.dashboardMainView);
-            }
+            Ti.App.Properties.hasProperty("noUserProfilesLabelSet") && Ti.App.Properties.removeProperty("noUserProfilesLabelSet");
             var rowId = 0;
-            while (profileCollection.length > rowId) {
+            while (rowId < profileCollection.length) {
                 var pSelected = profileCollection.at(rowId);
                 var profileid = pSelected.get("profile_id");
                 var url = pSelected.get("url");
@@ -429,16 +444,16 @@ function Controller() {
                     top: 5,
                     left: 5,
                     layout: "vertical",
-                    backgroundColor: "#33B5E5",
+                    backgroundColor: "white",
                     height: Ti.UI.SIZE,
-                    width: Ti.UI.SIZE,
+                    width: 480 == Ti.Platform.displayCaps.platformHeight ? 90 : 110,
                     borderRadius: 8,
                     id: profileid
                 });
                 var profileImage = Ti.UI.createImageView({
                     top: 5,
-                    height: 100,
-                    width: 100,
+                    height: 480 == Ti.Platform.displayCaps.platformHeight ? 80 : 100,
+                    width: 480 == Ti.Platform.displayCaps.platformHeight ? 80 : 100,
                     image: url,
                     autorotate: true,
                     id: profileid
@@ -457,7 +472,6 @@ function Controller() {
                 profileView.add(profileImage);
                 profileView.add(profileName);
                 profileImage.addEventListener("click", function(e) {
-                    Ti.API.info("Profile Selected :" + e.source.id);
                     var detailController = Alloy.createController("MyDashboard", {
                         parentTab: $.dashboardTab,
                         $model: e.source.id,
@@ -474,18 +488,26 @@ function Controller() {
                 top: 5,
                 left: 5,
                 layout: "vertical",
-                backgroundColor: "#33B5E5",
+                backgroundColor: "white",
                 height: Ti.UI.SIZE,
-                width: Ti.UI.SIZE,
+                width: 480 == Ti.Platform.displayCaps.platformHeight ? 90 : 110,
                 borderRadius: 8,
                 id: profileid
             });
             var profileImage = Ti.UI.createButton({
                 top: 5,
-                height: 100,
-                width: 100,
+                height: 480 == Ti.Platform.displayCaps.platformHeight ? 80 : 100,
+                width: 480 == Ti.Platform.displayCaps.platformHeight ? 80 : 100,
                 title: "Add Profile",
-                backgroundColor: "gray"
+                font: true && 480 == Ti.Platform.displayCaps.platformHeight ? {
+                    fontSize: 12,
+                    fontWeight: "normal"
+                } : {
+                    fontSize: 14,
+                    fontWeight: "bold"
+                },
+                backgroundColor: "gray",
+                style: true && 480 == Ti.Platform.displayCaps.platformHeight ? Ti.UI.iPhone.SystemButtonStyle.PLAIN : ""
             });
             var profileName = Ti.UI.createLabel({
                 top: 5,
@@ -503,37 +525,49 @@ function Controller() {
             });
             noprofileView.add(profileImage);
             noprofileView.add(profileName);
+            var hintView = Ti.UI.createView({
+                top: 5,
+                left: 10,
+                layout: "vertical",
+                height: 100,
+                width: Ti.UI.SIZE,
+                borderRadius: 8,
+                id: profileid
+            });
+            var hintLabel = Ti.UI.createLabel({
+                top: 5,
+                text: "Profiles help to view events and links specific to a student's class. All data is saved locally on your device",
+                font: {
+                    fontSize: 12,
+                    fontWeight: "normal"
+                },
+                height: Ti.UI.SIZE,
+                width: 180,
+                color: "black"
+            });
+            hintView.add(hintLabel);
             scrollView.add(noprofileView);
+            scrollView.add(hintView);
             $.dashboardMainView.add(scrollView);
             Ti.App.Properties.setString("noUserProfilesLabelSet", "true");
-            noProfileLabel = true;
         }
-        if (Ti.App.Properties.hasProperty("ACS-StoredSessionId") && null != Ti.App.Properties.getString("ACS-StoredSessionId")) {
-            Ti.API.info("Found User stored session");
-            Cloud.Users.showMe(function(e) {
-                if (e.success) {
-                    var user = e.users[0];
-                    Ti.API.info("Success:\nid: " + user.id + "\n" + "first name: " + user.first_name + "\n" + "last name: " + user.last_name);
-                    Ti.App.Properties.setBool("LoggedIn", true);
-                } else {
-                    Ti.API.info("User Not Logged In");
-                    Ti.App.Properties.setBool("LoggedIn", false);
+        Ti.App.Properties.hasProperty("ACS-StoredSessionId") && null != Ti.App.Properties.getString("ACS-StoredSessionId") ? Cloud.Users.showMe(function(e) {
+            if (e.success) {
+                {
+                    e.users[0];
                 }
-            });
-        } else {
-            Ti.App.Properties.setBool("LoggedIn", false);
-            Ti.API.info("User Not Logged In");
-        }
+                Ti.App.Properties.setBool("LoggedIn", true);
+            } else Ti.App.Properties.setBool("LoggedIn", false);
+        }) : Ti.App.Properties.setBool("LoggedIn", false);
         $.dashboardMainView.add(getNotificationsView());
+        $.dashboardMain.setVisible(true);
     }
     function updateContacts() {
         var sql = "SELECT * FROM contacts";
         Alloy.Globals.contacts.deleteAll();
-        Ti.API.info(" updating contacts collections");
         var tmpRS = schoolDB.execute(sql);
         if (tmpRS.getRowCount() > 0) {
             while (tmpRS.isValidRow()) {
-                Ti.API.info("Found " + tmpRS.getRowCount() + "of contacts");
                 var fid = tmpRS.fieldByName("id");
                 var fname = tmpRS.fieldByName("name");
                 var ftitle = tmpRS.fieldByName("title");
@@ -563,10 +597,8 @@ function Controller() {
         var sql = "SELECT * FROM schools";
         Alloy.Globals.school.config.columns;
         Alloy.Globals.school.deleteAll();
-        Ti.API.info(" updating contacts collections");
         var tmpRS = schoolDB.execute(sql);
         if (tmpRS.getRowCount() > 0) {
-            Ti.API.info("Number of fields in Resultset " + tmpRS.getFieldCount());
             while (tmpRS.isValidRow()) {
                 var newSchool = Alloy.createModel("school", {
                     earlyreleasehours: tmpRS.fieldByName("earlyreleasehours"),
@@ -603,7 +635,29 @@ function Controller() {
         }
     }
     function registerNotificationCallbacks() {
-        Ti.API.info("Android Register Push Notification Call back");
+        Ti.Network.registerForPushNotifications({
+            types: [ Ti.Network.NOTIFICATION_TYPE_BADGE, Ti.Network.NOTIFICATION_TYPE_ALERT, Ti.Network.NOTIFICATION_TYPE_SOUND ],
+            success: function(e) {
+                deviceToken = e.deviceToken;
+                Ti.App.Properties.setString("ACSDeviceToken", e.deviceToken);
+            },
+            error: function(e) {
+                alert("Failed to register for push notifications! " + e.error);
+            },
+            callback: function(evt) {
+                alert("Received push: in index.js" + JSON.stringify(evt));
+                var notificationModel = Alloy.createModel("notification", {
+                    datetime: new Date().toLocaleString(),
+                    title: evt.data.title,
+                    message: evt.data.alert,
+                    badge: evt.data.badge
+                });
+                notificationModel.save();
+                notificationCollection.fetch();
+                notificationCollection.trigger("change");
+                notificationCollection.trigger("sync");
+            }
+        });
     }
     function closeMenuWindow() {}
     function destroy() {
@@ -611,18 +665,25 @@ function Controller() {
         $.destroy();
         $.dashboardMain.removeAllChildren();
         $ = null;
-        Ti.API.info("dashboardMain: Cleanup Successfully");
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
-    var __alloyId105 = [];
+    var __alloyId104 = [];
     $.__views.dashboardMain = Ti.UI.createWindow({
-        backgroundColor: "#000",
+        backgroundColor: "#33B5E5",
         id: "dashboardMain",
         title: "Dashboard"
     });
@@ -634,37 +695,39 @@ function Controller() {
     $.__views.dashboardTab = Ti.UI.createTab({
         window: $.__views.dashboardMain,
         id: "dashboardTab",
-        title: "Home"
+        title: "Home",
+        icon: "home.png"
     });
-    __alloyId105.push($.__views.dashboardTab);
-    $.__views.__alloyId106 = Alloy.createController("DistrictTab", {
+    __alloyId104.push($.__views.dashboardTab);
+    $.__views.__alloyId105 = Alloy.createController("DistrictTab", {
+        id: "__alloyId105"
+    });
+    __alloyId104.push($.__views.__alloyId105.getViewEx({
+        recurse: true
+    }));
+    $.__views.__alloyId106 = Alloy.createController("SchoolsTab", {
         id: "__alloyId106"
     });
-    __alloyId105.push($.__views.__alloyId106.getViewEx({
+    __alloyId104.push($.__views.__alloyId106.getViewEx({
         recurse: true
     }));
-    $.__views.__alloyId107 = Alloy.createController("SchoolsTab", {
-        id: "__alloyId107"
+    $.__views.__alloyId108 = Alloy.createController("MyProfiles", {
+        id: "__alloyId108"
     });
-    __alloyId105.push($.__views.__alloyId107.getViewEx({
+    __alloyId104.push($.__views.__alloyId108.getViewEx({
         recurse: true
     }));
-    $.__views.__alloyId109 = Alloy.createController("MyProfiles", {
+    $.__views.__alloyId109 = Alloy.createController("ResourcesTab", {
         id: "__alloyId109"
     });
-    __alloyId105.push($.__views.__alloyId109.getViewEx({
-        recurse: true
-    }));
-    $.__views.__alloyId110 = Alloy.createController("ResourcesTab", {
-        id: "__alloyId110"
-    });
-    __alloyId105.push($.__views.__alloyId110.getViewEx({
+    __alloyId104.push($.__views.__alloyId109.getViewEx({
         recurse: true
     }));
     $.__views.tabGroup = Ti.UI.createTabGroup({
         navBarHidden: true,
-        tabs: __alloyId105,
-        id: "tabGroup"
+        tabs: __alloyId104,
+        id: "tabGroup",
+        backgroundColor: "#00FFFF"
     });
     $.__views.tabGroup && $.addTopLevelView($.__views.tabGroup);
     exports.destroy = function() {};
@@ -677,6 +740,7 @@ function Controller() {
             curve: Ti.UI.ANIMATION_CURVE_EASE_IN
         });
         isMenuWindowOpen = false;
+        $.tabGroup.remove(disableTabsImage);
         switch (true) {
           case "SignIn" === menuOptionsEvent.rowData.title:
             $.tabGroup.activeTab.open(Alloy.createController("login_form", {
@@ -697,7 +761,7 @@ function Controller() {
             break;
 
           case "Help" === menuOptionsEvent.rowData.title:
-            displayHelp();
+            displayHelp($.tabGroup.activeTab);
             break;
 
           case "About" === menuOptionsEvent.rowData.title:
@@ -706,17 +770,20 @@ function Controller() {
 
           case "Privacy Policy" === menuOptionsEvent.rowData.title:
             displayDisclaimerSigned($.tabGroup.activeTab);
+            break;
+
+          case "Refer to a friend" === menuOptionsEvent.rowData.title:
+            ReferToFriend($.tabGroup.activeTab);
         }
     });
     $.tabGroup.addEventListener("open", function() {
-        Ti.API.info("Inside TabGroup open IOS");
         var menuButton = Ti.UI.createButton({
-            title: "Menu",
-            toggle: false
+            toggle: false,
+            image: "menu.png"
         });
         $.dashboardMain.setLeftNavButton(menuButton);
         menuButton.addEventListener("click", function(e) {
-            if (true == e.source.toggle) {
+            if (true == isMenuWindowOpen) {
                 menuWindow.close();
                 $.tabGroup.activeTab.getWindow().animate({
                     left: 0,
@@ -763,6 +830,11 @@ function Controller() {
                     height: 50,
                     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
                     color: "black"
+                }, {
+                    title: "Refer to a friend",
+                    height: 50,
+                    textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
+                    color: "black"
                 } ];
                 menuOptionsTable.data = menuOptions;
                 menuWindow.add(menuOptionsTable);
@@ -772,30 +844,30 @@ function Controller() {
             }
         });
     });
-    $.dashboardMain.addEventListener("open", function() {
+    $.dashboardMain.addEventListener("open", function() {});
+    $.dashboardMain.addEventListener("focus", function() {
         Ti.App.Properties.hasProperty("AppDisclaimerAccepted") && "false" != Ti.App.Properties.getString("AppDisclaimerAccepted") || displayDisclaimer();
         if ("true" == Ti.App.Properties.getString("AppDisclaimerAccepted")) {
             Ti.App.Properties.hasProperty("UserSchoolDistrict") || selectSchoolDistrict();
             if (Ti.App.Properties.hasProperty("UserSchoolDistrict") && Ti.App.Properties.hasProperty("dbinstalled") && checkandupdateDb()) {
-                isTabsDisabledTabs && $.tabGroup.remove(disableTabsImage);
+                if (isTabsDisabledTabs) {
+                    $.tabGroup.remove(disableTabsImage);
+                    isTabsDisabledTabs = false;
+                }
                 openDashboard();
             }
         }
     });
     $.dashboardTab.addEventListener("close", function() {
-        Ti.API.info("DashboardTab| Received close event");
         $.tabGroup.fireEvent("close");
     });
     $.dashboardTab.addEventListener("click", function() {
         closeMenuWindow();
     });
     $.dashboardTab.addEventListener("close", destroy);
-    $.tabGroup.addEventListener("close", function() {
-        Ti.API.info("closing the App");
-    });
+    $.tabGroup.addEventListener("close", function() {});
     registerNotificationCallbacks();
-    Ti.App.addEventListener("close", function(e) {
-        Ti.API.info("MAIN| Exiting the App: " + e.message);
+    Ti.App.addEventListener("close", function() {
     });
     tabGroupGlobalReference = $.tabGroup;
     $.tabGroup.open();

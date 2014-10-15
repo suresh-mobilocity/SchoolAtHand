@@ -12,6 +12,8 @@
 			<Button id="photoButton"></Button>
 			<Button id="deleteButton"></Button>
 		</View>
+		<!--
 		<View ns="Admob" id="adView" />
+		-->
 	</Window>
 </Alloy>

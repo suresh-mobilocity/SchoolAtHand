@@ -11,14 +11,13 @@ function dofilter(_collection) {
             });
 }
 
-function dataTransformation(_model) {
-	//Ti.API.info('Inside the dataTransformation()' + _model.get('name') + _model.get('city') + _model.get('address1') + _model.get('phone)'));
-    //Ti.API.info('Inside the map event listener 1 ' + _model.attributes.longitude + _model.attributes.name);
+function dataTransformation(_model) { 
     return {
         imagefile: Ti.Filesystem.applicationDataDirectory  +"/images" + "/" + _model.attributes.imagefile,
         logofile: Ti.Filesystem.applicationDataDirectory + "/images" + "/" + _model.attributes.logofile,
     };
 }
+
 function destroy(){
 	$.schoolsListWindow.removeEventListener('close', destroy);
 	schollCollection = null;
@@ -39,13 +38,13 @@ $.schoolsTableView.addEventListener('click',function(e) {
     		$.parentController.open(Alloy.createController('SchoolDetail', args_t ).getView());
 });
 
-
 // 
 switch (args.schoolType) {
 	case "E": 
 			$.schoolsListWindow.title = "Elementary Schools";
 			break;
 	case "M": 
+			Ti.API.info("Inside Schools.js");
 			$.schoolsListWindow.title = "Middle Schools";
 			break;
 	case "H": 

@@ -61,7 +61,7 @@ function destroy(){
     $.destroy();
     $.detailWindow.removeAllChildren();
     $ = null;
-    //Ti.API.info("SchoolDetails: Cleanup Successfully");
+    Ti.API.info("SchoolDetails: Cleanup Successfully");
 }
 
 $.parentController = args.parentTab;

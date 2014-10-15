@@ -1,0 +1,36 @@
+"#row": {
+	backgroundColor: "#fff",
+	//height: '70dp',
+    height: Ti.UI.SIZE,
+    className: 'itemRow',
+    hasChild: true
+} 
+"#image": {
+ height: '42dp',
+ width: '68dp',
+ left: '5dp',
+ top: '3dp',
+ touchEnabled: false
+}
+"#title": {
+    height: '70dp',
+    font: {
+        fontSize: '16dp'
+    },
+    color: '#000',
+    left: '10dp',
+    right: '5dp',
+    touchEnabled: false
+}
+"#date": {
+    height: Ti.UI.SIZE,
+    width: Ti.UI.SIZE,
+    left: '10dp',
+    top: '5dp',
+    color: 'blue',
+    font: {
+        fontSize: '12dp'
+    },
+    textAlign: 'center',
+    touchEnabled: false
+}

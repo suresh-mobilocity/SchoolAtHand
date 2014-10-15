@@ -5,3 +5,6 @@
 		title:"Disclaimer",
 		layout:'vertical'	
 }
+"#webSiteView[platform=android]" : {
+	softKeyboardOnFocus: Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
+}

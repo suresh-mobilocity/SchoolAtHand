@@ -1,13 +1,15 @@
 <Alloy>
-	<TabGroup id="tabGroup">
-		<Tab id="dashboardTab" title="Home">
+	<TabGroup id="tabGroup" backgroundColor="#00FFFF">
+		<Tab id="dashboardTab" title="Home" icon="home.png">
 				<Window id="dashboardMain" title= "Dashboard">			
 					<View id="dashboardMainView" backgroundColor="#33B5E5"/>
 				</Window>   
 		</Tab>
+		<!--
 		<Require src="DistrictTab" />
-		<Require src="SchoolsTab">
+		<Require src="SchoolsTab" />
 		<Require src="MyProfiles" />
-		<Require src="ResourcesTab">
+		<Require src="ResourcesTab" />
+		-->
 	</TabGroup>
 </Alloy>

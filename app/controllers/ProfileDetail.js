@@ -1,5 +1,4 @@
 var args = arguments[0] || {};
-
 $.parentController = args.parentTab;
 
 $.profileDetail = _.extend({}, $.profileDetail, {
@@ -7,12 +6,13 @@ $.profileDetail = _.extend({}, $.profileDetail, {
         return dataTransformation(this);
     }
 });
-
-
+if ( Ti.App.Properties.getBool("DisplayAds")) {
+	var _admobview = require("admobview");
+	var adMobView = _admobview.getaddview();
+	$.detailWindow.add(adMobView);
+}
 //Ti.API.info('data attributes passed:' + args.data.attributes);
 $.profileDetail.set(args.data.attributes);
-
-
 function dataTransformation(_model) {
 	//Ti.API.info (_model.attributes.profile_id + ":" + _model.attributes.name + ":" + _model.attributes.grade);
     return {
@@ -25,7 +25,6 @@ function dataTransformation(_model) {
 		image : _model.attributes.url || '/images/profile.png'
     };
 }
-
 // save a photo to associate with the captured person
 $.photoButton.addEventListener('click', function(_e) {
  	//Ti.API.info('Adding Photo');

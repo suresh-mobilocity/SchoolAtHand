@@ -1,7 +1,11 @@
 var args = arguments[0] || {};
 
 var parentController = args.parentTab;
-
+var _admobview = require("admobview");
+var adMobView = _admobview.getaddview();
+if ( Ti.App.Properties.getBool("DisplayAds")) {
+		$.resourcesWindow.add(adMobView);
+}
 function displayTransportation(e){
 	$.resourcesTab.open(Alloy.createController('Transportation', {parentTab: $.resourcesTab}).getView());
 }

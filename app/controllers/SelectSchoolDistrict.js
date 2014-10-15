@@ -2,6 +2,11 @@ var args = arguments[0] || {};
 var selectedSchoolDistrict = null;
 var dbUrl = null;
 var dbLastUpdated = null;
+var supportedSchools = Titanium.UI.createTableView({width: "90%", top: "20%", 
+					   height: Ti.UI.SIZE, 
+            	       borderColor:'gray' ,
+            		   separatorColor: '#000000',
+            		   borderWidth: 2 });
 //var Compression = require('ti.compression');
 //var retrivingSchoolsProgress = Alloy.createController('ProgressIndicator', {message: 'Getting List of Schools'}).getView();
 function getSupportedSchoolsTableRows(e)
@@ -19,33 +24,45 @@ function getSupportedSchoolsTableRows(e)
 	                var filenameExt = filenameParts[1];
 	                var filename = filenameParts[0];
 	                if ( filenameExt === "db") {
+	                	 var data = {filename: filename , fileurl: file.url, fileid: file.id, lastupdated: file.updated_at};
 				         var row = Ti.UI.createTableViewRow({
 											layout: "vertical",
 											left: "1%",
 											height: 80,
 											width: "98%",
-											backgroundColor: "#336699",
+											//backgroundColor: "#336699",
 											borderWidth: 8,
-											borderColor: "gray"
+											color: "black",
+										//	selectedBackgroundColor: (OS_IOS) ? "#336699" : 
+										//	selectedColor: "white",
+											borderColor: "gray",
+											data: data,
+											hasCheck: false,
+											//touchEnabled: false,
+											//bubbleParent: false	
 										});
 						var recView = Ti.UI.createView({
 											layout: "hoizontal",
 											top: 0,
 											left: 0,
 											height: Ti.UI.SIZE,
-											width: Ti.UI.SIZE
+											width: Ti.UI.SIZE,
 											//visibile: false
+											touchEnabled: false
 										});
 						var districtName = Ti.UI.createLabel({
 											top: 0,
 											text: filename,
-											textAlight:  Ti.UI.TEXT_ALIGNMENT_LEFT,
-											left: 100,
+											textAlight:  Ti.UI.TEXT_ALIGNMENT_CENTER,
+											left: "4%",
 											height: 80,
-											width: Ti.UI.SIZE,
+											width: "96%",
 											font: {fontSize:16,fontWeight:'bold'},
-											color: "white"
+											//color: "white"
+											color: "black",
+											touchEnabled: (OS_ANDROID) ? false : true
 										});
+						/*
 						var selectionSwitch = Ti.UI.createSwitch({
 					  							 top: 0,
 					  							 textAlign:Ti.UI.TEXT_ALIGNMENT_CENTER,
@@ -63,16 +80,23 @@ function getSupportedSchoolsTableRows(e)
 								selectionSwitch.setStyle(Ti.UI.Android.SWITCH_STYLE_CHECKBOX);
 						}
 						selectionSwitch.addEventListener('change',function(e){
+						
 										 if( e.value) {
 										 	//Ti.API.info("INSTALL| User Selected School District: " + e.source.filename);
 										 	selectedSchoolDistrict = e.source.filename;
 										 	dbUrl = e.source.fileurl;
 										 	dbLastUpdated = e.source.lastupdated;
-										 	//Ti.API.info("INSTALL| Database file url: " + e.source.fileurl);	 	
+										 	//Ti.API.info("INSTALL| Database file url: " + e.source.fileurl);
+										 	//$.dialog.show(); 	
+										 	$.buttonNext.show();
+										 	$.buttonExit.hide();
+										 	$.buttonBack.show();
 										 }
-										 $.dialog.show();
+										 //$.dialog.show();
+						
 						});
 						recView.add(selectionSwitch);
+						*/
 						recView.add(districtName);
 						row.add(recView);
 						rowData.push(row);
@@ -167,13 +191,16 @@ function destroy(){
     // unbind any data collection you might have bound to the controller
     $.destroy();
     selectedSchoolDistrict = null;
+    supportedSchools.removeAllChildren();
+    supportedSchools = null;
 	dbUrl = null;
 	dbLastUpdated = null;
 	//retrivingSchoolsProgress = null;
 	// remove the children
     $.selectSchoolDistrict.removeAllChildren();
     $ = null;
-    //Ti.API.info("SelectSchoolDistrict: Cleanup Successfully");
+  //  Ti.API.info("SelectSchoolDistrict: Cleanup Successfully");
+   
 }
 
 
@@ -246,10 +273,57 @@ function unzipAndInstallImageFile(remoteFile)
    			xhr.send();
 }
 
-$.dialog.addEventListener('click', function(e){
-	if ( e.index < 2 )
-	{
-		if ( e.index == 0){
+
+//$.selectSchoolDistrict.open();
+$.selectSchoolDistrict.addEventListener('close', destroy);
+
+//retrivingSchoolsProgress.open();
+$.selectSchoolDistrict.title = "Select Your School District" ;
+Cloud.Files.query({
+    page: 1,
+    per_page: 20
+}, function (e) {
+    if (e.success) {
+           // Ti.API.info('Success:\n' + 'Found Supported Schools, Count: ' + e.files.length);
+            //retrivingSchoolsProgress.close();
+            var rowData = getSupportedSchoolsTableRows(e);  
+            /*
+            var supportedSchools = Titanium.UI.createTableView({data: rowData, width: "90%", top: "20%", 
+            						height: Ti.UI.SIZE, 
+            						borderColor:'gray' ,
+            						separatorColor: '#000000',
+            						borderWidth: 2 });
+            */
+            supportedSchools.setData(rowData);
+            $.selectSchoolDistrict.add(supportedSchools); 
+    } else {
+        //Ti.API.info('INSTALL: Error: in querying supported schools :\n' +  ((e.error && e.message) || JSON.stringify(e)));
+    }
+});
+
+supportedSchools.addEventListener('click', function(e){
+	supportedSchools.touchEnabled = false;
+	supportedSchools.bubbleParent = false;
+	//e.rowData.setBackgroundColor("#336699");
+	//e.rowData.setColor("white");
+	e.row.setBackgroundColor("#336699");
+	e.row.setHasCheck(true);
+	//e.row.setColor("white");
+	if (OS_IOS) { e.source.setColor("white"); }
+	if (OS_ANDROID) {
+		var rows = supportedSchools.data[0].rows;
+		for(x in rows) {
+            rows[x].tochEnabled = false;
+        }
+	}
+	selectedSchoolDistrict = e.rowData.data.filename;
+	dbUrl = e.rowData.data.fileurl;
+	dbLastUpdated = e.rowData.data.lastupdated;
+	Ti.API.info("Selected School District : " + selectedSchoolDistrict + "dbUrl:" + dbUrl + "dbLastUpdated:" + dbLastUpdated );
+	$.buttonNext.show();
+	
+});
+$.buttonNext.addEventListener('click', function(e){
 			 var loadingDBProgress = Alloy.createController('ProgressIndicator', {message: 'Loading configuration for \n' + selectedSchoolDistrict}).getView();
     		 loadingDBProgress.open();
    			 //Ti.API.info("INSTALL| User has selected School District : " + selectedSchoolDistrict);  
@@ -289,34 +363,15 @@ $.dialog.addEventListener('click', function(e){
    				  };
    			xhr.open("GET", dbUrl);
    			xhr.send();
-		}
-		else if ( e.index == 1 )
-		{
-			selectedSchoolDistrict = null;
-			dbUrl = null;
-			dbLastUpdated = null;
-			//Ti.API.info('User wants to exit the App');
-		}
-	}
 	//$.selectSchoolDistrict.close();
 	//parentController.open(Alloy.createController('index').getView());
 });
-//$.selectSchoolDistrict.open();
-$.selectSchoolDistrict.addEventListener('close', destroy);
 
-//retrivingSchoolsProgress.open();
-$.selectSchoolDistrict.title = "Select Your School District" ;
-Cloud.Files.query({
-    page: 1,
-    per_page: 20
-}, function (e) {
-    if (e.success) {
-            //Ti.API.info('Success:\n' + 'Found Supported Schools, Count: ' + e.files.length);
-            //retrivingSchoolsProgress.close();
-            var rowData = getSupportedSchoolsTableRows(e);  
-            var supportedSchools = Titanium.UI.createTableView({data: rowData, width: "90%", top: "20%", height: Ti.UI.SIZE, separatorColor: '#000000'});
-            $.selectSchoolDistrict.add(supportedSchools); 
-    } else {
-        //Ti.API.info('INSTALL: Error: in querying supported schools :\n' +  ((e.error && e.message) || JSON.stringify(e)));
-    }
+$.buttonExit.addEventListener('click', function(e){
+			selectedSchoolDistrict = null;
+			dbUrl = null;
+			dbLastUpdated = null;
+			Ti.App.fireEvent('close', {message: 'SeclectSchoolDistrict Aborted'});
+			$.selectSchoolDistrict.close();
+			// Close the Application
 });

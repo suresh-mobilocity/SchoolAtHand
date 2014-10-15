@@ -21,7 +21,6 @@
 	layout: "vertical",
 	height: "90%"
 },
-
 "#image[platform=ios]" : {
 		height:80,
 		width:60,
@@ -44,6 +43,11 @@
 		borderColor: '#336699',
 		borderRadius: 8
 },
+"#photoButton[if=IS_iPhone4SmallScreen]": {
+    style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+    font:{fontSize:12,fontWeight:'bold'},
+    height: "50dp"
+},
 "#deleteButton" :{
 		title:'Delete  Profile',
 		top:20,
@@ -55,22 +59,28 @@
 		borderColor: '#336699',
 		borderRadius: 8
 },
-"#adView[platform=android]" : {
-	publisherId: "ca-app-pub-3665132116722377/6561150840",
-	bottom: 0
-},
-"#adView[platform=ios]" : {
-	publisherId: "ca-app-pub-3665132116722377/2467198443",
-	height: "10%",
-	bottom: 0
-},
-"#adView": {
-	keywords: "K-12 SAT tutuion education graduation kids student school books science  math toys sports parent teacher cars bikes",
-	testing: false, // default is false
-	adBackgroundColor: "FF8855", // optional
-	backgroundColorTop: "738000", //optional - Gradient background color at top
-	borderColor: "#000000", // optional - Border color
-	textColor: "#000000", // optional - Text color
-	urlColor: "#00FF00", // optional - URL color
-	linkColor: "#0000FF" //optional -  Link text color
+"#deleteButton[if=IS_iPhone4SmallScreen]": {
+	top: 10,
+    style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+    font:{fontSize:12,fontWeight:'bold'},
+    height: "50dp"
 }
+//"#adView[platform=android]" : {
+	//publisherId: "ca-app-pub-3665132116722377/6561150840",
+	//bottom: 0
+//},
+//"#adView[platform=ios]" : {
+	//publisherId: "ca-app-pub-3665132116722377/2467198443",
+	//height: "10%",
+	//bottom: 0
+//},
+//"#adView": {
+	//keywords: "K-12 SAT tutuion education graduation kids student school books science  math toys sports parent teacher cars bikes",
+	//testing: false, // default is false
+	//adBackgroundColor: "FF8855", // optional
+	//backgroundColorTop: "738000", //optional - Gradient background color at top
+	//borderColor: "#000000", // optional - Border color
+	//textColor: "#000000", // optional - Text color
+	//urlColor: "#00FF00", // optional - URL color
+	//linkColor: "#0000FF" //optional -  Link text color
+//}

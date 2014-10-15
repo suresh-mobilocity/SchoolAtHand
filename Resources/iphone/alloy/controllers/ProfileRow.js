@@ -1,9 +1,24 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "ProfileRow";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    var $model = arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        var $model = __processArg(arguments[0], "$model");
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.row = Ti.UI.createTableViewRow({
@@ -12,7 +27,6 @@ function Controller() {
         height: 80,
         className: "loc_row",
         dataId: "",
-        left: "1%",
         borderColor: "white",
         color: "white",
         borderWidth: "8",
@@ -20,18 +34,18 @@ function Controller() {
         model: "undefined" != typeof $model.__transform["profile_id"] ? $model.__transform["profile_id"] : $model.get("profile_id")
     });
     $.__views.row && $.addTopLevelView($.__views.row);
-    $.__views.__alloyId71 = Ti.UI.createView({
+    $.__views.__alloyId72 = Ti.UI.createView({
         layout: "horizontal",
         height: Ti.UI.SIZE,
-        id: "__alloyId71"
+        id: "__alloyId72"
     });
-    $.__views.row.add($.__views.__alloyId71);
+    $.__views.row.add($.__views.__alloyId72);
     $.__views.name = Ti.UI.createLabel({
-        top: 20,
-        left: "10%",
         width: "60%",
         height: Ti.UI.SIZE,
         color: "white",
+        top: 20,
+        left: "10%",
         font: {
             fontSize: 24,
             fontWight: "bold",
@@ -41,8 +55,11 @@ function Controller() {
         id: "name",
         text: "undefined" != typeof $model.__transform["name"] ? $model.__transform["name"] : $model.get("name")
     });
-    $.__views.__alloyId71.add($.__views.name);
+    $.__views.__alloyId72.add($.__views.name);
     $.__views.right_arrow = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#fff",
         top: 20,
         left: 10,
         text: Alloy.Globals.right_arrow,
@@ -50,12 +67,10 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "#fff",
-        width: Ti.UI.SIZE,
         textAlign: "right",
         id: "right_arrow"
     });
-    $.__views.__alloyId71.add($.__views.right_arrow);
+    $.__views.__alloyId72.add($.__views.right_arrow);
     exports.destroy = function() {};
     _.extend($, $.__views);
     _.extend($, exports);

@@ -1,9 +1,24 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "SchoolRow";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    var $model = arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        var $model = __processArg(arguments[0], "$model");
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.row = Ti.UI.createTableViewRow({
@@ -17,18 +32,18 @@ function Controller() {
         hasChild: "true"
     });
     $.__views.row && $.addTopLevelView($.__views.row);
-    $.__views.__alloyId86 = Ti.UI.createView({
+    $.__views.__alloyId89 = Ti.UI.createView({
         height: "50",
-        id: "__alloyId86"
+        id: "__alloyId89"
     });
-    $.__views.row.add($.__views.__alloyId86);
+    $.__views.row.add($.__views.__alloyId89);
     $.__views.schoolBanner = Ti.UI.createImageView({
         width: Ti.UI.FILL,
         height: Ti.UI.FILL,
         id: "schoolBanner",
         image: "undefined" != typeof $model.__transform["logofile"] ? $model.__transform["logofile"] : $model.get("logofile")
     });
-    $.__views.__alloyId86.add($.__views.schoolBanner);
+    $.__views.__alloyId89.add($.__views.schoolBanner);
     exports.destroy = function() {};
     _.extend($, $.__views);
     _.extend($, exports);

@@ -1,6 +1,6 @@
 var args = arguments[0] || {};
 var schoolCollection = Alloy.Collections.school;
-$.parentController = args.parentTab;
+var parentController = args.parentTab;
 function dataTransformation(_model) {
     return {
         imagefile: Ti.Filesystem.applicationDataDirectory  +"/images" + "/" + _model.attributes.imagefile,
@@ -11,13 +11,23 @@ $.schoolsTableView.addEventListener('click',function(e) {
 			//Ti.API.info('Schools Id selected:' + e.rowData.model);
 			
 			var data = JSON.stringify(schoolCollection.get(e.rowData.model));
-			//Ti.API.info('Selected School shorname: ' + JSON.parse(data).shortname);
+			var shortname = JSON.parse(data).shortname;
+			var eventsfeedtype = getEventsFeedType(shortname);
+			var eventsfeedurl = getEventsFeedUrl(shortname);
+			var schoolname = JSON.parse(data).name;
 			var args_t = {
-				parentTab: $.parentController,
-				shortname: JSON.parse(data).shortname,
-				schoolname: JSON.parse(data).name
+				parentTab: parentController,
+				shortname: shortname,
+				eventsfeedtype: eventsfeedtype,
+				rssfeedurl: eventsfeedurl,
+				schoolname: schoolname,
+				title: schoolname
 			};
-			$.parentController.open(Alloy.createController('SchoolEvents', args_t ).getView());
+			if ( getEventsFeedType(shortname) === "RSS"){
+				Alloy.createController('RssMain', args_t ).getView();
+			} else {	
+				parentController.open(Alloy.createController('SchoolEvents', args_t ).getView());
+			}
 });
 function destroy(){
 	$.eventsWindow.removeEventListener('close', destroy);
@@ -26,6 +36,34 @@ function destroy(){
 	$.eventsWindow.removeAllChildren();
 	$ = null;
 	//Ti.API.info("Events| Controller Successfully Cleanedup ");
+}
+function getEventsFeedType(name){
+	var eventsfeedtype = null;
+	var sqlQueryStr = "SELECT eventsfeedtype from schools where shortname like '%" + name+ "%'" ;
+	var queryResults = schoolDB.execute(sqlQueryStr);
+	if ( queryResults.getRowCount() > 0 )
+	{
+		if ( queryResults.isValidRow())
+			{
+				eventsfeedtype= queryResults.fieldByName('eventsfeedtype');
+			}
+	}
+	queryResults.close();
+	return eventsfeedtype;
+}
+function getEventsFeedUrl(name){
+	var eventsfeedurl = null;
+	var sqlQueryStr = "SELECT eventsfeedurl from schools where shortname like '%" + name+ "%'" ;
+	var queryResults = schoolDB.execute(sqlQueryStr);
+	if ( queryResults.getRowCount() > 0 )
+	{
+		if ( queryResults.isValidRow())
+			{
+				eventsfeedurl= queryResults.fieldByName('eventsfeedurl');
+			}
+	}
+	queryResults.close();
+	return eventsfeedurl;
 }
 $.eventsWindow.addEventListener('close',destroy);
 schoolCollection.fetch();

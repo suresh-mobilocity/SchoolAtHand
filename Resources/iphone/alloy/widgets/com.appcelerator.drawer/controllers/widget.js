@@ -4,6 +4,15 @@ function WPATH(s) {
     return path;
 }
 
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function pullTabClick() {
         $._isOpen = !$._isOpen;
@@ -28,9 +37,11 @@ function Controller() {
     this.__widgetId = "com.appcelerator.drawer";
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "widget";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
@@ -80,7 +91,7 @@ function Controller() {
         closeOpacity: .75,
         animationDuration: 500,
         gutter: 0,
-        overrideMenu: true,
+        overrideMenu: false,
         annoy: 0
     };
     $._isOpen = false;
@@ -88,7 +99,7 @@ function Controller() {
     $._params = {};
     $._annoy = false;
     exports.jiggle = function() {
-        if ($._isOpen || !$._params.overrideMenu) return;
+        if ($._isOpen || false) return;
         var animation = require("alloy/animation");
         var chain = [ Ti.UI.createAnimation({
             bottom: -($._params.iconSize + 2 * $._params.gutter) + DRAWER_PULLTAB_HEIGHT,
@@ -103,7 +114,7 @@ function Controller() {
         animation.chainAnimate($.drawer, chain);
     };
     exports.checkEnabled = function() {
-        $._params.overrideMenu && Object.keys($._buttons).forEach(function(key) {
+        Object.keys($._buttons).forEach(function(key) {
             var i = parseInt(key, 10);
             $._buttons[i].enabled && ($._buttons[i].button.enabled = $._buttons[i].enabled());
         });
@@ -111,57 +122,32 @@ function Controller() {
     exports.init = function(args) {
         $._buttons = args.buttons;
         $._params = _.defaults(args, defaults);
-        if ($._params.overrideMenu) {
-            $.buttonbar.height = $._params.iconSize + 2 * $._params.gutter;
-            $.drawer.height = DRAWER_PULLTAB_HEIGHT + $.buttonbar.height;
-            $.drawer.bottom = -$.buttonbar.height;
-            Object.keys($._buttons).forEach(function(key) {
-                var i = parseInt(key, 10);
-                var buttonDesc = omit($._buttons[i], [ "id", "title", "click", "enabled" ]);
-                _.extend(buttonDesc, {
-                    top: $._params.gutter,
-                    left: $._params.gutter,
-                    width: $._params.iconSize,
-                    height: $._params.iconSize,
-                    backgroundImage: "/images/" + $._buttons[i].id + "Enabled.png",
-                    backgroundDisabledImage: "/images/" + $._buttons[i].id + "Disabled.png"
-                });
-                $._buttons[i].button = Ti.UI.createButton(buttonDesc);
-                $._buttons[i].button.addEventListener("click", function(e) {
-                    $._buttons[i].click && $._buttons[i].click(e);
-                    $._params.autoClose && pullTabClick(e);
-                });
-                $.buttonbar.add($._buttons[i].button);
+        $.buttonbar.height = $._params.iconSize + 2 * $._params.gutter;
+        $.drawer.height = DRAWER_PULLTAB_HEIGHT + $.buttonbar.height;
+        $.drawer.bottom = -$.buttonbar.height;
+        Object.keys($._buttons).forEach(function(key) {
+            var i = parseInt(key, 10);
+            var buttonDesc = omit($._buttons[i], [ "id", "title", "click", "enabled" ]);
+            _.extend(buttonDesc, {
+                top: $._params.gutter,
+                left: $._params.gutter,
+                width: $._params.iconSize,
+                height: $._params.iconSize,
+                backgroundImage: "/images/" + $._buttons[i].id + "Enabled.png",
+                backgroundDisabledImage: "/images/" + $._buttons[i].id + "Disabled.png"
             });
-            $._params.annoy && ($._annoy = setInterval(function() {
-                $._params.annoy > 0 && $._params.annoy--;
-                0 === $._params.annoy && clearInterval($._annoy);
-                $.jiggle();
-            }, 2e3));
-        } else {
-            $.drawer.visible = false;
-            var activity = $._params.mainWindow.activity;
-            activity.onCreateOptionsMenu = function(e) {
-                var menu = e.menu;
-                Object.keys($._buttons).forEach(function(key) {
-                    var i = parseInt(key, 10);
-                    var menuItem = menu.add({
-                        title: $._buttons[i].title,
-                        itemId: i
-                    });
-                    menuItem.setIcon("/images/" + $._buttons[i].id + "Enabled.png");
-                    $._buttons[i].click && menuItem.addEventListener("click", $._buttons[i].click);
-                });
-            };
-            activity.onPrepareOptionsMenu = function(e) {
-                var menu = e.menu;
-                Object.keys($._buttons).forEach(function(key) {
-                    var i = parseInt(key, 10);
-                    var menuItem = menu.findItem(i);
-                    menuItem.enabled = $._buttons[i].enabled ? $._buttons[i].enabled() : true;
-                });
-            };
-        }
+            $._buttons[i].button = Ti.UI.createButton(buttonDesc);
+            $._buttons[i].button.addEventListener("click", function(e) {
+                $._buttons[i].click && $._buttons[i].click(e);
+                $._params.autoClose && pullTabClick(e);
+            });
+            $.buttonbar.add($._buttons[i].button);
+        });
+        $._params.annoy && ($._annoy = setInterval(function() {
+            $._params.annoy > 0 && $._params.annoy--;
+            0 == $._params.annoy && clearInterval($._annoy);
+            $.jiggle();
+        }, 2e3));
     };
     __defers["$.__views.pulltab!click!pullTabClick"] && $.__views.pulltab.addEventListener("click", pullTabClick);
     _.extend($, exports);

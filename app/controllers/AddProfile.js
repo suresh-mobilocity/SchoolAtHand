@@ -5,8 +5,6 @@ var grade = 6;
     $.profileAddWindow.setRightNavButton($.saveButton);
 }
 //
-
-
 //
 // EVENT HANDLER
 //

@@ -1,6 +1,6 @@
 <Alloy>
-<Tab id="resourcesTab" title="More">
-			<Window id="resourcesWindow" title="Resources">
+<Tab id="resourcesTab" title="More" icon="more.png">
+			<Window id="resourcesWindow" title="Resources" >
 				<TableView id="resourcesView" top="0" left="0" layout="vertical">
 				 	<TableViewRow  onClick="displayTransportation">
 				 		<View id="buttonView" top="0" layout="horizontal">
@@ -33,7 +33,9 @@
 				 		</View>
 				 	</TableViewRow>
 				</TableView>
+				<!--
 				<View ns="Admob" id="adView"/>
+				-->
 			</Window>
 		</Tab>
 </Alloy>

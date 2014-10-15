@@ -1,4 +1,15 @@
 
 ".container" : {
-  
+},
+"#webSiteView[platform=ios]": {
+	//willHandleTouches: false,
+	height: "90%",
+	font:{fontSize:12,fontWeight:'bold'},
+	top: 0
+},
+"#webSiteView[platform=android]": {
+	height: "90%",
+	font:{fontSize:12,fontWeight:'bold'},
+	top: 0,
+	softKeyboardOnFocus: Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS
 }

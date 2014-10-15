@@ -1,3 +1,5 @@
+
+
 function displayElementarySchools(e){
  	$.schoolsTab.open(Alloy.createController('Schools', {parentTab: $.schoolsTab, schoolType: "E"}).getView());
 }
@@ -22,14 +24,15 @@ $.schoolsTab.addEventListener('click', function(e){
 
 function destroy(){
     $.schoolsWindow.removeEventListener('close', destroy);
-    // unbind any data collection you might have bound to the controller
     $.destroy();
-	// remove the children
     $.schoolsWindow.removeAllChildren();
-    // run de-allocation
-   // Alloy.Globals.deallocate($);
-    // set to null for garbage collection
     $ = null;
-    //Ti.API.info("SchoolsTab: Cleanup Successfully");
+    Ti.API.info("SchoolsTab: Cleanup Successfully");
 }
 $.schoolsTab.addEventListener('close', destroy);
+
+if ( Ti.App.Properties.getBool("DisplayAds")) {
+	var _admobview = require("admobview");
+	var adMobView = _admobview.getaddview();
+	$.schoolsWindow.add(adMobView);
+}

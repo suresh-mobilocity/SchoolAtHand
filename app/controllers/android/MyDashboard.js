@@ -1,3 +1,4 @@
+
 var args = arguments[0] || {};
 var lunchMenu =[];
 var fridayFolders = [];
@@ -223,8 +224,7 @@ $.eventsButton.addEventListener('click', function(e){
 $.callButton.addEventListener('click', function(e){
 		if ( teacherPhoneno == null)
 			{
-				getTeacherContacts();
-				
+				getTeacherContacts();	
 			}
 			if(teacherPhoneno == null){
 				
@@ -251,10 +251,16 @@ $.emailButton.addEventListener('click', function(e){
 			emailDialog.open();
 });
 function getTeacherContacts() {
-	var contactsQuery = "SELECT phonenum, emailaddr FROM contacts where name like '%" + teacherName + "%'" 
+	var contactsQuery = null;
+	if (teacherName === "" || teacherName === null){
+		Ti.API.info("teacherName is empty");
+	 	contactsQuery = "SELECT phone as phonenum, principal_emailaddr as emailaddr FROM schools where name like '%" + school + "%'" ;
+	} else {
+		Ti.API.info("teacherName is empty" + teacherName);
+		contactsQuery = "SELECT phonenum, emailaddr FROM contacts where name like '%" + teacherName + "%'" 
 									+ " AND building like '" + school + "%'";
-					  
-	Ti.API.info('contacts: ' + contactsQuery);
+	} 
+	//Ti.API.info('contacts: ' + contactsQuery);
 	//var contactResults = db.execute(contactsQuery);
 	var contactResults = schoolDB.execute(contactsQuery);
 	if ( contactResults.getRowCount() > 0 )

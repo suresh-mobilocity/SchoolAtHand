@@ -9,13 +9,15 @@ module.exports = [ {
     priority: 1000.0001,
     key: "Window",
     style: {
-        backgroundColor: "#000"
+        backgroundColor: "#33B5E5"
     }
 }, {
     isApi: true,
     priority: 1000.0003,
     key: "TableView",
     style: {
+        left: 0,
+        width: Ti.UI.FILL,
         separatorColor: "#336699",
         height: Ti.UI.SIZE,
         backgroundColor: "#33B5E5"
@@ -28,6 +30,15 @@ module.exports = [ {
         layout: "vertical",
         width: Ti.UI.FILL,
         height: 80
+    }
+}, {
+    isApi: true,
+    priority: 1000.001,
+    key: "Label",
+    style: {
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000"
     }
 }, {
     isApi: true,

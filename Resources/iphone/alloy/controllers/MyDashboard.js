@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function getEventsFromDistrictCalendar(school) {
         var sql = "SELECT shortname from schools where name = '" + school + "'";
@@ -8,8 +17,7 @@ function Controller() {
             scode = sqlRS.fieldByName("shortname");
             sqlRS.close();
         }
-        var eventsQuery = "SELECT strftime('%m/%d', eventdate) as eventdate , strftime('%w', eventdate) as weekday, eventdescription from districtcalendar where schoolcode like '" + scode.toUpperCase() + "' " + " and eventdate between date('now') and date('now', '+7 day')" + " UNION SELECT strftime('%m/%d', eventdate) as eventdate , strftime('%w', eventdate) as weekday, eventdescription from districtcalendar where schoolcode like ''" + " and eventdate between date('now') and date('now', '+7 day')" + " order by 1";
-        Ti.API.info("eventsQuery: " + eventsQuery);
+        var eventsQuery = "SELECT strftime('%m/%d', eventdate) as eventdate , strftime('%w', eventdate) as weekday, eventdescription from districtcalendar where schoolcode like '" + scode.toUpperCase() + "'  and eventdate between date('now') and date('now', '+7 day') UNION SELECT strftime('%m/%d', eventdate) as eventdate , strftime('%w', eventdate) as weekday, eventdescription from districtcalendar where schoolcode like '' and eventdate between date('now') and date('now', '+7 day') order by 1";
         var eventResults = schoolDB.execute(eventsQuery);
         if (eventResults.getRowCount() > 0) {
             while (eventResults.isValidRow()) {
@@ -24,21 +32,28 @@ function Controller() {
         return eventList;
     }
     function getTeacherContacts() {
-        var contactsQuery = "SELECT phonenum, emailaddr FROM contacts where name like '%" + teacherName + "%'" + " AND building like '" + school + "%'";
-        Ti.API.info("contacts: " + contactsQuery);
+        var contactsQuery = null;
+        contactsQuery = "" === teacherName || null === teacherName ? "SELECT phone as phonenum, principal_emailaddr as emailaddr FROM schools where name like '%" + school + "%'" : "SELECT phonenum, emailaddr FROM contacts where name like '%" + teacherName + "%' AND building like '" + school + "%'";
         var contactResults = schoolDB.execute(contactsQuery);
         if (contactResults.getRowCount() > 0 && contactResults.isValidRow()) {
             teacherPhoneno = contactResults.fieldByName("phonenum");
             teacherEmailAddr = contactResults.fieldByName("emailaddr");
-            Ti.API.info("Teacher: " + teacherName + " phoneno:" + teacherPhoneno + " emailaddr:" + teacherEmailAddr);
         }
         contactResults.close();
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "MyDashboard";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.myProfile = Alloy.createModel("profile");
@@ -80,16 +95,16 @@ function Controller() {
     });
     $.__views.profileView.add($.__views.profileImage);
     $.__views.profileDetailsLabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "blue",
         textAlign: "Ti.UI.TEXT_ALIGNMENT_RIGHT",
         verticalAlign: "TEXT_VERTICAL_ALIGNMENT_TOP",
         font: {
             fontSize: 12,
             fontWeight: "bold"
         },
-        color: "blue",
         left: 50,
-        width: Ti.UI.SIZE,
-        height: Ti.UI.SIZE,
         id: "profileDetailsLabel"
     });
     $.__views.profileView.add($.__views.profileDetailsLabel);
@@ -102,48 +117,42 @@ function Controller() {
         height: "50"
     });
     $.__views.mainView.add($.__views.teacherView);
-    var __alloyId35 = [];
-    var __alloyId36 = {
-        title: "Call",
-        ns: "Alloy.Abstract"
-    };
-    __alloyId35.push(__alloyId36);
+    var __alloyId36 = [];
     var __alloyId37 = {
-        title: "Email",
-        ns: "Alloy.Abstract"
+        title: "Call"
     };
-    __alloyId35.push(__alloyId37);
+    __alloyId36.push(__alloyId37);
+    var __alloyId38 = {
+        title: "Email"
+    };
+    __alloyId36.push(__alloyId38);
     $.__views.contactTeacher = Ti.UI.createButtonBar({
         backgroundColor: "#336699",
         top: 2,
         height: 25,
         width: 150,
         style: "Titanium.UI.iPhone.SystemButtonStyle.BAR",
-        labels: __alloyId35,
+        labels: __alloyId36,
         id: "contactTeacher"
     });
     $.__views.teacherView.add($.__views.contactTeacher);
-    var __alloyId39 = [];
-    var __alloyId44 = {
-        title: "Events",
-        ns: "Alloy.Abstract"
-    };
-    __alloyId39.push(__alloyId44);
+    var __alloyId40 = [];
     var __alloyId45 = {
-        title: "Fri.Folder",
-        ns: "Alloy.Abstract"
+        title: "Events"
     };
-    __alloyId39.push(__alloyId45);
+    __alloyId40.push(__alloyId45);
     var __alloyId46 = {
-        title: "Lunch",
-        ns: "Alloy.Abstract"
+        title: "Fri.Folder"
     };
-    __alloyId39.push(__alloyId46);
+    __alloyId40.push(__alloyId46);
     var __alloyId47 = {
-        title: "Sports",
-        ns: "Alloy.Abstract"
+        title: "Lunch"
     };
-    __alloyId39.push(__alloyId47);
+    __alloyId40.push(__alloyId47);
+    var __alloyId48 = {
+        title: "Sports"
+    };
+    __alloyId40.push(__alloyId48);
     $.__views.contentButtonBar = Ti.UI.createButtonBar({
         backgroundColor: "maroon",
         top: 5,
@@ -155,7 +164,7 @@ function Controller() {
             fontWeight: "normal"
         },
         color: "blue",
-        labels: __alloyId39,
+        labels: __alloyId40,
         id: "contentButtonBar"
     });
     $.__views.mainView.add($.__views.contentButtonBar);
@@ -180,11 +189,13 @@ function Controller() {
     });
     $.__views.contentsScrollView.add($.__views.contentsView);
     $.__views.contentsViewLabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "blue",
         font: {
             fontSize: 12,
             fontWeight: "normal"
         },
-        color: "blue",
         textAlign: "Ti.UI.TEXT_ALIGNMENT_LEFT",
         verticalAlign: "Ti.UI.TEXT_VERTICAL_ALIGNMENT_TOP",
         id: "contentsViewLabel"
@@ -213,6 +224,8 @@ function Controller() {
     });
     $.__views.announcementsScrollView.add($.__views.districtAnnouncementsView);
     $.__views.districtAnnouncementsLabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
         color: "red",
         left: 5,
         font: {
@@ -227,7 +240,6 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
-    Ti.API.info("Entered into MyDashboard, about to install db");
     args.parentTab;
     args.tabToNavigateBack;
     args.windowToNavigate;
@@ -237,11 +249,10 @@ function Controller() {
     var school = myProfile.get("school");
     var grade = myProfile.get("grade");
     var teacherName = myProfile.get("teacher");
-    $.profileDetailsLabel.text = myProfile.get("name") + "\n" + grade + "\n" + school + "\n" + "Teacher: " + teacherName;
+    $.profileDetailsLabel.text = myProfile.get("name") + "\n" + grade + "\n" + school + "\nTeacher: " + teacherName;
     var eventsList = getEventsFromDistrictCalendar(school);
     $.contentsViewLabel.text = eventsList;
     $.profileImage.image = myProfile.get("url");
-    Ti.API.info("URL for the profile:" + myProfile.get("url"));
     1 == profileCollection.length && ($.MyDashboardWindow.backButtonTitle = "");
     $.drawer.init({
         mainWindow: $.index,
@@ -313,12 +324,8 @@ function Controller() {
             var tStr = httpResponse.substring(start);
             var end = tStr.indexOf(";");
             var districtAnnouncement = tStr.substring(searchStr.length, end);
-            Ti.API.info(districtAnnouncement);
             $.districtAnnouncementsLabel.text = "District Announcement:\n" + districtAnnouncement;
-        } else {
-            Ti.API.info("Unexpected HTTP response: " + this.status);
-            alert("Unexpected HTTP response: " + this.status);
-        }
+        } else alert("Unexpected HTTP response: " + this.status);
     };
     xhr.onerror = function(e) {
         Ti.API.debug(e.error);

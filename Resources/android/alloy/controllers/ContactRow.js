@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function dialContactNumber(e) {
         var phoneno = e.source.phonenum.replace(/[^0-9]/g, "");
@@ -12,9 +21,15 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "ContactRow";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    var $model = arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        var $model = __processArg(arguments[0], "$model");
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
@@ -28,7 +43,8 @@ function Controller() {
         id: "contactRecord",
         dataId: "",
         model: "undefined" != typeof $model.__transform["id"] ? $model.__transform["id"] : $model.get("id"),
-        filter: "undefined" != typeof $model.__transform["name"] ? $model.__transform["name"] : $model.get("name")
+        filter: "undefined" != typeof $model.__transform["name"] ? $model.__transform["name"] : $model.get("name"),
+        className: "contactDetails"
     });
     $.__views.contactRecord && $.addTopLevelView($.__views.contactRecord);
     $.__views.contactLabels = Ti.UI.createView({
@@ -39,14 +55,15 @@ function Controller() {
     });
     $.__views.contactRecord.add($.__views.contactLabels);
     $.__views.Name = Ti.UI.createLabel({
-        left: "7",
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "black",
+        left: "7",
         font: {
             fontSize: 14,
             fontWeight: "bold",
             fontColor: "#000000"
         },
-        color: "black",
         id: "Name",
         text: "undefined" != typeof $model.__transform["name"] ? $model.__transform["name"] : $model.get("name")
     });
@@ -59,32 +76,37 @@ function Controller() {
     });
     $.__views.contactRecord.add($.__views.department);
     $.__views.Title = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "black",
         left: "7",
         font: {
             fontSize: 12,
             fontWeight: "normal",
             fontColor: "#000000"
         },
-        color: "black",
-        height: Ti.UI.SIZE,
         id: "Title",
         text: "undefined" != typeof $model.__transform["title"] ? $model.__transform["title"] : $model.get("title")
     });
     $.__views.department.add($.__views.Title);
     $.__views.sep = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         id: "sep",
         text: "/"
     });
     $.__views.department.add($.__views.sep);
     $.__views.Department = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "black",
         left: "7",
         font: {
             fontSize: 12,
             fontWeight: "normal",
             fontColor: "#000"
         },
-        color: "black",
-        height: Ti.UI.SIZE,
         id: "Department",
         text: "undefined" != typeof $model.__transform["department"] ? $model.__transform["department"] : $model.get("department")
     });
@@ -98,65 +120,84 @@ function Controller() {
     });
     $.__views.contactRecord.add($.__views.phoneNo);
     $.__views.Phone = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "blue",
         left: "7",
         font: {
             fontSize: 12,
             fontWeight: "bold",
             fontColor: "#000"
         },
-        color: "blue",
-        height: Ti.UI.SIZE,
         id: "Phone",
         text: "undefined" != typeof $model.__transform["phonenum"] ? $model.__transform["phonenum"] : $model.get("phonenum")
     });
     $.__views.phoneNo.add($.__views.Phone);
     $.__views.Extention = Ti.UI.createLabel({
+        width: 50,
+        height: Ti.UI.SIZE,
+        color: "blue",
         left: 10,
         font: {
             fontSize: 12,
             fontWeight: "bold",
             fontColor: "#000"
         },
-        height: Ti.UI.SIZE,
-        color: "blue",
-        width: 50,
         id: "Extention",
         text: "undefined" != typeof $model.__transform["ext"] ? $model.__transform["ext"] : $model.get("ext")
     });
     $.__views.phoneNo.add($.__views.Extention);
-    $.__views.phoneButton = Ti.UI.createButton({
-        left: 20,
-        color: "green",
-        backgroundColor: "white",
-        width: 50,
-        height: 50,
-        font: {
-            fontFamily: "AppIcons",
-            fontSize: "50dp"
-        },
-        title: Alloy.Globals.icons.phone,
-        borderRadius: 8,
-        id: "phoneButton",
-        phonenum: "undefined" != typeof $model.__transform["phonenum"] ? $model.__transform["phonenum"] : $model.get("phonenum"),
-        extension: "undefined" != typeof $model.__transform["ext"] ? $model.__transform["ext"] : $model.get("ext")
-    });
+    $.__views.phoneButton = Ti.UI.createButton(function() {
+        var o = {};
+        _.extend(o, {
+            left: 20,
+            color: "white",
+            backgroundColor: "orange",
+            width: 50,
+            height: 50,
+            font: {
+                fontFamily: "AppIcons",
+                fontSize: "50dp"
+            },
+            title: Alloy.Globals.icons.phone,
+            borderRadius: 8
+        });
+        IS_iPhone4SmallScreen && _.extend(o, {
+            style: Ti.UI.iPhone.SystemButtonStyle.PLAIN
+        });
+        _.extend(o, {
+            id: "phoneButton",
+            phonenum: "undefined" != typeof $model.__transform["phonenum"] ? $model.__transform["phonenum"] : $model.get("phonenum"),
+            extension: "undefined" != typeof $model.__transform["ext"] ? $model.__transform["ext"] : $model.get("ext")
+        });
+        return o;
+    }());
     $.__views.phoneNo.add($.__views.phoneButton);
     dialContactNumber ? $.__views.phoneButton.addEventListener("click", dialContactNumber) : __defers["$.__views.phoneButton!click!dialContactNumber"] = true;
-    $.__views.emailButton = Ti.UI.createButton({
-        left: 20,
-        color: "#336699",
-        backgroundColor: "white",
-        width: Ti.UI.SIZE,
-        height: 50,
-        font: {
-            fontFamily: "AppIcons",
-            fontSize: "50dp"
-        },
-        title: Alloy.Globals.icons.envelope_alt,
-        borderRadius: 8,
-        id: "emailButton",
-        emailaddr: "undefined" != typeof $model.__transform["emailaddr"] ? $model.__transform["emailaddr"] : $model.get("emailaddr")
-    });
+    $.__views.emailButton = Ti.UI.createButton(function() {
+        var o = {};
+        _.extend(o, {
+            left: 20,
+            color: "white",
+            backgroundColor: "orange",
+            width: 60,
+            height: 50,
+            font: {
+                fontFamily: "AppIcons",
+                fontSize: "50dp"
+            },
+            title: Alloy.Globals.icons.envelope,
+            borderRadius: 8
+        });
+        IS_iPhone4SmallScreen && _.extend(o, {
+            style: Ti.UI.iPhone.SystemButtonStyle.PLAIN
+        });
+        _.extend(o, {
+            id: "emailButton",
+            emailaddr: "undefined" != typeof $model.__transform["emailaddr"] ? $model.__transform["emailaddr"] : $model.get("emailaddr")
+        });
+        return o;
+    }());
     $.__views.phoneNo.add($.__views.emailButton);
     sendEmail ? $.__views.emailButton.addEventListener("click", sendEmail) : __defers["$.__views.emailButton!click!sendEmail"] = true;
     exports.destroy = function() {};

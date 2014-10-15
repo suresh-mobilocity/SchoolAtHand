@@ -29,6 +29,7 @@ function actionLogin(e) {
 				           */
 		       			 Ti.App.Properties.setString("ACS-StoredSessionId", Cloud.sessionId);
 		       			 Ti.App.Properties.setBool("LoggedIn", true);
+		       			  Ti.App.Properties.setString("username", user.username);
 		       			 loginLabel = "SignOut";
 		       			 retrieveDeviceToken();
 		                // $.loginForm = null;
@@ -81,10 +82,46 @@ function retrieveDeviceToken()
 				});
 			} else if ( OS_IOS) {
 				// use Titanium.Network.registerForPushNotifications
+					Ti.Network.registerForPushNotifications({
+			    // Specifies which notifications to receive
+			    types: [
+			        Ti.Network.NOTIFICATION_TYPE_BADGE,
+			        Ti.Network.NOTIFICATION_TYPE_ALERT,
+			        Ti.Network.NOTIFICATION_TYPE_SOUND
+			    ],
+			    success: function deviceTokenSuccess (e) {
+			    		deviceToken = e.deviceToken;
+			    		Ti.App.Properties.setString("ACSDeviceToken", e.deviceToken);
+			    },
+			    error: function deviceTokenError(e){
+			    	alert('Failed to register for push notifications! ' + e.error);
+			    },
+			    callback: function receivePush(evt) {
+			    	 alert('Received push: in index.js' + JSON.stringify(evt));
+			    		//var eventRec = JSON.stringify(evt);
+							//Ti.API.info("Received Push Notification evtRec: " + eventRec.toString());
+			    			//alert("Received Push Notification: " + evt.data);				
+									//var payload = JSON.parse(evt);
+		   							//Ti.API.info("PUSH_MSG| Alert: " + payload.alert + " Title: " + payload.title + " Badge: " + payload.badge);
+		   							var notificationModel = Alloy.createModel("notification", {
+											//datetime: (new Date()).toString(),
+											datetime: (new Date()).toLocaleString(),							       
+									        title:  evt.data.title,
+									        message : evt.data.alert,
+									        badge: evt.data.badge
+									 });
+								     notificationModel.save();
+									 notificationCollection.fetch();
+								     notificationCollection.trigger('change');
+								     notificationCollection.trigger('sync');
+								     //Ti.API.info("Stored Push Notification: " + evt.payload);
+								    
+				}
+			
+			});
 			}
 	}
 }
-
 
 function openRegistration(e) {
    //Alloy.createController('Register', {parentTab: parentController}).getView().open();
@@ -145,7 +182,8 @@ $.loginForm.title        = 'Login';
 $.inputUsername.hintText = 'email address';
 $.inputPassword.hintText = 'Password';
 $.buttonLogin.title      = 'SignIn';
-$.inputUsername.value = (Ti.App.Properties.getString("username")) ? Ti.App.Properties.getString("username") : "";
+if ( Ti.App.Properties.hasProperty("username"))
+	$.inputUsername.value =  Ti.App.Properties.getString("username") ;
 function validateInputFields()
 {
 	

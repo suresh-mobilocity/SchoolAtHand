@@ -5,6 +5,7 @@ exports.getaddview = function() {
         publisherId: "ca-app-pub-3665132116722377/6561150840",
         keywords: "K-12 SAT tutuion education graduation kids student school books science  math toys sports parent teacher cars bikes",
         testing: false,
+        height: Ti.UI.SIZE,
         width: Ti.UI.FILL,
         bottom: 0,
         adBackgroundColor: "FF8855",

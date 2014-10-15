@@ -1,0 +1,4 @@
+<Alloy>
+  	<!-- Android -->
+    <Require id="rssmaster" src="RssMaster" platform="android"/>
+</Alloy>

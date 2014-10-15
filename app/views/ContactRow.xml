@@ -1,5 +1,5 @@
 `<Alloy>
-	<TableViewRow id="contactRecord" dataId="" model="{id}" filter="{name}">
+	<TableViewRow id="contactRecord" dataId="" model="{id}" filter="{name}" className="contactDetails">
 		<View id="contactLabels">
 			<Label id="Name" text="{name}"/>
 		</View>

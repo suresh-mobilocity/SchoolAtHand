@@ -4,6 +4,15 @@ function WPATH(s) {
     return true && 0 !== path.indexOf("/") ? "/" + path : path;
 }
 
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function pullTabClick() {
         $._isOpen = !$._isOpen;
@@ -28,9 +37,11 @@ function Controller() {
     this.__widgetId = "com.appcelerator.drawer";
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "widget";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        __processArg(arguments[0], "__parentSymbol");
+        __processArg(arguments[0], "$model");
+        __processArg(arguments[0], "__itemTemplate");
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
@@ -88,7 +99,7 @@ function Controller() {
     $._params = {};
     $._annoy = false;
     exports.jiggle = function() {
-        if ($._isOpen || !$._params.overrideMenu) return;
+        if ($._isOpen || true && !$._params.overrideMenu) return;
         var animation = require("alloy/animation");
         var chain = [ Ti.UI.createAnimation({
             bottom: -($._params.iconSize + 2 * $._params.gutter) + DRAWER_PULLTAB_HEIGHT,
@@ -103,7 +114,7 @@ function Controller() {
         animation.chainAnimate($.drawer, chain);
     };
     exports.checkEnabled = function() {
-        $._params.overrideMenu && Object.keys($._buttons).forEach(function(key) {
+        (false || $._params.overrideMenu) && Object.keys($._buttons).forEach(function(key) {
             var i = parseInt(key, 10);
             $._buttons[i].enabled && ($._buttons[i].button.enabled = $._buttons[i].enabled());
         });
@@ -111,7 +122,7 @@ function Controller() {
     exports.init = function(args) {
         $._buttons = args.buttons;
         $._params = _.defaults(args, defaults);
-        if ($._params.overrideMenu) {
+        if (false || $._params.overrideMenu) {
             $.buttonbar.height = $._params.iconSize + 2 * $._params.gutter;
             $.drawer.height = DRAWER_PULLTAB_HEIGHT + $.buttonbar.height;
             $.drawer.bottom = -$.buttonbar.height;
@@ -135,10 +146,10 @@ function Controller() {
             });
             $._params.annoy && ($._annoy = setInterval(function() {
                 $._params.annoy > 0 && $._params.annoy--;
-                0 === $._params.annoy && clearInterval($._annoy);
+                0 == $._params.annoy && clearInterval($._annoy);
                 $.jiggle();
             }, 2e3));
-        } else {
+        } else if (true && !$._params.overrideMenu) {
             $.drawer.visible = false;
             var activity = $._params.mainWindow.activity;
             activity.onCreateOptionsMenu = function(e) {

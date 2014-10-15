@@ -1,18 +1,27 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
-    function __alloyId48(e) {
+    function __alloyId49(e) {
         if (e && e.fromAdapter) return;
-        __alloyId48.opts || {};
-        var models = __alloyId47.models;
+        __alloyId49.opts || {};
+        var models = __alloyId48.models;
         var len = models.length;
         var rows = [];
         for (var i = 0; len > i; i++) {
-            var __alloyId44 = models[i];
-            __alloyId44.__transform = {};
-            var __alloyId46 = Alloy.createController("NotificationRow", {
-                $model: __alloyId44,
+            var __alloyId45 = models[i];
+            __alloyId45.__transform = {};
+            var __alloyId47 = Alloy.createController("NotificationRow", {
+                $model: __alloyId45,
                 __parentSymbol: __parentSymbol
             });
-            rows.push(__alloyId46.getViewEx({
+            rows.push(__alloyId47.getViewEx({
                 recurse: true
             }));
         }
@@ -26,9 +35,15 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "Notifications";
-    var __parentSymbol = arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        var __parentSymbol = __processArg(arguments[0], "__parentSymbol");
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     Alloy.Collections.instance("notification");
@@ -40,14 +55,16 @@ function Controller() {
     });
     $.__views.notificationsWindow && $.addTopLevelView($.__views.notificationsWindow);
     $.__views.notificationTable = Ti.UI.createTableView({
+        left: 0,
+        width: Ti.UI.FILL,
         separatorColor: "#000000",
         height: "85%",
         backgroundColor: "#33B5E5",
         id: "notificationTable"
     });
     $.__views.notificationsWindow.add($.__views.notificationTable);
-    var __alloyId47 = Alloy.Collections["notification"] || notification;
-    __alloyId47.on("fetch destroy change add remove reset", __alloyId48);
+    var __alloyId48 = Alloy.Collections["notification"] || notification;
+    __alloyId48.on("fetch destroy change add remove reset", __alloyId49);
     $.__views.adView = Admob.createView({
         testing: false,
         keywords: "K-12, education, graduation, kids student school books science  math toys sports parent teacher cars bikes",
@@ -59,12 +76,11 @@ function Controller() {
         urlColor: "#00FF00",
         linkColor: "#0000FF",
         publisherId: "ca-app-pub-3665132116722377/6561150840",
-        ns: "Admob",
         id: "adView"
     });
     $.__views.notificationsWindow.add($.__views.adView);
     exports.destroy = function() {
-        __alloyId47.off("fetch destroy change add remove reset", __alloyId48);
+        __alloyId48.off("fetch destroy change add remove reset", __alloyId49);
     };
     _.extend($, $.__views);
     var args = arguments[0] || {};

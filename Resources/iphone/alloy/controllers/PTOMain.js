@@ -1,18 +1,27 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
-    function __alloyId69(e) {
+    function __alloyId70(e) {
         if (e && e.fromAdapter) return;
-        __alloyId69.opts || {};
-        var models = __alloyId68.models;
+        __alloyId70.opts || {};
+        var models = __alloyId69.models;
         var len = models.length;
         var rows = [];
         for (var i = 0; len > i; i++) {
-            var __alloyId65 = models[i];
-            __alloyId65.__transform = dataTransformation(__alloyId65);
-            var __alloyId67 = Alloy.createController("SchoolRow", {
-                $model: __alloyId65,
+            var __alloyId66 = models[i];
+            __alloyId66.__transform = dataTransformation(__alloyId66);
+            var __alloyId68 = Alloy.createController("SchoolRow", {
+                $model: __alloyId66,
                 __parentSymbol: __parentSymbol
             });
-            rows.push(__alloyId67.getViewEx({
+            rows.push(__alloyId68.getViewEx({
                 recurse: true
             }));
         }
@@ -20,8 +29,8 @@ function Controller() {
     }
     function dataTransformation(_model) {
         return {
-            imagefile: Ti.Filesystem.applicationDataDirectory + "/images" + "/" + _model.attributes.imagefile,
-            logofile: Ti.Filesystem.applicationDataDirectory + "/images" + "/" + _model.attributes.logofile
+            imagefile: Ti.Filesystem.applicationDataDirectory + "/images/" + _model.attributes.imagefile,
+            logofile: Ti.Filesystem.applicationDataDirectory + "/images/" + _model.attributes.logofile
         };
     }
     function destroy() {
@@ -30,13 +39,18 @@ function Controller() {
         $.destroy();
         $.ptoWindow.removeAllChildren();
         $ = null;
-        Ti.API.info("PTOMain| Controller Successfully Cleanedup ");
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "PTOMain";
-    var __parentSymbol = arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        var __parentSymbol = __processArg(arguments[0], "__parentSymbol");
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     Alloy.Collections.instance("school");
@@ -47,16 +61,18 @@ function Controller() {
     });
     $.__views.ptoWindow && $.addTopLevelView($.__views.ptoWindow);
     $.__views.schoolsTableView = Ti.UI.createTableView({
+        left: 0,
+        width: Ti.UI.FILL,
         separatorColor: "#336699",
         height: Ti.UI.SIZE,
         backgroundColor: "transparent",
         id: "schoolsTableView"
     });
     $.__views.ptoWindow.add($.__views.schoolsTableView);
-    var __alloyId68 = Alloy.Collections["school"] || school;
-    __alloyId68.on("fetch destroy change add remove reset", __alloyId69);
+    var __alloyId69 = Alloy.Collections["school"] || school;
+    __alloyId69.on("fetch destroy change add remove reset", __alloyId70);
     exports.destroy = function() {
-        __alloyId68.off("fetch destroy change add remove reset", __alloyId69);
+        __alloyId69.off("fetch destroy change add remove reset", __alloyId70);
     };
     _.extend($, $.__views);
     var args = arguments[0] || {};

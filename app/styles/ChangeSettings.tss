@@ -13,16 +13,16 @@
 	font:{fontSize:14,fontWeight:'normal', fontFamily:'Helvetica',  fontStyle: 'normal'},
     color: "blue"
 },
-"#disableAds" :{
+"#displayAds" :{
 	top: 20,
 	left: 20,
     width: Ti.UI.SIZE,
     height: Ti.UI.SIZE,
     textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
- //   title: 'Disable Ads',
+ //   title: 'Display Ads',
     color: "blue",
 },
-"#disableAds[platform=android]" :{
+"#displayAds[platform=android]" :{
     style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
 },
 "#pushNotificationSelection" : {
@@ -86,8 +86,13 @@
  	color: "white",
  	borderRadius: 10
 },
-"#buttonChangePassword" : {
-	title:  'Change Password',
+"#buttonSaveChanges[if=IS_iPhone4SmallScreen]": {
+    style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+    font:{fontSize:12,fontWeight:'bold'},
+    height: "50dp"
+}
+"#buttonResetPassword" : {
+	title:  'Forgot / Reset Password',
 	backgroundColor: '#336699',
 	top: 20,
 	left: "10%",
@@ -97,14 +102,25 @@
  	color: "white",
  	borderRadius: 10
 },
-"#buttonChangeSchoolDistrict" : {
-	title:  'Change School District',
-	backgroundColor: '#336699',
-	top: 20,
-	left: "10%",
-	width: "80%",
- 	height: Ti.UI.SIZE,
- 	font:{fontSize:12,fontWeight:'bold'},
- 	color: "white",
- 	borderRadius: 10
+
+"#buttonResetPassword[if=IS_iPhone4SmallScreen]": {
+    style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+    font:{fontSize:12,fontWeight:'bold'},
+    height: "50dp"
 }
+//"#buttonChangeSchoolDistrict" : {
+//title:  'Change School District',
+//	backgroundColor: '#336699',
+//	top: 20,
+//	left: "10%",
+//	width: "80%",
+// 	height: Ti.UI.SIZE,
+// 	font:{fontSize:12,fontWeight:'bold'},
+// 	color: "white",
+// 	borderRadius: 10
+//},
+//"#buttonChangeSchoolDistrict[if=IS_iPhone4SmallScreen]": {
+//   style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+//    font:{fontSize:12,fontWeight:'bold'},
+//    height: "50dp"
+//}

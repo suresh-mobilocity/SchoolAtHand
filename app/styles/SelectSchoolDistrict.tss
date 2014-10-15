@@ -7,9 +7,39 @@
 }
 "#hintLabel": {
 	top: 0,
-	left: "1%",
+	left: "2%",
 	height: 80,
 	width: "98%",
 	font:{fontSize:14,fontWeight:'bold'},
 	color: "blue"
+},
+"#buttonLayout": {
+	layout: "horizontal",
+	borderColor: '#336699',
+	top: "80%"
+}  
+"#buttonNext": {
+    title:  'Next',
+	backgroundColor: '#336699',
+	top: "10%",
+ 	width: "40%",
+ 	left: "5%",
+ 	height: Ti.UI.SIZE,
+ 	font:{fontSize:12,fontWeight:'bold'},
+ 	color: "white",
+ 	borderColor:  '#336699',
+ 	borderRadius: 8
+},
+"#buttonExit": {
+    title:  'Exit',
+	backgroundColor: '#336699',
+ 	width: "40%",
+ 	top: "10%",
+ 	left: "5%",
+ 	height: Ti.UI.SIZE,
+ 	font:{fontSize:12,fontWeight:'bold'},
+ 	color: "white",
+ 	borderColor:  '#336699',
+ 	borderRadius: 8
 }
+

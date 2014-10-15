@@ -1,19 +1,43 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "ViewWebSite";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.viewWebSiteWin = Ti.UI.createWindow({
-        backgroundColor: "#000",
+        backgroundColor: "#33B5E5",
         id: "viewWebSiteWin",
         title: "School Web Site",
-        modal: "flase"
+        modal: "false"
     });
     $.__views.viewWebSiteWin && $.addTopLevelView($.__views.viewWebSiteWin);
     $.__views.webSiteView = Ti.UI.createWebView({
+        height: "90%",
+        font: {
+            fontSize: 12,
+            fontWeight: "bold"
+        },
+        top: 0,
+        softKeyboardOnFocus: Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS,
         id: "webSiteView"
     });
     $.__views.viewWebSiteWin.add($.__views.webSiteView);
@@ -23,6 +47,11 @@ function Controller() {
     $.parentController = args.parentTab;
     $.viewWebSiteWin.title = args.wintitle;
     $.webSiteView.url = args.url;
+    if (Ti.App.Properties.getBool("DisplayAds")) {
+        var _admobview = require("admobview");
+        adMobView = _admobview.getaddview();
+        $.viewWebSiteWin.add(adMobView);
+    }
     _.extend($, exports);
 }
 

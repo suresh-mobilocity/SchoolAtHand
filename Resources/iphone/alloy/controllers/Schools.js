@@ -1,18 +1,27 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
-    function __alloyId93(e) {
+    function __alloyId96(e) {
         if (e && e.fromAdapter) return;
-        __alloyId93.opts || {};
-        var models = dofilter(__alloyId92);
+        __alloyId96.opts || {};
+        var models = dofilter(__alloyId95);
         var len = models.length;
         var rows = [];
         for (var i = 0; len > i; i++) {
-            var __alloyId89 = models[i];
-            __alloyId89.__transform = dataTransformation(__alloyId89);
-            var __alloyId91 = Alloy.createController("SchoolRow", {
-                $model: __alloyId89,
+            var __alloyId92 = models[i];
+            __alloyId92.__transform = dataTransformation(__alloyId92);
+            var __alloyId94 = Alloy.createController("SchoolRow", {
+                $model: __alloyId92,
                 __parentSymbol: __parentSymbol
             });
-            rows.push(__alloyId91.getViewEx({
+            rows.push(__alloyId94.getViewEx({
                 recurse: true
             }));
         }
@@ -25,8 +34,8 @@ function Controller() {
     }
     function dataTransformation(_model) {
         return {
-            imagefile: Ti.Filesystem.applicationDataDirectory + "/images" + "/" + _model.attributes.imagefile,
-            logofile: Ti.Filesystem.applicationDataDirectory + "/images" + "/" + _model.attributes.logofile
+            imagefile: Ti.Filesystem.applicationDataDirectory + "/images/" + _model.attributes.imagefile,
+            logofile: Ti.Filesystem.applicationDataDirectory + "/images/" + _model.attributes.logofile
         };
     }
     function destroy() {
@@ -35,36 +44,42 @@ function Controller() {
         $.destroy();
         $.schoolsListWindow.removeAllChildren();
         $ = null;
-        Ti.API.info("Schools| Controller Successfully Cleanedup ");
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "Schools";
-    var __parentSymbol = arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        var __parentSymbol = __processArg(arguments[0], "__parentSymbol");
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     Alloy.Collections.instance("school");
     $.__views.schoolsListWindow = Ti.UI.createWindow({
-        backgroundColor: "white",
+        backgroundColor: "#33B5E5",
         id: "schoolsListWindow",
         title: "Schools"
     });
     $.__views.schoolsListWindow && $.addTopLevelView($.__views.schoolsListWindow);
     $.__views.schoolsTableView = Ti.UI.createTableView({
+        left: "0",
+        width: Ti.UI.FILL,
         separatorColor: "#336699",
         height: Ti.UI.SIZE,
         backgroundColor: "transparent",
         id: "schoolsTableView",
         top: "0",
-        left: "0",
         layout: "vertical"
     });
     $.__views.schoolsListWindow.add($.__views.schoolsTableView);
-    var __alloyId92 = Alloy.Collections["school"] || school;
-    __alloyId92.on("fetch destroy change add remove reset", __alloyId93);
+    var __alloyId95 = Alloy.Collections["school"] || school;
+    __alloyId95.on("fetch destroy change add remove reset", __alloyId96);
     exports.destroy = function() {
-        __alloyId92.off("fetch destroy change add remove reset", __alloyId93);
+        __alloyId95.off("fetch destroy change add remove reset", __alloyId96);
     };
     _.extend($, $.__views);
     var args = arguments[0] || {};
@@ -85,14 +100,13 @@ function Controller() {
         break;
 
       case "M":
+        Ti.API.info("Inside Schools.js");
         $.schoolsListWindow.title = "Middle Schools";
         break;
 
       case "H":
         $.schoolsListWindow.title = "High Schools";
-        break;
-
-      default:    }
+    }
     schoolCollection.fetch();
     _.extend($, exports);
 }

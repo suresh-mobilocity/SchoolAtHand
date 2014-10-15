@@ -1,6 +1,8 @@
 <Alloy>
     <Window id="districtCalendar" title="District Calendar" class ='continer' modal="false">
         <WebView id="webview" />
+        <!--
          <View ns="Admob" id="adView">
+         -->
     </Window>
 </Alloy>

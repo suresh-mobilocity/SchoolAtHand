@@ -1,16 +1,9 @@
-
 //var db = Ti.Database.open('sbsddatabase');
 var secretaryEmailAddr="";
 var supervisorEmailAddr = "";
 getDataFromDistrictDB();
 
-/*
-if ( Ti.Platform.osname === "iphone" || Ti.Platform.osname === "ipad")
-{
-	iads = Ti.UI.iOS.createAdView({ width: 'auto',height: 'auto'});
-	$.ads.add(iads);
-}
-*/
+
 
 function dialPhoneNumber(e) {
 	// remove special characters
@@ -63,26 +56,11 @@ $.emailsecretary.addEventListener('click', function(e){
 	emailDialog.open();
 		
 });
-
-var adMobView = Admob.createView({
-				publisherId: "ca-app-pub-3665132116722377/6561150840",
-				testing:false, // default is false
-				bottom: 0, // optional
-				adBackgroundColor: "FF8855", // optional
-				backgroundColorTop: "738000", //optional - Gradient background color at top
-				borderColor: "#000000", // optional - Border color
-				textColor: "#000000", // optional - Text color
-				urlColor: "#00FF00", // optional - URL color
-				linkColor: "#0000FF" //optional -  Link text color
-				//primaryTextColor: "blue", // deprecated -- now maps to textColor
-				//secondaryTextColor: "green" // deprecated -- now maps to linkColor
-});
-
-//adMobView.requestAd();
-//$.adMobView.requestTestAd();
-//listener for adReceived
-
-$.transportationWindow.add(adMobView);
+if ( Ti.App.Properties.getBool("DisplayAds") == true) {
+	var _admobview = require("admobview");
+    var adMobView = _admobview.getaddview();
+	$.transportationWindow.add(adMobView);
+}
 function destroy(){
     $.transportationWindow.removeEventListener('close', destroy);
     // unbind any data collection you might have bound to the controller

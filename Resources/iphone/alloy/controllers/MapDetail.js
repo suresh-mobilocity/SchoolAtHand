@@ -1,9 +1,32 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
+    function destroy() {
+        $.mapWindow.removeEventListener("close", destroy);
+        $.destroy();
+        $.mapWindow.removeAllChildren();
+        $ = null;
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "MapDetail";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.mapWindow = Ti.UI.createWindow({
@@ -17,10 +40,9 @@ function Controller() {
         mapType: 1,
         animate: true,
         regionFit: true,
-        userLocation: true,
+        userLocation: "true",
         userLocationButton: true,
         annotations: [],
-        ns: "MapModule",
         id: "mapView",
         opacity: "1"
     });
@@ -28,7 +50,6 @@ function Controller() {
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};
-    Ti.API.info("latitude:" + args.data.latitude + "longitude:" + args.data.longitude);
     $.mapWindow.title = args.data.name;
     if ("android" === Ti.Platform.osname) {
         var rc = MapModule.isGooglePlayServicesAvailable();
@@ -43,14 +64,17 @@ function Controller() {
         animate: true
     });
     $.mapView.addAnnotation(ann);
+    $.mapView.addEventListener("click", function(e) {
+        Ti.Platform.openURL("Maps://?daddr=" + e.source.latitude + "," + e.source.longitude);
+    });
     $.mapView.setRegion({
         latitude: args.data.latitude,
         longitude: args.data.longitude,
         title: args.data.name,
-        latitudeDelta: .01,
-        longitudeDelta: .01
+        latitudeDelta: .05,
+        longitudeDelta: .05
     });
-    Ti.Platform.openURL("Maps://?daddr=" + args.data.address1 + "," + args.data.city + "," + args.data.state);
+    $.mapWindow.addEventListener("close", destroy);
     _.extend($, exports);
 }
 

@@ -1,9 +1,9 @@
 <Alloy>
 	<Window id="changeOptionsWin" class="container" title="Change Settings">
-		<View id="changeOptions">
+		<ScrollView id="changeOptions">
 				<View layout="horizontal"  height="Ti.UI.SIZE">
-					<Label text="Disable Ads"/> 
-					<Switch id="disableAds"/>
+					<Label text="Display Ads"/> 
+					<Switch id="displayAds"/>
 				</View>
 				<View layout="horizontal" height="Ti.UI.SIZE">
 					<Label id="pushNotificationSelection"/>
@@ -22,9 +22,11 @@
 	            </View>
 	            <View layout="vertical"  height="Ti.UI.SIZE">
 	            	 <Button id="buttonSaveChanges"/>
+	            	 <!--
 	           		 <Button id="buttonChangeSchoolDistrict"/>
-	           		 <Button id="buttonChangePassword"/>
+	           		 -->
+	           		 <Button id="buttonResetPassword"/>
 	           </View>
-		</View>
+		</ScrollView>
 	</Window>
 </Alloy>

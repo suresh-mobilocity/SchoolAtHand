@@ -1,8 +1,41 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function displayNews() {
-        $.districtTab.open(Alloy.createController("DistrictNewsMain", {
+        var feedType = getNewsFeedType();
+        if ("RSS" == feedType.toUpperCase()) {
+            var newsfeedurl = getNewsFeedUrl();
+            Alloy.createController("RssMain", {
+                parentTab: $.districtTab,
+                rssfeedurl: newsfeedurl,
+                title: "District News"
+            });
+        } else $.districtTab.open(Alloy.createController("DistrictNewsMain", {
             parentTab: $.districtTab
         }).getView());
+    }
+    function getNewsFeedType() {
+        var sql = "SELECT name, value FROM enum where name like '%newsfeed%'";
+        var feedType = "";
+        var tmpRS = schoolDB.execute(sql);
+        tmpRS.getRowCount() > 0 && tmpRS.isValidRow() && (feedType = tmpRS.fieldByName("value"));
+        tmpRS.close();
+        return feedType;
+    }
+    function getNewsFeedUrl() {
+        var sql = "SELECT url FROM weburls where name like '%newsfeed%' ";
+        var feedUrl = "";
+        var tmpRS = schoolDB.execute(sql);
+        tmpRS.getRowCount() > 0 && tmpRS.isValidRow() && (feedUrl = tmpRS.fieldByName("url"));
+        tmpRS.close();
+        return feedUrl;
     }
     function displayEvents() {
         $.districtTab.open(Alloy.createController("Events", {
@@ -51,25 +84,33 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "DistrictTab";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
     $.__views.districtWindow = Ti.UI.createWindow({
-        backgroundColor: "#000",
+        backgroundColor: "#33B5E5",
         id: "districtWindow",
         title: "District"
     });
-    var __alloyId19 = [];
+    var __alloyId20 = [];
     $.__views.news = Ti.UI.createTableViewRow({
         layout: "vertical",
         width: Ti.UI.FILL,
         height: 80,
         id: "news"
     });
-    __alloyId19.push($.__views.news);
+    __alloyId20.push($.__views.news);
     displayNews ? $.__views.news.addEventListener("click", displayNews) : __defers["$.__views.news!click!displayNews"] = true;
     $.__views.buttonView = Ti.UI.createView({
         id: "buttonView",
@@ -78,6 +119,9 @@ function Controller() {
     });
     $.__views.news.add($.__views.buttonView);
     $.__views.news_icon = Ti.UI.createLabel({
+        width: "15%",
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 10,
         text: Alloy.Globals.icons.list_alt,
@@ -85,18 +129,16 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: "15%",
         textAlign: "right",
         id: "news_icon"
     });
     $.__views.buttonView.add($.__views.news_icon);
     $.__views.row_label = Ti.UI.createLabel({
-        top: 20,
-        left: "5%",
         width: "60%",
         height: Ti.UI.SIZE,
         color: "white",
+        top: 20,
+        left: "5%",
         font: {
             fontSize: 24,
             fontWight: "bold",
@@ -108,6 +150,9 @@ function Controller() {
     });
     $.__views.buttonView.add($.__views.row_label);
     $.__views.right_arrow = Ti.UI.createLabel({
+        width: 50,
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 0,
         text: Alloy.Globals.right_arrow,
@@ -115,8 +160,6 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: 50,
         textAlign: "left",
         id: "right_arrow"
     });
@@ -127,7 +170,7 @@ function Controller() {
         height: 80,
         id: "events"
     });
-    __alloyId19.push($.__views.events);
+    __alloyId20.push($.__views.events);
     displayEvents ? $.__views.events.addEventListener("click", displayEvents) : __defers["$.__views.events!click!displayEvents"] = true;
     $.__views.buttonView = Ti.UI.createView({
         id: "buttonView",
@@ -136,6 +179,9 @@ function Controller() {
     });
     $.__views.events.add($.__views.buttonView);
     $.__views.events_icon = Ti.UI.createLabel({
+        width: "15%",
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 10,
         text: Alloy.Globals.icons.calendar,
@@ -143,18 +189,16 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: "15%",
         textAlign: "right",
         id: "events_icon"
     });
     $.__views.buttonView.add($.__views.events_icon);
     $.__views.row_label = Ti.UI.createLabel({
-        top: 20,
-        left: "5%",
         width: "60%",
         height: Ti.UI.SIZE,
         color: "white",
+        top: 20,
+        left: "5%",
         font: {
             fontSize: 24,
             fontWight: "bold",
@@ -166,6 +210,9 @@ function Controller() {
     });
     $.__views.buttonView.add($.__views.row_label);
     $.__views.right_arrow = Ti.UI.createLabel({
+        width: 50,
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 0,
         text: Alloy.Globals.right_arrow,
@@ -173,8 +220,6 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: 50,
         textAlign: "left",
         id: "right_arrow"
     });
@@ -185,7 +230,7 @@ function Controller() {
         height: 80,
         id: "lunchmenu"
     });
-    __alloyId19.push($.__views.lunchmenu);
+    __alloyId20.push($.__views.lunchmenu);
     displayLunchMenu ? $.__views.lunchmenu.addEventListener("click", displayLunchMenu) : __defers["$.__views.lunchmenu!click!displayLunchMenu"] = true;
     $.__views.buttonView = Ti.UI.createView({
         id: "buttonView",
@@ -194,6 +239,9 @@ function Controller() {
     });
     $.__views.lunchmenu.add($.__views.buttonView);
     $.__views.lunch_icon = Ti.UI.createLabel({
+        width: "15%",
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 10,
         text: Alloy.Globals.icons.food,
@@ -201,18 +249,16 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: "15%",
         textAlign: "right",
         id: "lunch_icon"
     });
     $.__views.buttonView.add($.__views.lunch_icon);
     $.__views.row_label = Ti.UI.createLabel({
-        top: 20,
-        left: "5%",
         width: "60%",
         height: Ti.UI.SIZE,
         color: "white",
+        top: 20,
+        left: "5%",
         font: {
             fontSize: 24,
             fontWight: "bold",
@@ -224,6 +270,9 @@ function Controller() {
     });
     $.__views.buttonView.add($.__views.row_label);
     $.__views.right_arrow = Ti.UI.createLabel({
+        width: 50,
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 0,
         text: Alloy.Globals.right_arrow,
@@ -231,8 +280,6 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: 50,
         textAlign: "left",
         id: "right_arrow"
     });
@@ -243,7 +290,7 @@ function Controller() {
         height: 80,
         id: "contacts"
     });
-    __alloyId19.push($.__views.contacts);
+    __alloyId20.push($.__views.contacts);
     displayContacts ? $.__views.contacts.addEventListener("click", displayContacts) : __defers["$.__views.contacts!click!displayContacts"] = true;
     $.__views.buttonView = Ti.UI.createView({
         id: "buttonView",
@@ -252,6 +299,9 @@ function Controller() {
     });
     $.__views.contacts.add($.__views.buttonView);
     $.__views.contacts_icon = Ti.UI.createLabel({
+        width: "15%",
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 10,
         text: Alloy.Globals.icons.book_alt,
@@ -259,18 +309,16 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: "15%",
         textAlign: "right",
         id: "contacts_icon"
     });
     $.__views.buttonView.add($.__views.contacts_icon);
     $.__views.row_label = Ti.UI.createLabel({
-        top: 20,
-        left: "5%",
         width: "60%",
         height: Ti.UI.SIZE,
         color: "white",
+        top: 20,
+        left: "5%",
         font: {
             fontSize: 24,
             fontWight: "bold",
@@ -282,6 +330,9 @@ function Controller() {
     });
     $.__views.buttonView.add($.__views.row_label);
     $.__views.right_arrow = Ti.UI.createLabel({
+        width: 50,
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 0,
         text: Alloy.Globals.right_arrow,
@@ -289,8 +340,6 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: 50,
         textAlign: "left",
         id: "right_arrow"
     });
@@ -301,7 +350,7 @@ function Controller() {
         height: 80,
         id: "calendar"
     });
-    __alloyId19.push($.__views.calendar);
+    __alloyId20.push($.__views.calendar);
     displayCalendar ? $.__views.calendar.addEventListener("click", displayCalendar) : __defers["$.__views.calendar!click!displayCalendar"] = true;
     $.__views.buttonView = Ti.UI.createView({
         id: "buttonView",
@@ -310,6 +359,9 @@ function Controller() {
     });
     $.__views.calendar.add($.__views.buttonView);
     $.__views.calendar_icon = Ti.UI.createLabel({
+        width: "15%",
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 10,
         text: Alloy.Globals.icons.calendar,
@@ -317,18 +369,16 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: "15%",
         textAlign: "right",
         id: "calendar_icon"
     });
     $.__views.buttonView.add($.__views.calendar_icon);
     $.__views.row_label = Ti.UI.createLabel({
-        top: 20,
-        left: "5%",
         width: "60%",
         height: Ti.UI.SIZE,
         color: "white",
+        top: 20,
+        left: "5%",
         font: {
             fontSize: 24,
             fontWight: "bold",
@@ -340,6 +390,9 @@ function Controller() {
     });
     $.__views.buttonView.add($.__views.row_label);
     $.__views.right_arrow = Ti.UI.createLabel({
+        width: 50,
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 0,
         text: Alloy.Globals.right_arrow,
@@ -347,8 +400,6 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: 50,
         textAlign: "left",
         id: "right_arrow"
     });
@@ -359,7 +410,7 @@ function Controller() {
         height: 80,
         id: "communityEdLabel"
     });
-    __alloyId19.push($.__views.communityEdLabel);
+    __alloyId20.push($.__views.communityEdLabel);
     displayCommunityEd ? $.__views.communityEdLabel.addEventListener("click", displayCommunityEd) : __defers["$.__views.communityEdLabel!click!displayCommunityEd"] = true;
     $.__views.buttonView = Ti.UI.createView({
         id: "buttonView",
@@ -368,6 +419,9 @@ function Controller() {
     });
     $.__views.communityEdLabel.add($.__views.buttonView);
     $.__views.community_icon = Ti.UI.createLabel({
+        width: "15%",
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 10,
         text: Alloy.Globals.icons.group_alt,
@@ -375,18 +429,16 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: "15%",
         textAlign: "right",
         id: "community_icon"
     });
     $.__views.buttonView.add($.__views.community_icon);
     $.__views.row_label = Ti.UI.createLabel({
-        top: 20,
-        left: "5%",
         width: "60%",
         height: Ti.UI.SIZE,
         color: "white",
+        top: 20,
+        left: "5%",
         font: {
             fontSize: 24,
             fontWight: "bold",
@@ -398,6 +450,9 @@ function Controller() {
     });
     $.__views.buttonView.add($.__views.row_label);
     $.__views.right_arrow = Ti.UI.createLabel({
+        width: 50,
+        height: Ti.UI.SIZE,
+        color: "white",
         top: 20,
         left: 0,
         text: Alloy.Globals.right_arrow,
@@ -405,27 +460,27 @@ function Controller() {
             fontFamily: "AppIcons",
             fontSize: "24dp"
         },
-        color: "white",
-        width: 50,
         textAlign: "left",
         id: "right_arrow"
     });
     $.__views.buttonView.add($.__views.right_arrow);
     $.__views.districtView = Ti.UI.createTableView({
+        left: "0",
+        width: Ti.UI.FILL,
         separatorColor: "#336699",
         height: Ti.UI.SIZE,
         backgroundColor: "#33B5E5",
-        data: __alloyId19,
+        data: __alloyId20,
         id: "districtView",
         top: "0",
-        left: "0",
         layout: "vertical"
     });
     $.__views.districtWindow.add($.__views.districtView);
     $.__views.districtTab = Ti.UI.createTab({
         window: $.__views.districtWindow,
         id: "districtTab",
-        title: "District"
+        title: "District",
+        icon: "library.png"
     });
     $.__views.districtTab && $.addTopLevelView($.__views.districtTab);
     exports.destroy = function() {};

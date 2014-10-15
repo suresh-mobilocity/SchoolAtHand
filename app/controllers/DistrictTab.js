@@ -1,7 +1,37 @@
 function displayNews(e) {
-		$.districtTab.open(Alloy.createController('DistrictNewsMain', {parentTab: $.districtTab}).getView());
+		var feedType = getNewsFeedType();
+		if ( feedType.toUpperCase() == "RSS"){
+			var newsfeedurl = getNewsFeedUrl();
+			Alloy.createController('RssMain', {parentTab: $.districtTab, rssfeedurl: newsfeedurl, title: 'District News'});
+		} else {
+			$.districtTab.open(Alloy.createController('DistrictNewsMain', {parentTab: $.districtTab}).getView());
+		}
 }
 
+function getNewsFeedType(){
+	var sql = "SELECT name, value FROM enum where name like '%newsfeed%'";
+	var feedType = "";
+	var tmpRS = schoolDB.execute(sql);
+	if ( tmpRS.getRowCount() > 0 ){
+			if ( tmpRS.isValidRow()){
+					feedType = tmpRS.fieldByName('value');
+			}
+	}
+	tmpRS.close();
+	return (feedType);
+}
+function getNewsFeedUrl(){
+	var sql = "SELECT url FROM weburls where name like '%newsfeed%' ";
+	var feedUrl = "";
+	var tmpRS = schoolDB.execute(sql);
+	if ( tmpRS.getRowCount() > 0 ){
+			if ( tmpRS.isValidRow()){
+					feedUrl = tmpRS.fieldByName('url');
+			}
+	}
+	tmpRS.close();
+	return (feedUrl);
+}
 function displayEvents(e) {
 		//$.districtTab.open(Alloy.createController('DistrictNews', {parentTab: $.districtTab}).getView());
 		$.districtTab.open(Alloy.createController('Events', {parentTab: $.districtTab}).getView());

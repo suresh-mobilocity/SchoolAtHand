@@ -1,5 +1,5 @@
 "Window" : {
-	backgroundColor: "#000"
+	backgroundColor: "#33B5E5"
 },
 "TabGroup[platform=ios]" : {
 	navBarHidden: true
@@ -7,6 +7,8 @@
 "TableView" : {
 	//separatorColor: 'white',
 	//top: 0,
+	left: 0,
+	width: Ti.UI.FILL,
 	separatorColor: '#336699',
 	//width: Ti.UI.SIZE,
 	height: Ti.UI.SIZE,
@@ -63,4 +65,9 @@
 "#adView[platform=ios]" : {
         publisherId: "ca-app-pub-3665132116722377/2467198443",
         height: "10%"
-}
+},
+"Label": {
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	color: "#000"
+} 

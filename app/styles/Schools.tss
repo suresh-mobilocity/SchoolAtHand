@@ -1,5 +1,5 @@
 ".container": {
-	backgroundColor: "white"
+	backgroundColor: "#33B5E5"
 },
 "Label": {
 	width: Ti.UI.SIZE,
@@ -7,5 +7,4 @@
 },
 '#schoolsTableView' : {
 	backgroundColor: 'transparent'
-	//backgroundImage: 'images/grain.png'
 }

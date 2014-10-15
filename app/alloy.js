@@ -36,7 +36,7 @@ var notRegisteredLabel = Titanium.UI.createLabel({
 					width: "90%",
 					left: "10%",
 					top: "20%",
-					color: 'blue'
+					color: 'black'
 });
 var alreadyRegisteredLabel = Titanium.UI.createLabel({
 					text: 'You have subscribed to recieve notifications and updates',
@@ -99,7 +99,6 @@ var noProfileLabel = false;
 var isTabsDisabledTabs = false;
 var deviceToken = null;
 var schoolDB = null;
-var noProfileLabel = false;
 if( OS_ANDROID ) {
     Alloy.Globals.Android = { 
         "Api" : Ti.Platform.Android.API_LEVEL
@@ -146,5 +145,13 @@ var menuView = Titanium.UI.createView({
 	            });
 //menuView.add(menuOptionsTable);
 //menuWindow.add(menuView);
+if ( !Ti.App.Properties.hasProperty("DisplayAds")){
+	Ti.App.Properties.setBool("DisplayAds", true);
+}
+//var _admobview = require("admobview");
+//var adMobView = _admobview.getaddview();
 var isMenuWindowOpen = false;
 var tabGroupGlobalReference  = null;
+IS_Ios7Plus = (OS_IOS && parseInt(Ti.Platform.version.split(".")[0]) >= 7);
+IS_iPhoneTall = (OS_IOS && Ti.Platform.osname == "iphone" && Ti.Platform.displayCaps.platformHeight == 568); 
+IS_iPhone4SmallScreen = (OS_IOS && Ti.Platform.osname == "iphone" && Ti.Platform.displayCaps.platformHeight == 480);

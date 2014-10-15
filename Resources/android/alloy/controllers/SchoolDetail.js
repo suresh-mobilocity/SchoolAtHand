@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function dataTransformation(_model) {
         return {
@@ -11,8 +20,8 @@ function Controller() {
             fax: _model.attributes.fax,
             latitude: _model.attributes.latitude,
             longitude: _model.attributes.longitude,
-            imagefile: Ti.Filesystem.applicationDataDirectory + "/images" + "/" + _model.attributes.imagefile,
-            logofile: Ti.Filesystem.applicationDataDirectory + "/images" + "/" + _model.attributes.logofile,
+            imagefile: Ti.Filesystem.applicationDataDirectory + "/images/" + _model.attributes.imagefile,
+            logofile: Ti.Filesystem.applicationDataDirectory + "/images/" + _model.attributes.logofile,
             websiteurl: _model.attributes.websiteurl,
             principal: _model.attributes.principal,
             assistantprincipal: _model.attributes.assistantprincipal,
@@ -35,12 +44,21 @@ function Controller() {
         $.destroy();
         $.detailWindow.removeAllChildren();
         $ = null;
+        Ti.API.info("SchoolDetails: Cleanup Successfully");
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "SchoolDetail";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
@@ -74,78 +92,94 @@ function Controller() {
     });
     $.__views.schoolAddress.add($.__views.schoolImage);
     $.__views.namelabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         textAlign: "center",
         font: {
             fontWeight: "bold",
             fontSize: 18
         },
-        color: "#000",
         id: "namelabel"
     });
     $.__views.schoolAddress.add($.__views.namelabel);
     $.__views.addresslabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         textAlign: "center",
         font: {
             fontSize: 12
         },
-        color: "#000",
         id: "addresslabel"
     });
     $.__views.schoolAddress.add($.__views.addresslabel);
     $.__views.citylabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         textAlign: "center",
         font: {
             fontSize: 12
         },
-        color: "#000",
         id: "citylabel"
     });
     $.__views.schoolAddress.add($.__views.citylabel);
     $.__views.stateandziplabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         textAlign: "center",
         font: {
             fontSize: 12
         },
-        color: "#000",
         id: "stateandziplabel"
     });
     $.__views.schoolAddress.add($.__views.stateandziplabel);
     $.__views.phonelabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         textAlign: "center",
         font: {
             fontSize: 12
         },
-        color: "#000",
         id: "phonelabel"
     });
     $.__views.schoolAddress.add($.__views.phonelabel);
-    $.__views.__alloyId68 = Ti.UI.createLabel({
+    $.__views.__alloyId74 = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         textAlign: "center",
         font: {
             fontSize: 12
         },
-        color: "#000",
-        id: "__alloyId68"
+        id: "__alloyId74"
     });
-    $.__views.schoolAddress.add($.__views.__alloyId68);
-    $.__views.__alloyId69 = Ti.UI.createLabel({
+    $.__views.schoolAddress.add($.__views.__alloyId74);
+    $.__views.__alloyId75 = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         textAlign: "center",
         font: {
             fontSize: 12
         },
-        color: "#000",
-        id: "__alloyId69"
+        id: "__alloyId75"
     });
-    $.__views.schoolAddress.add($.__views.__alloyId69);
-    $.__views.__alloyId70 = Ti.UI.createLabel({
+    $.__views.schoolAddress.add($.__views.__alloyId75);
+    $.__views.__alloyId76 = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         textAlign: "center",
         font: {
             fontSize: 12
         },
-        color: "#000",
-        id: "__alloyId70"
+        id: "__alloyId76"
     });
-    $.__views.schoolAddress.add($.__views.__alloyId70);
+    $.__views.schoolAddress.add($.__views.__alloyId76);
     $.__views.schoolButtons = Ti.UI.createView({
         top: 10,
         layout: "horizontal",
@@ -156,11 +190,11 @@ function Controller() {
     });
     $.__views.schoolAddress.add($.__views.schoolButtons);
     $.__views.phonebutton = Ti.UI.createLabel({
-        left: 10,
-        color: "white",
-        backgroundColor: "#336699",
         width: 50,
         height: 50,
+        color: "white",
+        left: 10,
+        backgroundColor: "#336699",
         font: {
             fontFamily: "AppIcons",
             fontSize: "50dp"
@@ -173,11 +207,11 @@ function Controller() {
     $.__views.schoolButtons.add($.__views.phonebutton);
     dialPhoneNumber ? $.__views.phonebutton.addEventListener("click", dialPhoneNumber) : __defers["$.__views.phonebutton!click!dialPhoneNumber"] = true;
     $.__views.mapbutton = Ti.UI.createLabel({
-        left: 10,
-        color: "white",
-        backgroundColor: "#336699",
         width: 50,
         height: 50,
+        color: "white",
+        left: 10,
+        backgroundColor: "#336699",
         font: {
             fontFamily: "AppIcons",
             fontSize: "50dp"
@@ -189,11 +223,11 @@ function Controller() {
     });
     $.__views.schoolButtons.add($.__views.mapbutton);
     $.__views.webbutton = Ti.UI.createLabel({
-        left: 10,
-        color: "white",
-        backgroundColor: "#336699",
         width: 50,
         height: 50,
+        color: "white",
+        left: 10,
+        backgroundColor: "#336699",
         font: {
             fontFamily: "AppIcons",
             fontSize: "50dp"
@@ -226,24 +260,27 @@ function Controller() {
     });
     $.__views.schoolContacts.add($.__views.principal);
     $.__views.principallabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "black",
         textAlign: "left",
         font: {
             fontWeight: "normal",
             fontSize: 14
         },
-        color: "black",
         id: "principallabel",
         text: "Principal:"
     });
     $.__views.principal.add($.__views.principallabel);
     $.__views.principalname = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: 20,
+        color: "blue",
         textAlign: "center",
         font: {
             fontWeight: "normal",
             fontSize: 14
         },
-        color: "blue",
-        height: 20,
         id: "principalname"
     });
     $.__views.principal.add($.__views.principalname);
@@ -263,25 +300,27 @@ function Controller() {
     });
     $.__views.schoolContacts.add($.__views.assistantprincipal);
     $.__views.assistantprincipallabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: 20,
+        color: "black",
         textAlign: "left",
         font: {
             fontWeight: "normal",
             fontSize: 14
         },
-        color: "black",
-        height: 20,
         id: "assistantprincipallabel",
         text: "Asst. Principal:"
     });
     $.__views.assistantprincipal.add($.__views.assistantprincipallabel);
     $.__views.assistantprincipalname = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: 20,
+        color: "blue",
         textAlign: "center",
         font: {
             fontWeight: "normal",
             fontSize: 14
         },
-        color: "blue",
-        height: 20,
         id: "assistantprincipalname"
     });
     $.__views.assistantprincipal.add($.__views.assistantprincipalname);
@@ -301,25 +340,27 @@ function Controller() {
     });
     $.__views.schoolContacts.add($.__views.abspecialist);
     $.__views.abspecialistlabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: 20,
+        color: "black",
         textAlign: "left",
         font: {
             fontWeight: "normal",
             fontSize: 14
         },
-        color: "black",
-        height: 20,
         id: "abspecialistlabel",
         text: "Anti Bullying Specialist:"
     });
     $.__views.abspecialist.add($.__views.abspecialistlabel);
     $.__views.abspecialistname = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: 20,
+        color: "blue",
         textAlign: "center",
         font: {
             fontWeight: "normal",
             fontSize: 14
         },
-        color: "blue",
-        height: 20,
         id: "abspecialistname"
     });
     $.__views.abspecialist.add($.__views.abspecialistname);
@@ -331,35 +372,47 @@ function Controller() {
         id: "emailABSpecialist"
     });
     $.__views.abspecialist.add($.__views.emailABSpecialist);
-    var __alloyId71 = function() {
-        $.schoolImage.image = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["imagefile"] : $.schoolDetail.get("imagefile");
-        $.schoolImage.image = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["imagefile"] : $.schoolDetail.get("imagefile");
-        $.namelabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["name"] : $.schoolDetail.get("name");
-        $.namelabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["name"] : $.schoolDetail.get("name");
-        $.addresslabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["address1"] : $.schoolDetail.get("address1");
-        $.addresslabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["address1"] : $.schoolDetail.get("address1");
-        $.citylabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["city"] : $.schoolDetail.get("city");
-        $.citylabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["city"] : $.schoolDetail.get("city");
-        $.stateandziplabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["stateandzip"] : $.schoolDetail.get("stateandzip");
-        $.stateandziplabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["stateandzip"] : $.schoolDetail.get("stateandzip");
-        $.phonelabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["phone"] : $.schoolDetail.get("phone");
-        $.phonelabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["phone"] : $.schoolDetail.get("phone");
-        $.__alloyId68.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["regular_hours"] : $.schoolDetail.get("regular_hours");
-        $.__alloyId68.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["regular_hours"] : $.schoolDetail.get("regular_hours");
-        $.__alloyId69.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["delayed_hours"] : $.schoolDetail.get("delayed_hours");
-        $.__alloyId69.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["delayed_hours"] : $.schoolDetail.get("delayed_hours");
-        $.__alloyId70.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["earlyrelease_hours"] : $.schoolDetail.get("earlyrelease_hours");
-        $.__alloyId70.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["earlyrelease_hours"] : $.schoolDetail.get("earlyrelease_hours");
-        $.principalname.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["principal"] : $.schoolDetail.get("principal");
-        $.principalname.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["principal"] : $.schoolDetail.get("principal");
-        $.assistantprincipalname.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["assistantprincipal"] : $.schoolDetail.get("assistantprincipal");
-        $.assistantprincipalname.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["assistantprincipal"] : $.schoolDetail.get("assistantprincipal");
-        $.abspecialistname.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["antibullyingspecialist"] : $.schoolDetail.get("antibullyingspecialist");
-        $.abspecialistname.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["antibullyingspecialist"] : $.schoolDetail.get("antibullyingspecialist");
+    var __alloyId77 = function() {
+        $.schoolImage.image = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["imagefile"] : _.template("<%=schoolDetail.imagefile%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.namelabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["name"] : _.template("<%=schoolDetail.name%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.addresslabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["address1"] : _.template("<%=schoolDetail.address1%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.citylabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["city"] : _.template("<%=schoolDetail.city%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.stateandziplabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["stateandzip"] : _.template("<%=schoolDetail.stateandzip%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.phonelabel.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["phone"] : _.template("<%=schoolDetail.phone%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.__alloyId74.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["regular_hours"] : _.template("<%=schoolDetail.regular_hours%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.__alloyId75.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["delayed_hours"] : _.template("<%=schoolDetail.delayed_hours%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.__alloyId76.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["earlyrelease_hours"] : _.template("<%=schoolDetail.earlyrelease_hours%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.principalname.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["principal"] : _.template("<%=schoolDetail.principal%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.assistantprincipalname.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["assistantprincipal"] : _.template("<%=schoolDetail.assistantprincipal%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
+        $.abspecialistname.text = _.isFunction($.schoolDetail.transform) ? $.schoolDetail.transform()["antibullyingspecialist"] : _.template("<%=schoolDetail.antibullyingspecialist%>", {
+            schoolDetail: $.schoolDetail.toJSON()
+        });
     };
-    $.schoolDetail.on("fetch change destroy", __alloyId71);
+    $.schoolDetail.on("fetch change destroy", __alloyId77);
     exports.destroy = function() {
-        $.schoolDetail.off("fetch change destroy", __alloyId71);
+        $.schoolDetail.off("fetch change destroy", __alloyId77);
     };
     _.extend($, $.__views);
     var args = arguments[0] || {};

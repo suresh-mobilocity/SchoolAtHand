@@ -1,9 +1,26 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "Findmyschool";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.findMySchoolWindow = Ti.UI.createWindow({
@@ -27,10 +44,12 @@ function Controller() {
     });
     $.__views.findMySchoolWindow.add($.__views.findMySchoolView);
     $.__views.streetnamelabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         left: 5,
         top: 5,
         right: 5,
-        height: Ti.UI.SIZE,
         id: "streetnamelabel",
         text: "Enter Street Name",
         textAlign: "left"
@@ -64,6 +83,8 @@ function Controller() {
     });
     $.__views.inputView.add($.__views.schoolFinderButton);
     $.__views.listOfSchoolsByStreet = Ti.UI.createTableView({
+        left: 0,
+        width: Ti.UI.FILL,
         separatorColor: "#336699",
         height: Ti.UI.SIZE,
         backgroundColor: "#E3E3E3",
@@ -84,7 +105,6 @@ function Controller() {
     $.schoolFinderButton.addEventListener("click", function() {
         $.streetNameInput.blur();
         var sql = "SELECT street, elementary, middle FROM schoolallotment WHERE street LIKE '" + $.streetNameInput.value + "%'";
-        Ti.API.info("SQL statement being executed: " + sql);
         var mySchoolsRS = schoolDB.execute(sql);
         var data = [];
         if (mySchoolsRS.getRowCount() > 0) {
@@ -94,7 +114,6 @@ function Controller() {
                 var street = mySchoolsRS.fieldByName("street");
                 var elementary = mySchoolsRS.fieldByName("elementary");
                 var middle = mySchoolsRS.fieldByName("middle");
-                Ti.API.info("Database returned street:" + street + ", elementary:" + elementary + ", middle:" + middle);
                 var row = Ti.UI.createTableViewRow({
                     layout: "vertical",
                     height: 80
@@ -116,7 +135,7 @@ function Controller() {
                 rowView.add(streetLabel);
                 var elementaryLabel = Ti.UI.createLabel({
                     left: 30,
-                    text: elementary + " " + "Elementary School",
+                    text: elementary + " Elementary School",
                     font: {
                         fontSize: 14,
                         fontWeight: "normal"
@@ -128,7 +147,7 @@ function Controller() {
                 var middleLabel = Ti.UI.createLabel({
                     left: 30,
                     textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-                    text: middle + " " + "Middle School",
+                    text: middle + " Middle School",
                     font: {
                         fontSize: 14,
                         fontWeight: "normal"

@@ -144,10 +144,13 @@ $.contactTeacher.addEventListener('click', function(e){
 	}
 });
 function getTeacherContacts() {
-	var contactsQuery = "SELECT phonenum, emailaddr FROM contacts where name like '%" + teacherName + "%'" 
+	var contactsQuery = null;
+	if (teacherName === "" || teacherName === null){
+	 	contactsQuery = "SELECT phone as phonenum, principal_emailaddr as emailaddr FROM schools where name like '%" + school + "%'" ;
+	} else {
+		contactsQuery = "SELECT phonenum, emailaddr FROM contacts where name like '%" + teacherName + "%'" 
 									+ " AND building like '" + school + "%'";
-					  
-	//Ti.API.info('contacts: ' + contactsQuery);
+	} 
 	var contactResults = schoolDB.execute(contactsQuery);
 	if ( contactResults.getRowCount() > 0 )
 	{

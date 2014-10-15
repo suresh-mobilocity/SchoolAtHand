@@ -22,7 +22,6 @@ var xhr = Titanium.Network.createHTTPClient({
         humidity = json.current_observation.relative_humidity;
         uv = json.current_observation.UV;
         icon_url = json.current_observation.icon_url;
-        Ti.API.info("weather:" + weather + "\n" + "temp: " + temp_f + "\n" + "imgUrl:" + icon_url);
         var weatherLabel = Ti.UI.createLabel({
             text: weather,
             font: {
@@ -35,7 +34,7 @@ var xhr = Titanium.Network.createHTTPClient({
             touchEnabled: false
         });
         var conditionsLabel = Ti.UI.createLabel({
-            text: "T:" + temp_f + "F " + " H:" + humidity + " UV: " + uv,
+            text: "T:" + temp_f + "F  H:" + humidity + " UV: " + uv,
             font: {
                 fontSize: "10dp",
                 fontWeight: "bold"
@@ -65,8 +64,8 @@ var xhr = Titanium.Network.createHTTPClient({
 
 exports.fillWeatherReport = function(city, state) {
     var queryUrl = baseUrl + state + "/" + city.replace(" ", "_") + ".json";
+    weatherView.removeAllChildren();
     xhr.open("GET", queryUrl);
-    Ti.API.info("Retriving Weather Report");
     xhr.send();
     var locationLabel = Ti.UI.createLabel({
         text: city + " " + state,

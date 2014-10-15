@@ -1,21 +1,38 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "AboutSHApp";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.aboutWindow = Ti.UI.createWindow({
-        backgroundColor: "#000",
+        backgroundColor: "#33B5E5",
         id: "aboutWindow"
     });
     $.__views.aboutWindow && $.addTopLevelView($.__views.aboutWindow);
-    $.__views.content = Ti.UI.createWebView({
-        id: "content",
+    $.__views.aboutView = Ti.UI.createWebView({
+        id: "aboutView",
         url: "/aboutshapp.html"
     });
-    $.__views.aboutWindow.add($.__views.content);
+    $.__views.aboutWindow.add($.__views.aboutView);
     exports.destroy = function() {};
     _.extend($, $.__views);
     var args = arguments[0] || {};

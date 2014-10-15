@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function getDepartmentDataFromDB() {
         var sql = "SELECT * from departments where name like '%Community%'";
@@ -7,7 +16,6 @@ function Controller() {
             $.citylabel.text = sqlRS.fieldByName("city");
             $.stateandziplabel.text = sqlRS.fieldByName("stateandzipcode");
             $.phonelabel.text = sqlRS.fieldByName("phoneno");
-            Ti.API.info($.addresslabel.text + ":" + $.citylabel.text + ":" + $.stateandziplabel.text + ":" + $.phonelabel.text);
             sqlRS.close();
         }
     }
@@ -21,7 +29,6 @@ function Controller() {
             var emailAddr = sqlRS.fieldByName("emailaddr");
             var phoneNo = sqlRS.fieldByName("phoneno");
             var ext = sqlRS.fieldByName("ext");
-            Ti.API.info("sectionName: " + sectionName + "contactName:" + sectionName + "phoneNo: " + phoneNo);
             var row = Ti.UI.createTableViewRow({
                 layout: "vertical",
                 height: 100,
@@ -46,12 +53,14 @@ function Controller() {
                 height: Ti.UI.SIZE,
                 width: Ti.UI.SIZE
             });
-            Ti.UI.createView({
-                layout: "vertical",
-                id: "contactView",
-                height: Ti.UI.SIZE,
-                width: Ti.UI.SIZE
-            });
+            {
+                Ti.UI.createView({
+                    layout: "vertical",
+                    id: "contactView",
+                    height: Ti.UI.SIZE,
+                    width: Ti.UI.SIZE
+                });
+            }
             var contactNameLabel = Ti.UI.createLabel({
                 left: 5,
                 text: contactName,
@@ -121,7 +130,7 @@ function Controller() {
     }
     function dialPhoneNumber(phoneNo, ext) {
         var dialingNo = phoneNo.replace(/[^0-9]/g, "");
-        "" == ext ? Ti.Platform.openURL("tel:" + dialingNo) : Ti.Platform.openURL("tel:" + dialingNo + ",,,," + ext);
+        Ti.Platform.openURL("" == ext ? "tel:" + dialingNo : "tel:" + dialingNo + ",,,," + ext);
     }
     function sendEmail(emailAddr) {
         var emailDialog = Ti.UI.createEmailDialog();
@@ -131,9 +140,17 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "CommunityEd";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.communityEdWindow = Ti.UI.createWindow({
@@ -152,10 +169,12 @@ function Controller() {
     });
     $.__views.communityEdWindow.add($.__views.communityEdMainView);
     $.__views.namelabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         font: {
             fontSize: 18
         },
-        color: "#000",
         text: "Community Education Dept",
         id: "namelabel"
     });
@@ -172,40 +191,48 @@ function Controller() {
     });
     $.__views.contactsView.add($.__views.address);
     $.__views.addresslabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         font: {
             fontSize: 14
         },
-        color: "#000",
         text: "Address",
         id: "addresslabel",
         left: "10"
     });
     $.__views.address.add($.__views.addresslabel);
     $.__views.citylabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         font: {
             fontSize: 14
         },
-        color: "#000",
         text: "City",
         id: "citylabel",
         left: "10"
     });
     $.__views.address.add($.__views.citylabel);
     $.__views.stateandziplabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         font: {
             fontSize: 14
         },
-        color: "#000",
         text: "08852",
         id: "stateandziplabel",
         left: "10"
     });
     $.__views.address.add($.__views.stateandziplabel);
     $.__views.phonelabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         font: {
             fontSize: 14
         },
-        color: "#000",
         text: "phonenumber",
         id: "phonelabel",
         left: "10"

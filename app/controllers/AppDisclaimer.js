@@ -1,10 +1,6 @@
 var args = arguments[0] || {};
 var parentController = args.parentTab;
 
-function showOptions(){
-    $.dialog.show();
-}
-
 function destroy(){
     $.DisclaimerWin.removeEventListener('close', destroy);
     // unbind any data collection you might have bound to the controller
@@ -15,33 +11,38 @@ function destroy(){
    // Alloy.Globals.deallocate($);
     // set to null for garbage collection
     $ = null;
-    parentController = null;
-    //Ti.API.info("AppDiscalimer| Cleanup Successful");
+    if (OS_ANDROID) { parentController = null; }
+    Ti.API.info("AppDiscalimer| Cleanup Successful");
 }
 /*
-$.dialog.addEventListener('click', function(e){
-	if ( e.index < 2 )
-	{
-		if ( e.index == 0){
-			Ti.App.Properties.setString('AppDisclaimerAccepted', 'true');
-			Ti.API.info('Discalimer is Accepted');
-		}
-		else if ( e.index == 1 )
+	$.dialog.addEventListener('click', function(e){
+		if ( e.index < 2 )
 		{
-			Ti.App.Properties.setString('AppDisclaimerAccepted', 'false');
-			Ti.API.info('Discalimer Denied');
+			if ( e.index == 0){
+				Ti.App.Properties.setString('AppDisclaimerAccepted', 'true');
+				Ti.API.info('Discalimer is Accepted');
+			}
+			else if ( e.index == 1 )
+			{
+				Ti.App.Properties.setString('AppDisclaimerAccepted', 'false');
+				Ti.API.info('Discalimer Denied');
+			}
 		}
-	}
-	$.DisclaimerWin.close();
-	//parentController.open(Alloy.createController('index').getView());
-});
+		$.DisclaimerWin.close();
+		//parentController.open(Alloy.createController('index').getView());
+	});
 */
-
 $.buttonAccept.addEventListener('click', function(e){
 	Ti.App.Properties.setString('AppDisclaimerAccepted', 'true');
-	//Ti.API.info('Discalimer is Accepted');
-	parentController.open(Alloy.createController('SelectSchoolDistrict',{parentTab: parentController} ).getView());
-	$.DisclaimerWin.close();
+	Ti.API.info('Discalimer is Accepted');
+	if (OS_ANDROID) {
+		parentController.open(Alloy.createController('SelectSchoolDistrict',{parentTab: parentController} ).getView());
+		$.DisclaimerWin.close();
+	} else if (OS_IOS) {
+		
+		//parentController.open(Alloy.createController('SelectSchoolDistrict',{parentTab: parentController} ).getView());
+		$.DisclaimerWin.close();
+	}
 	
 });
 $.buttonDeny.addEventListener('click', function(e){

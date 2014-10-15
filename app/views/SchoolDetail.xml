@@ -1,5 +1,5 @@
 <Alloy>
-	<Model id="schoolDetail" instance="true" src = "school"> 
+	<Model id="schoolDetail" instance="true" src = "school" /> 
 	   <Window id="detailWindow" model="$.schoolDetail" class="container">
 	   		<View id="schoolAddress" height='60%'>
 	   			<ImageView id="schoolImage" image="{$.schoolDetail.imagefile}"/>

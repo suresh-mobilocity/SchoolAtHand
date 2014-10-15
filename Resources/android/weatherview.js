@@ -34,7 +34,7 @@ var xhr = Titanium.Network.createHTTPClient({
             touchEnabled: false
         });
         var conditionsLabel = Ti.UI.createLabel({
-            text: "T:" + temp_f + "F " + " H:" + humidity + " UV: " + uv,
+            text: "T:" + temp_f + "F  H:" + humidity + " UV: " + uv,
             font: {
                 fontSize: "10dp",
                 fontWeight: "bold"

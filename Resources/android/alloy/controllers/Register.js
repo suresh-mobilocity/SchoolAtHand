@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function destroy() {
         $.registerForm.removeEventListener("close", destroy);
@@ -62,21 +71,33 @@ function Controller() {
             channel: "SBSD_Alerts",
             type: "gcm"
         }, function(e) {
-            e.success ? registerCallbacks() : alert("Error:\n" + (e.error && e.message || JSON.stringify(e)));
+            if (e.success) {
+                registerCallbacks();
+                alert("Successfully subscribed to receive School District Notifications");
+                Ti.App.Properties.setBool("Subscribe_SBSD_Alerts", true);
+            } else alert("Error:\n" + (e.error && e.message || JSON.stringify(e)));
         });
         $.recivePushFromPTA.value && Cloud.PushNotifications.subscribeToken({
             device_token: deviceToken,
             channel: "PTA_Alerts",
             type: "gcm"
         }, function(e) {
-            e.success ? registerCallbacks() : alert("Error:\n" + (e.error && e.message || JSON.stringify(e)));
+            if (e.success) {
+                registerCallbacks();
+                alert("Successfully subscribed to receive PTA Announcements");
+                Ti.App.Properties.setBool("Subscribe_PTA_Alerts", true);
+            } else alert("Error:\n" + (e.error && e.message || JSON.stringify(e)));
         });
         $.recivePushFromSports.value && Cloud.PushNotifications.subscribeToken({
             device_token: deviceToken,
             channel: "Sports_Alerts",
             type: "gcm"
         }, function(e) {
-            e.success ? registerCallbacks() : alert("Error:\n" + (e.error && e.message || JSON.stringify(e)));
+            if (e.success) {
+                registerCallbacks();
+                alert("Successfully subscribed to receive Push Notifications");
+                Ti.App.Properties.setBool("Subscribe_Sports_Alerts", true);
+            } else alert("Error:\n" + (e.error && e.message || JSON.stringify(e)));
         });
     }
     function validateEmailformat(emailAddress) {
@@ -110,9 +131,17 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "Register";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
@@ -225,44 +254,44 @@ function Controller() {
     });
     $.__views.registerView.add($.__views.confirmPassword);
     $.__views.pushNotificationSelection = Ti.UI.createLabel({
-        top: 20,
-        left: 20,
         width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "blue",
+        top: 20,
+        left: 20,
         font: {
             fontSize: 14,
             fontWeight: "normal",
             fontFamily: "Helvetica",
             fontStyle: "normal"
         },
-        color: "blue",
         textAlign: Ti.UI.TEXT_ALIGNMENT_LEFT,
-        text: "I agreee to reive push notifications for",
+        text: "I agree to recive push notifications for",
         id: "pushNotificationSelection"
     });
     $.__views.registerView.add($.__views.pushNotificationSelection);
-    $.__views.__alloyId58 = Ti.UI.createView({
+    $.__views.__alloyId59 = Ti.UI.createView({
         layout: "horizontal",
         height: Ti.UI.SIZE,
-        id: "__alloyId58"
+        id: "__alloyId59"
     });
-    $.__views.registerView.add($.__views.__alloyId58);
-    $.__views.__alloyId59 = Ti.UI.createLabel({
-        top: 20,
-        left: 20,
+    $.__views.registerView.add($.__views.__alloyId59);
+    $.__views.__alloyId60 = Ti.UI.createLabel({
         width: "70%",
         height: Ti.UI.SIZE,
+        color: "blue",
+        top: 20,
+        left: 20,
         font: {
             fontSize: 14,
             fontWeight: "normal",
             fontFamily: "Helvetica",
             fontStyle: "normal"
         },
-        color: "blue",
         text: "School Announcements",
-        id: "__alloyId59"
+        id: "__alloyId60"
     });
-    $.__views.__alloyId58.add($.__views.__alloyId59);
+    $.__views.__alloyId59.add($.__views.__alloyId60);
     $.__views.recivePushFromSBSD = Ti.UI.createSwitch({
         top: 20,
         left: 20,
@@ -274,29 +303,29 @@ function Controller() {
         style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
         id: "recivePushFromSBSD"
     });
-    $.__views.__alloyId58.add($.__views.recivePushFromSBSD);
-    $.__views.__alloyId60 = Ti.UI.createView({
+    $.__views.__alloyId59.add($.__views.recivePushFromSBSD);
+    $.__views.__alloyId61 = Ti.UI.createView({
         layout: "horizontal",
         height: Ti.UI.SIZE,
-        id: "__alloyId60"
+        id: "__alloyId61"
     });
-    $.__views.registerView.add($.__views.__alloyId60);
-    $.__views.__alloyId61 = Ti.UI.createLabel({
-        top: 20,
-        left: 20,
+    $.__views.registerView.add($.__views.__alloyId61);
+    $.__views.__alloyId62 = Ti.UI.createLabel({
         width: "70%",
         height: Ti.UI.SIZE,
+        color: "blue",
+        top: 20,
+        left: 20,
         font: {
             fontSize: 14,
             fontWeight: "normal",
             fontFamily: "Helvetica",
             fontStyle: "normal"
         },
-        color: "blue",
         text: "PTA Annoncements",
-        id: "__alloyId61"
+        id: "__alloyId62"
     });
-    $.__views.__alloyId60.add($.__views.__alloyId61);
+    $.__views.__alloyId61.add($.__views.__alloyId62);
     $.__views.recivePushFromPTA = Ti.UI.createSwitch({
         top: 20,
         left: 20,
@@ -308,29 +337,29 @@ function Controller() {
         style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
         id: "recivePushFromPTA"
     });
-    $.__views.__alloyId60.add($.__views.recivePushFromPTA);
-    $.__views.__alloyId62 = Ti.UI.createView({
+    $.__views.__alloyId61.add($.__views.recivePushFromPTA);
+    $.__views.__alloyId63 = Ti.UI.createView({
         layout: "horizontal",
         height: Ti.UI.SIZE,
-        id: "__alloyId62"
+        id: "__alloyId63"
     });
-    $.__views.registerView.add($.__views.__alloyId62);
-    $.__views.__alloyId63 = Ti.UI.createLabel({
-        top: 20,
-        left: 20,
+    $.__views.registerView.add($.__views.__alloyId63);
+    $.__views.__alloyId64 = Ti.UI.createLabel({
         width: "70%",
         height: Ti.UI.SIZE,
+        color: "blue",
+        top: 20,
+        left: 20,
         font: {
             fontSize: 14,
             fontWeight: "normal",
             fontFamily: "Helvetica",
             fontStyle: "normal"
         },
-        color: "blue",
         text: "Sports Anouncements",
-        id: "__alloyId63"
+        id: "__alloyId64"
     });
-    $.__views.__alloyId62.add($.__views.__alloyId63);
+    $.__views.__alloyId63.add($.__views.__alloyId64);
     $.__views.recivePushFromSports = Ti.UI.createSwitch({
         top: 20,
         left: 20,
@@ -342,22 +371,36 @@ function Controller() {
         style: Ti.UI.Android.SWITCH_STYLE_CHECKBOX,
         id: "recivePushFromSports"
     });
-    $.__views.__alloyId62.add($.__views.recivePushFromSports);
-    $.__views.buttonRegister = Ti.UI.createButton({
-        title: "Signup",
-        backgroundColor: "#336699",
-        top: 20,
-        left: "10%",
-        width: "80%",
-        height: Ti.UI.SIZE,
-        font: {
-            fontSize: 12,
-            fontWeight: "bold"
-        },
-        color: "white",
-        borderRadius: 10,
-        id: "buttonRegister"
-    });
+    $.__views.__alloyId63.add($.__views.recivePushFromSports);
+    $.__views.buttonRegister = Ti.UI.createButton(function() {
+        var o = {};
+        _.extend(o, {
+            title: "Signup",
+            backgroundColor: "#336699",
+            top: 20,
+            left: "10%",
+            width: "80%",
+            height: Ti.UI.SIZE,
+            font: {
+                fontSize: 12,
+                fontWeight: "bold"
+            },
+            color: "white",
+            borderRadius: 10
+        });
+        IS_iPhone4SmallScreen && _.extend(o, {
+            style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+            font: {
+                fontSize: 12,
+                fontWeight: "bold"
+            },
+            height: "50dp"
+        });
+        _.extend(o, {
+            id: "buttonRegister"
+        });
+        return o;
+    }());
     $.__views.registerView.add($.__views.buttonRegister);
     actionRegister ? $.__views.buttonRegister.addEventListener("click", actionRegister) : __defers["$.__views.buttonRegister!click!actionRegister"] = true;
     $.__views.activityIndicator = Ti.UI.createActivityIndicator({

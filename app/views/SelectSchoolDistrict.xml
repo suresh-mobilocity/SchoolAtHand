@@ -1,13 +1,12 @@
 <Alloy>
 	<Window id="selectSchoolDistrict" fullscreen="true" class="container" exitOnClose="true" >
 		<View id="hintView" backgroundColor="#ffffff">
-			   	<Label id="hintLabel">Currently the following School Districts are supported. Select yours.</Label>
+			   	<Label id="hintLabel">Currently the following School Districts are supported\n. Select yours by clicking the school district</Label>
 		</View>
-        <OptionDialog id="dialog" title="Confirm School District">
-        	<Options>
-                <Option>Confirm</Option>
-                <Option>Exit</Option>
-            </Options>
-        </OptionDialog>
+        <View id="buttonLayout">
+        	<Button id="buttonExit" visible="true" />
+        	<Button id="buttonNext" visible="false"/>
+        	
+        </View>
 	 </Window>
 </Alloy>

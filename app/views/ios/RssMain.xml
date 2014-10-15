@@ -1,0 +1,7 @@
+<Alloy>
+	<!-- iPad -->
+	<SplitWindow id="schoolEventsRss" formFactor="tablet">
+		<Require src="RssMaster" id="rssmaster"/>
+		<Require src="RssDetail" id="rssdetail"/>
+	</SplitWindow>
+</Alloy>

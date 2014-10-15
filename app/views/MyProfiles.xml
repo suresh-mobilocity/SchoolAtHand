@@ -1,14 +1,18 @@
 <Alloy>
       <Collection src="profile" />
-      <Tab id="profilesTab" title="Profiles">
+      <Tab id="profilesTab" title="Profiles" icon="users.png">
 	       <Window id="profilesWindow"  title="MyProfiles" class="container" layout="vertical">
 	       		<View id="profilesView">
 			            <TableView id="profilesTableView" dataCollection="profile">
-			            	<Require src="ProfileRow">
+			            	<Require src="ProfileRow" />
 			            </TableView>
+			            <!--
 			        	<Button id="addButton" title="Add Profile"></Button>
-	        	</View>
+			        	-->
+			      </View>
+	        	<!--
 	        	<View ns="Admob" id="adView"/>
+	        	-->
 	       </Window>
      </Tab>
 </Alloy>

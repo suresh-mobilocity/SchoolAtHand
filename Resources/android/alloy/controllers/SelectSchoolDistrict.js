@@ -1,62 +1,60 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function getSupportedSchoolsTableRows(e) {
         var rowData = [];
-        for (var i = 0; e.files.length > i; i++) {
+        for (var i = 0; i < e.files.length; i++) {
             var file = e.files[i];
             var filenameParts = file.name.split(".");
             var filenameExt = filenameParts[1];
             var filename = filenameParts[0];
             if ("db" === filenameExt) {
+                var data = {
+                    filename: filename,
+                    fileurl: file.url,
+                    fileid: file.id,
+                    lastupdated: file.updated_at
+                };
                 var row = Ti.UI.createTableViewRow({
                     layout: "vertical",
                     left: "1%",
                     height: 80,
                     width: "98%",
-                    backgroundColor: "#336699",
                     borderWidth: 8,
-                    borderColor: "gray"
+                    color: "black",
+                    borderColor: "gray",
+                    data: data,
+                    hasCheck: false
                 });
                 var recView = Ti.UI.createView({
                     layout: "hoizontal",
                     top: 0,
                     left: 0,
                     height: Ti.UI.SIZE,
-                    width: Ti.UI.SIZE
+                    width: Ti.UI.SIZE,
+                    touchEnabled: false
                 });
                 var districtName = Ti.UI.createLabel({
                     top: 0,
                     text: filename,
-                    textAlight: Ti.UI.TEXT_ALIGNMENT_LEFT,
-                    left: 100,
+                    textAlight: Ti.UI.TEXT_ALIGNMENT_CENTER,
+                    left: "4%",
                     height: 80,
-                    width: Ti.UI.SIZE,
+                    width: "96%",
                     font: {
                         fontSize: 16,
                         fontWeight: "bold"
                     },
-                    color: "white"
+                    color: "black",
+                    touchEnabled: false
                 });
-                var selectionSwitch = Ti.UI.createSwitch({
-                    top: 0,
-                    textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
-                    height: 80,
-                    left: 20,
-                    value: false,
-                    filename: filename,
-                    fileid: file.id,
-                    fileurl: file.url,
-                    lastupdated: file.updated_at
-                });
-                selectionSwitch.setStyle(Ti.UI.Android.SWITCH_STYLE_CHECKBOX);
-                selectionSwitch.addEventListener("change", function(e) {
-                    if (e.value) {
-                        selectedSchoolDistrict = e.source.filename;
-                        dbUrl = e.source.fileurl;
-                        dbLastUpdated = e.source.lastupdated;
-                    }
-                    $.dialog.show();
-                });
-                recView.add(selectionSwitch);
                 recView.add(districtName);
                 row.add(recView);
                 rowData.push(row);
@@ -140,6 +138,8 @@ function Controller() {
         $.selectSchoolDistrict.removeEventListener("close", destroy);
         $.destroy();
         selectedSchoolDistrict = null;
+        supportedSchools.removeAllChildren();
+        supportedSchools = null;
         dbUrl = null;
         dbLastUpdated = null;
         $.selectSchoolDistrict.removeAllChildren();
@@ -191,9 +191,17 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "SelectSchoolDistrict";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.selectSchoolDistrict = Ti.UI.createWindow({
@@ -211,63 +219,75 @@ function Controller() {
     });
     $.__views.selectSchoolDistrict.add($.__views.hintView);
     $.__views.hintLabel = Ti.UI.createLabel({
-        top: 0,
-        left: "1%",
-        height: 80,
         width: "98%",
+        height: 80,
+        color: "blue",
+        top: 0,
+        left: "2%",
         font: {
             fontSize: 14,
             fontWeight: "bold"
         },
-        color: "blue",
-        text: "Currently the following School Districts are supported. Select yours.",
+        text: "Currently the following School Districts are supported\n. Select yours by clicking the school district",
         id: "hintLabel"
     });
     $.__views.hintView.add($.__views.hintLabel);
-    var __alloyId86 = [];
-    __alloyId86.push("Confirm");
-    __alloyId86.push("Exit");
-    $.__views.dialog = Ti.UI.createOptionDialog({
-        options: __alloyId86,
-        id: "dialog",
-        title: "Confirm School District"
+    $.__views.buttonLayout = Ti.UI.createView({
+        layout: "horizontal",
+        borderColor: "#336699",
+        top: "80%",
+        id: "buttonLayout"
     });
+    $.__views.selectSchoolDistrict.add($.__views.buttonLayout);
+    $.__views.buttonExit = Ti.UI.createButton({
+        title: "Exit",
+        backgroundColor: "#336699",
+        width: "40%",
+        top: "10%",
+        left: "5%",
+        height: Ti.UI.SIZE,
+        font: {
+            fontSize: 12,
+            fontWeight: "bold"
+        },
+        color: "white",
+        borderColor: "#336699",
+        borderRadius: 8,
+        id: "buttonExit",
+        visible: "true"
+    });
+    $.__views.buttonLayout.add($.__views.buttonExit);
+    $.__views.buttonNext = Ti.UI.createButton({
+        title: "Next",
+        backgroundColor: "#336699",
+        top: "10%",
+        width: "40%",
+        left: "5%",
+        height: Ti.UI.SIZE,
+        font: {
+            fontSize: 12,
+            fontWeight: "bold"
+        },
+        color: "white",
+        borderColor: "#336699",
+        borderRadius: 8,
+        id: "buttonNext",
+        visible: "false"
+    });
+    $.__views.buttonLayout.add($.__views.buttonNext);
     exports.destroy = function() {};
     _.extend($, $.__views);
     arguments[0] || {};
     var selectedSchoolDistrict = null;
     var dbUrl = null;
     var dbLastUpdated = null;
-    $.dialog.addEventListener("click", function(e) {
-        if (2 > e.index) if (0 == e.index) {
-            var loadingDBProgress = Alloy.createController("ProgressIndicator", {
-                message: "Loading configuration for \n" + selectedSchoolDistrict
-            }).getView();
-            loadingDBProgress.open();
-            var databaseDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "databases");
-            databaseDir.exists() || databaseDir.createDirectory();
-            var databaseFile = Ti.Filesystem.getFile(databaseDir.resolve(), "schoolDB.sqlite");
-            var xhr = Ti.Network.createHTTPClient();
-            xhr.onload = function() {
-                databaseFile.write(this.responseData);
-                loadingDBProgress.close();
-                schoolDB = Ti.Database.install(databaseFile.getNativePath(), "schoolDBDownloaded");
-                updateContacts();
-                updateSchools();
-                Ti.App.Properties.setBool("dbinstalled", true);
-                Ti.App.Properties.setString("dbversion", dbLastUpdated);
-                Ti.App.Properties.setString("dbname", selectedSchoolDistrict + ".db");
-                Ti.App.Properties.setString("UserSchoolDistrict", selectedSchoolDistrict);
-                databaseFile.deleteFile();
-                downloadAndInstallResourceFiles();
-            };
-            xhr.open("GET", dbUrl);
-            xhr.send();
-        } else if (1 == e.index) {
-            selectedSchoolDistrict = null;
-            dbUrl = null;
-            dbLastUpdated = null;
-        }
+    var supportedSchools = Titanium.UI.createTableView({
+        width: "90%",
+        top: "20%",
+        height: Ti.UI.SIZE,
+        borderColor: "gray",
+        separatorColor: "#000000",
+        borderWidth: 2
     });
     $.selectSchoolDistrict.addEventListener("close", destroy);
     $.selectSchoolDistrict.title = "Select Your School District";
@@ -277,15 +297,56 @@ function Controller() {
     }, function(e) {
         if (e.success) {
             var rowData = getSupportedSchoolsTableRows(e);
-            var supportedSchools = Titanium.UI.createTableView({
-                data: rowData,
-                width: "90%",
-                top: "20%",
-                height: Ti.UI.SIZE,
-                separatorColor: "#000000"
-            });
+            supportedSchools.setData(rowData);
             $.selectSchoolDistrict.add(supportedSchools);
         }
+    });
+    supportedSchools.addEventListener("click", function(e) {
+        supportedSchools.touchEnabled = false;
+        supportedSchools.bubbleParent = false;
+        e.row.setBackgroundColor("#336699");
+        e.row.setHasCheck(true);
+        var rows = supportedSchools.data[0].rows;
+        for (x in rows) rows[x].tochEnabled = false;
+        selectedSchoolDistrict = e.rowData.data.filename;
+        dbUrl = e.rowData.data.fileurl;
+        dbLastUpdated = e.rowData.data.lastupdated;
+        Ti.API.info("Selected School District : " + selectedSchoolDistrict + "dbUrl:" + dbUrl + "dbLastUpdated:" + dbLastUpdated);
+        $.buttonNext.show();
+    });
+    $.buttonNext.addEventListener("click", function() {
+        var loadingDBProgress = Alloy.createController("ProgressIndicator", {
+            message: "Loading configuration for \n" + selectedSchoolDistrict
+        }).getView();
+        loadingDBProgress.open();
+        var databaseDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, "databases");
+        databaseDir.exists() || databaseDir.createDirectory();
+        var databaseFile = Ti.Filesystem.getFile(databaseDir.resolve(), "schoolDB.sqlite");
+        var xhr = Ti.Network.createHTTPClient();
+        xhr.onload = function() {
+            databaseFile.write(this.responseData);
+            loadingDBProgress.close();
+            schoolDB = Ti.Database.install(databaseFile.getNativePath(), "schoolDBDownloaded");
+            updateContacts();
+            updateSchools();
+            Ti.App.Properties.setBool("dbinstalled", true);
+            Ti.App.Properties.setString("dbversion", dbLastUpdated);
+            Ti.App.Properties.setString("dbname", selectedSchoolDistrict + ".db");
+            Ti.App.Properties.setString("UserSchoolDistrict", selectedSchoolDistrict);
+            databaseFile.deleteFile();
+            downloadAndInstallResourceFiles();
+        };
+        xhr.open("GET", dbUrl);
+        xhr.send();
+    });
+    $.buttonExit.addEventListener("click", function() {
+        selectedSchoolDistrict = null;
+        dbUrl = null;
+        dbLastUpdated = null;
+        Ti.App.fireEvent("close", {
+            message: "SeclectSchoolDistrict Aborted"
+        });
+        $.selectSchoolDistrict.close();
     });
     _.extend($, exports);
 }

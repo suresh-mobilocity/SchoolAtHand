@@ -6,8 +6,13 @@ function sendFeedback() {
 	emailDialog.open();
 }
 
-function displayHelp() {
-	//alert ( "Display Help Page!");
+function displayHelp(e) {
+		var args_t = {
+				parentTab: e,
+				wintitle: 'User Guide',
+				url: (OS_IOS)? "/help_ios.html" : "./help_android.html"
+			};
+	e.open(Alloy.createController('ViewWebSite', args_t).getView());
 }
 
 function displayAboutSH(e) {
@@ -124,6 +129,7 @@ function getNotificationsView()
 										backgroundColor: 'orange',
 										borderRadius: 8,
 										color: "white",
+										style: (OS_IOS && Ti.Platform.displayCaps.platformHeight == 480) ? Ti.UI.iPhone.SystemButtonStyle.PLAIN: "",
 										textAlign:  Ti.UI.TEXT_ALIGNMENT_CENTER
 						});
 	notificationCenterButton.addEventListener('click', function(e){
@@ -145,6 +151,7 @@ function getNotificationsView()
 										backgroundColor: 'orange',
 										borderRadius: 8,
 										color: "white",
+										style: (OS_IOS && Ti.Platform.displayCaps.platformHeight == 480) ? Ti.UI.iPhone.SystemButtonStyle.PLAIN: "",
 										textAlign:  Ti.UI.TEXT_ALIGNMENT_CENTER
 						});
 				signupButton.addEventListener('click', function(e){
@@ -195,12 +202,17 @@ function getNotificationsView()
 											color: "blue",
 											textAlign:  Ti.UI.TEXT_ALIGNMENT_LEFT
 										});
+					if (OS_ANDROID) messageLabel.setWordWrap(false);
 					messageView.add(notificationIcon);
 					messageView.add(datetimeLabel);
 					messageView.add(messageLabel);
 					recentNotificationsView.add(messageView);
 					rowId++;
 			}
+			recentNotificationsView.addEventListener('click', function(e){
+				$.dashboardTab.open(Alloy.createController('Notifications', {parentTab: $.dashboardTab}).getView());
+			});
+			
 	}
  }
  return recentNotificationsView;		
@@ -256,19 +268,19 @@ function getDistrictQuickView(){
 		height: Ti.UI.SIZE,
 		width: "100%"
 	});
-	var mdata = JSON.parse('{ "address1": "341 black horse lane", "city": "North Brunswick", "name": "district office" }');
-	//Ti.API.info("My Data" + mdata.name+  mdata.address1 + mdata.city);
 	var distPhone = Ti.UI.createButton({
 					top: "5%",
 					left: (OS_ANDROID) ? 0: "5%",
 					color: 'white',
-				    backgroundColor: '#33B5E5',
-					width: Ti.UI.SIZE,
-					height: Ti.UI.SIZE,
+				    backgroundColor: 'orange',
+					width: (OS_ANDROID) ? Ti.UI.SIZE : 40,
+					height: (OS_ANDROID) ? Ti.UI.SIZE : 40,
+					borderRadius: 8,
 					font: {fontFamily: 'AppIcons', fontSize:'40dp'},
 					title: Alloy.Globals.icons.phone,
 					textAlign: 'center',
 					data: getDistrictPhone(),
+					style: (OS_IOS && Ti.Platform.displayCaps.platformHeight == 480) ? Ti.UI.iPhone.SystemButtonStyle.PLAIN: "",
 					//borderRadius: 8
 	 });
 	 distPhone.addEventListener('click', function(e){
@@ -278,13 +290,15 @@ function getDistrictQuickView(){
 					top: "5%",
 					left: (OS_ANDROID) ? "5%": "15%",
 					color: 'white',
-				    backgroundColor: '#33B5E5',
-					width: Ti.UI.SIZE,
-					height: Ti.UI.SIZE,
+				    backgroundColor: 'orange',
+					width: (OS_ANDROID) ? Ti.UI.SIZE : 40,
+					height:(OS_ANDROID) ? Ti.UI.SIZE : 40,
+					borderRadius: 8,
 					font: {fontFamily: 'AppIcons', fontSize:'40dp'},
 					title: Alloy.Globals.icons.globe_alt,
 					textAlign: 'center',
 					data: getDistrictWebSiteUrl(),
+					style: (OS_IOS && Ti.Platform.displayCaps.platformHeight == 480) ? Ti.UI.iPhone.SystemButtonStyle.PLAIN: "",
 					//borderRadius: 8
 	 });
 	 distWeb.addEventListener('click', function(e){
@@ -301,12 +315,15 @@ function getDistrictQuickView(){
 	 				bottom: "2%",
 					color: 'white',
 					left: (OS_ANDROID) ? "5%": "15%",
-					backgroundColor: '#33B5E5',
-					width: Ti.UI.SIZE,
-					height:Ti.UI.SIZE,
+					//backgroundColor: '#33B5E5',
+					backgroundColor: 'orange',
+					borderRadius: 8,
+					width: (OS_ANDROID) ? Ti.UI.SIZE : 40,
+					height:(OS_ANDROID) ? Ti.UI.SIZE : 40,
 					font: {fontFamily: 'AppIcons', fontSize:'40dp'},
 					title: Alloy.Globals.icons.direction,
 					textAlign: 'center',
+					style: (OS_IOS && Ti.Platform.displayCaps.platformHeight == 480) ? Ti.UI.iPhone.SystemButtonStyle.PLAIN: "",
 					data: JSON.parse(getDistOfficeLocation())
 	 });
 	 distLocationButton.addEventListener('click', function(e) {
@@ -343,7 +360,6 @@ function selectSchoolDistrict(){
 }
 
 function displayDisclaimer(){
-	//$.index.add(disableTabsImage);
 	if (OS_IOS){
 		$.tabGroup.add(disableTabsImage);
 		isTabsDisabledTabs = true;
@@ -467,8 +483,11 @@ function openDashboard(){
 					top:"30%",
 					height:"30%",
 					width: "95%",
-					backgroundColor: "white",
-					borderRadius: 8
+					//backgroundColor: "white",
+					backgroundColor: "transparent",
+					//borderColor: "white",
+					borderRadius: 8,
+					//opacity: 0.5
 		});
 		
 		var numberOfProfiles = profileCollection.length;
@@ -479,7 +498,6 @@ function openDashboard(){
 		   					//$.dashboardMain.setVisible(false);
 		   					//$.dashboardMain.remove($.dashboardMainView);
 		   			}		
-		   		
 						var rowId = 0;
 						while(rowId < profileCollection.length) {
 							var pSelected = profileCollection.at(rowId);
@@ -489,17 +507,21 @@ function openDashboard(){
 								top: 5,
 								left: 5,
 								layout: "vertical",
-								backgroundColor: "#33B5E5",
+								//backgroundColor: "#33B5E5",
+								backgroundColor: "white",
 								height: Ti.UI.SIZE,
 								//width: "40%",
-								width: Ti.UI.SIZE,
+								//width: 100,
+								width: (Ti.Platform.displayCaps.platformHeight == 480) ? 90 : 110,
 								borderRadius: 8,
 								id : profileid
 							});
 							var profileImage = Ti.UI.createImageView({
 								top: 5,
-								height: 100,
-								width: 100,
+								//height: 100,
+								//width: 90,
+								height: (Ti.Platform.displayCaps.platformHeight == 480) ? 80 : 100,
+								width: (Ti.Platform.displayCaps.platformHeight == 480) ? 80 : 100,
 								//backgroundImage: url,
 								image: url,
 								autorotate: true,
@@ -538,19 +560,24 @@ function openDashboard(){
 								top: 5,
 								left: 5,
 								layout: "vertical",
-								backgroundColor: "#33B5E5",
+								//backgroundColor: "#33B5E5",
+								backgroundColor: "white",
 								height: Ti.UI.SIZE,
 								//width: "40%",
-								width: Ti.UI.SIZE,
+								width: (Ti.Platform.displayCaps.platformHeight == 480) ? 90 : 110,
 								borderRadius: 8,
 								id : profileid
 							});
 					var profileImage = Ti.UI.createButton({
 								top: 5,
-								height: 100,
-								width: 100,
+								//height: 100, // works fine for iphone5
+								//width: 100,  // works fine for iPhone5
+								height: (Ti.Platform.displayCaps.platformHeight == 480) ? 80 : 100,
+								width: (Ti.Platform.displayCaps.platformHeight == 480) ? 80 : 100,
 								title: "Add Profile",
+								font: (OS_IOS && Ti.Platform.displayCaps.platformHeight == 480)? {fontSize: 12, fontWeight: 'normal'}: {fontSize: 14, fontWeight: 'bold'},
 								backgroundColor: "gray" ,
+								style: (OS_IOS && Ti.Platform.displayCaps.platformHeight == 480) ? Ti.UI.iPhone.SystemButtonStyle.PLAIN: "",
 							});
 					var profileName = Ti.UI.createLabel({
 								top: 5,
@@ -560,16 +587,37 @@ function openDashboard(){
 								width: Ti.UI.SIZE,
 								color: "orange"
 					});
+					
 					profileImage.addEventListener('click', function(e){
 						$.dashboardTab.open(Alloy.createController('AddProfile', $.dashboardTab).getView());
 					});
 					noprofileView.add(profileImage);
 					noprofileView.add(profileName);
+					var hintView = Ti.UI.createView({
+								top: 5,
+								left: 10,
+								layout: "vertical",
+								//backgroundColor: "#33B5E5",
+								height: 100,
+								width: Ti.UI.SIZE,
+								borderRadius: 8,
+								id : profileid
+							});
+					var hintLabel = Ti.UI.createLabel({
+								top: 5,
+								text: "Profiles help to view events and links specific to a student's class. All data is saved locally on your device",
+								font: {fontSize: 12, fontWeight: 'normal'},
+								height: Ti.UI.SIZE,
+								width: 180,
+								color: "black"
+					});
+					hintView.add(hintLabel);
 					scrollView.add(noprofileView) ;
+					scrollView.add(hintView);
 					$.dashboardMainView.add(scrollView);
 					Ti.App.Properties.setString('noUserProfilesLabelSet', "true");
 					//$.dashboardMain.setVisible(true);
-					noProfileLabel = true;			
+					if ( OS_ANDROID) noProfileLabel = true;			
 				}
 		} 
 		
@@ -595,9 +643,9 @@ function openDashboard(){
 		        //Ti.API.info("User Not Logged In");   		
 	     }
 	    $.dashboardMainView.add(getNotificationsView());
-	    if ( OS_ANDROID) {
+	    //if ( OS_ANDROID) {
         	$.dashboardMain.setVisible(true);
-		}
+		//}
 		//addAdMobView();
 } // end openDashboard
 
@@ -693,9 +741,8 @@ function registerNotificationCallbacks(){
 			CloudPush.showAppOnTrayClick = true;
 			//Ti.API.info("CloudPush device Token:" + deviceToken);
 			//Ti.API.info("Registering Callbacks to receive Push Notifications");
-			if (OS_ANDROID) {
 					CloudPush.addEventListener('callback', function (evt) {
-							var eventRec = JSON.stringify(evt);
+							//var eventRec = JSON.stringify(evt);
 							//Ti.API.info("Received Push Notification evtRec: " + eventRec.toString());
 			    			//Ti.API.info("Received Push Notification: " + evt.payload);				
 									var payload = JSON.parse(evt.payload).android;
@@ -713,7 +760,6 @@ function registerNotificationCallbacks(){
 								     notificationCollection.trigger('sync');
 								     //Ti.API.info("Stored Push Notification: " + evt.payload);					
 				});
-			}
 			CloudPush.addEventListener('trayClickLaunchedApp', function (evt) {
 			    		//Ti.API.info('Tray Click Launched App (app was not running)');
 			    		//displayNotifications();
@@ -723,8 +769,45 @@ function registerNotificationCallbacks(){
 			    		//displayNotifications();
 			});
 	} else if (OS_IOS) {
-		//Ti.API.info("Android Register Push Notification Call back");
-	}
+			//Ti.API.info("iOS Register Push Notification Call back");
+			 	Ti.Network.registerForPushNotifications({
+			    // Specifies which notifications to receive
+			    types: [
+			        Ti.Network.NOTIFICATION_TYPE_BADGE,
+			        Ti.Network.NOTIFICATION_TYPE_ALERT,
+			        Ti.Network.NOTIFICATION_TYPE_SOUND
+			    ],
+			    success: function deviceTokenSuccess (e) {
+			    		deviceToken = e.deviceToken;
+			    		Ti.App.Properties.setString("ACSDeviceToken", e.deviceToken);
+			    },
+			    error: function deviceTokenError(e){
+			    	alert('Failed to register for push notifications! ' + e.error);
+			    },
+			    callback: function receivePush(evt) {
+			    	 alert('Received push: in index.js' + JSON.stringify(evt));
+			    		//var eventRec = JSON.stringify(evt);
+							//Ti.API.info("Received Push Notification evtRec: " + eventRec.toString());
+			    			//alert("Received Push Notification: " + evt.data);				
+									//var payload = JSON.parse(evt);
+		   							//Ti.API.info("PUSH_MSG| Alert: " + payload.alert + " Title: " + payload.title + " Badge: " + payload.badge);
+		   							var notificationModel = Alloy.createModel("notification", {
+											//datetime: (new Date()).toString(),
+											datetime: (new Date()).toLocaleString(),							       
+									        title:  evt.data.title,
+									        message : evt.data.alert,
+									        badge: evt.data.badge
+									 });
+								     notificationModel.save();
+									 notificationCollection.fetch();
+								     notificationCollection.trigger('change');
+								     notificationCollection.trigger('sync');
+								     //Ti.API.info("Stored Push Notification: " + evt.payload);
+								    
+				}
+			
+			});
+		}
 }
 function closeMenuWindow(){
  if ( OS_ANDROID) {
@@ -761,6 +844,7 @@ menuOptionsTable.addEventListener('click', function(menuOptionsEvent) {
 				            	curve:Ti.UI.ANIMATION_CURVE_EASE_IN
 		        		});
 		        		isMenuWindowOpen = false;
+		        		$.tabGroup.remove(disableTabsImage);
 				}
 					switch (true) {
 			        		case ( menuOptionsEvent.rowData.title === "SignIn"):
@@ -777,7 +861,7 @@ menuOptionsTable.addEventListener('click', function(menuOptionsEvent) {
 			        			sendFeedback();
 			        			break;
 			        		case ( menuOptionsEvent.rowData.title === "Help"):
-			        			displayHelp();
+			        			displayHelp($.tabGroup.activeTab);
 			        			break;
 			        		case ( menuOptionsEvent.rowData.title === "About" ):
 			        			displayAboutSH($.tabGroup.activeTab);
@@ -792,8 +876,9 @@ menuOptionsTable.addEventListener('click', function(menuOptionsEvent) {
 });
 
 $.tabGroup.addEventListener('open', function(e) {
+
 	if ( OS_ANDROID) {
-			//Ti.API.info("Inside TabGroup open event listener");
+			Ti.API.info("Inside TabGroup open event listener");
 	    var activity = $.tabGroup.activity;
 	    if( Alloy.Globals.Android.Api >= 11 ) {
 	        activity.actionBar.title = "School@Hand";
@@ -821,7 +906,6 @@ $.tabGroup.addEventListener('open', function(e) {
 	        	});
 	        	collapseActionView.add(optionsLabel);
 	        	collapseActionView.addEventListener('click', function() {
-					Ti.API.info("Action View Clicked!");
 					if ( menuItem.isActionViewExpanded) {
 						$.tabGroup.remove(disableTabsImage);
 						menuItem.collapseActionView();
@@ -837,9 +921,7 @@ $.tabGroup.addEventListener('open', function(e) {
 			  			//actionView: collapseActionView
 			  	});
 			 	menuItem.addEventListener("click", function(e) { 
-					Ti.API.info("In menuItem event listener");
 					if (isMenuWindowOpen == true) {
-						
 						 var tabs = $.tabGroup.getTabs();
 						 //Ti.API.info("No of Tabs in TabGroup are", tabs.length);
 						 for ( var i=0; i < tabs.length; i++){
@@ -883,13 +965,15 @@ $.tabGroup.addEventListener('open', function(e) {
 	} else if (OS_IOS ) {
 			//Ti.API.info("Inside TabGroup open IOS");
 			 var menuButton = Ti.UI.createButton({
-				    title:'Menu',
-				    toggle:false // Custom property for menu toggle
+				   // title:'Menu',
+				    toggle:false, // Custom property for menu toggle
+				    image: 'menu.png'
 			});
 			$.dashboardMain.setLeftNavButton(menuButton);
 			menuButton.addEventListener('click', function(e){
 				    // If the menu is opened
-				    if(e.source.toggle == true){
+				   // if(e.source.toggle == true){
+				   	if ( isMenuWindowOpen == true) {
 				    	//$.tabGroup.remove(menuWindow);
 				    	menuWindow.close();
 				        $.tabGroup.activeTab.getWindow().animate({
@@ -901,7 +985,7 @@ $.tabGroup.addEventListener('open', function(e) {
 				        e.source.toggle = false;
 				        isMenuWindowOpen = false;
 				        
-				    }
+				   } 
 				    // If the menu isn't opened
 				    else{
 				        $.tabGroup.activeTab.getWindow().animate({
@@ -935,36 +1019,67 @@ $.tabGroup.addEventListener('open', function(e) {
 
 //$.dashboardMain.addEventListener('focus', function(e) {
 $.dashboardMain.addEventListener('open', function(e) {
-	if ( (!Ti.App.Properties.hasProperty('AppDisclaimerAccepted') ) || (Ti.App.Properties.getString('AppDisclaimerAccepted') == 'false'))
-	{
-			displayDisclaimer();
-	}
-	if ( Ti.App.Properties.getString('AppDisclaimerAccepted') == 'true') 
-	{	
-		//Ti.API.info('AppDisclaimerAccepted property is set to true' );			
-		if ( !Ti.App.Properties.hasProperty("UserSchoolDistrict"))
+	if ( OS_ANDROID) {
+		Ti.API.info("Opened dashboardMain view");
+		if ( (!Ti.App.Properties.hasProperty('AppDisclaimerAccepted') ) || (Ti.App.Properties.getString('AppDisclaimerAccepted') == 'false'))
 		{
-				//Ti.API.info("User has not selected School District");
-				selectSchoolDistrict();
+				displayDisclaimer();
 		}
-		if ( Ti.App.Properties.hasProperty("UserSchoolDistrict") && Ti.App.Properties.hasProperty("dbinstalled") ) {
-			//Ti.API.info("User selected School District : " + Ti.App.Properties.getString('UserSchoolDistrict'));
-			if ( checkandupdateDb() ) {
-				if ( isTabsDisabledTabs) {
-					$.tabGroup.remove(disableTabsImage);
-				}
-				openDashboard();
+		if ( Ti.App.Properties.getString('AppDisclaimerAccepted') == 'true') 
+		{	
+			//Ti.API.info('AppDisclaimerAccepted property is set to true' );			
+			if ( !Ti.App.Properties.hasProperty("UserSchoolDistrict"))
+			{
+					//Ti.API.info("User has not selected School District");
+					selectSchoolDistrict();
 			}
-		}	
+			if ( Ti.App.Properties.hasProperty("UserSchoolDistrict") && Ti.App.Properties.hasProperty("dbinstalled") ) {
+				//Ti.API.info("User selected School District : " + Ti.App.Properties.getString('UserSchoolDistrict'));
+				if ( checkandupdateDb() ) {
+					if ( isTabsDisabledTabs) {
+						$.tabGroup.remove(disableTabsImage);
+						isTabsDisabledTabs = false;
+					}
+					openDashboard();
+				}
+			}	
+		}
 	}
 });
 
 $.dashboardMain.addEventListener('focus', function(e) {
-	var numberOfProfiles = profileCollection.length;
-	 if (Ti.App.Properties.hasProperty('noUserProfilesLabelSet') && numberOfProfiles > 0){
-	 	openDashboard();
-	 }
+	if (OS_ANDROID) {
+		var numberOfProfiles = profileCollection.length;
+	 	if (Ti.App.Properties.hasProperty('noUserProfilesLabelSet') && numberOfProfiles > 0){
+	 		openDashboard();
+	 	}
+	} else if (OS_IOS) {
+			if ( (!Ti.App.Properties.hasProperty('AppDisclaimerAccepted') ) || (Ti.App.Properties.getString('AppDisclaimerAccepted') == 'false'))
+			{
+					displayDisclaimer();
+			}
+			if ( Ti.App.Properties.getString('AppDisclaimerAccepted') == 'true') 
+			{	
+				//Ti.API.info('AppDisclaimerAccepted property is set to true' );			
+				if ( !Ti.App.Properties.hasProperty("UserSchoolDistrict"))
+				{
+						//Ti.API.info("User has not selected School District");
+						selectSchoolDistrict();
+				}
+				if ( Ti.App.Properties.hasProperty("UserSchoolDistrict") && Ti.App.Properties.hasProperty("dbinstalled") ) {
+					//Ti.API.info("User selected School District : " + Ti.App.Properties.getString('UserSchoolDistrict'));
+					if ( checkandupdateDb() ) {
+						if ( isTabsDisabledTabs) {
+							$.tabGroup.remove(disableTabsImage);
+							isTabsDisabledTabs = false;
+						}
+						openDashboard();
+					}
+				}	
+			}
+	}
 });
+
 $.dashboardTab.addEventListener('close', function(e){
 	//Ti.API.info("DashboardTab| Received close event");
 	$.tabGroup.fireEvent('close');

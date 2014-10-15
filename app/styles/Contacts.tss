@@ -3,14 +3,37 @@
 	layout: 'vertical'
 },
 "#contactsTable" : {
-	//backgroundColor: 'transparent',
-	separatorColor: '#000000'
+	separatorColor: '#000000',
+	backgroundColor: '#ffffff',
+	height: "90%"
 },
 "#searchContacts": {
 	barColor: "#000",
 	color: '#fff',
+	backgroundColor: "fff",
 	showCancel: "true" ,
-	height: "43" ,
+	height: "10%" ,
 	top: 0, 
 	hintText: "Enter title or name or school",
+},
+"#noResults": {
+    backgroundColor: '#fff',
+    color: '#000',
+    textAlign: 'center',
+    height: '50dp'
+},
+"#activityIndicator": {
+  color: 'black',
+  font: {fontFamily:'Helvetica Neue', fontSize:16, fontWeight:'bold'},
+  message: 'Loading...',
+  top:20,
+  left:'30%',
+  height:Ti.UI.SIZE,
+  width:Ti.UI.SIZE
+},
+"#activityIndicator[platform=ios]": {
+	style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK
+},
+"#activityIndicator[platform=android]": {
+	style: Ti.UI.ActivityIndicatorStyle.DARK
 }

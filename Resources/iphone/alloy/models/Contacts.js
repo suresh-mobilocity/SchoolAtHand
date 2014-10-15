@@ -1,3 +1,5 @@
+var Alloy = require("alloy"), _ = require("alloy/underscore")._, model, collection;
+
 exports.definition = {
     config: {
         adapter: {
@@ -22,7 +24,7 @@ exports.definition = {
                 db.execute(sql);
                 db.close();
                 collection.trigger("sync");
-                Ti.API.info("Deleting all recors from contacts");
+                Ti.API.info("Deleting all records from contacts");
             },
             saveAll: function() {
                 var collection = this;
@@ -53,8 +55,6 @@ exports.definition = {
         return Collection;
     }
 };
-
-var Alloy = require("alloy"), _ = require("alloy/underscore")._, model, collection;
 
 model = Alloy.M("contacts", exports.definition, []);
 

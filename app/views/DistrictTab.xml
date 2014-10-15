@@ -1,6 +1,6 @@
 <Alloy>
-<Tab id="districtTab" title="District">
-			<Window id="districtWindow" title="District">	
+<Tab id="districtTab" title="District" icon="library.png">
+			<Window id="districtWindow" title="District" >	
 				<TableView id="districtView" top="0" left="0" layout="vertical">
 				 	<TableViewRow id="news" onClick="displayNews">
 				 		<View id="buttonView" top="0" layout="horizontal" >

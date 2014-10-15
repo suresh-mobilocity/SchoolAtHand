@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function getPTOWebsiteUrl() {
         var url = "";
@@ -15,19 +24,34 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "SchoolPTO";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.viewPTOSite = Ti.UI.createWindow({
-        backgroundColor: "#000",
+        backgroundColor: "#33B5E5",
         id: "viewPTOSite",
         title: "School Web Site",
         modal: "flase"
     });
     $.__views.viewPTOSite && $.addTopLevelView($.__views.viewPTOSite);
     $.__views.webSiteView = Ti.UI.createWebView({
+        height: "90%",
+        font: {
+            fontSize: 12,
+            fontWeight: "bold"
+        },
+        top: 0,
+        softKeyboardOnFocus: Titanium.UI.Android.SOFT_KEYBOARD_HIDE_ON_FOCUS,
         id: "webSiteView"
     });
     $.__views.viewPTOSite.add($.__views.webSiteView);

@@ -39,7 +39,7 @@ var notRegisteredLabel = Titanium.UI.createLabel({
     width: "90%",
     left: "10%",
     top: "20%",
-    color: "blue"
+    color: "black"
 });
 
 var alreadyRegisteredLabel = Titanium.UI.createLabel({
@@ -122,8 +122,6 @@ var deviceToken = null;
 
 var schoolDB = null;
 
-var noProfileLabel = false;
-
 Alloy.Globals.Android = {
     Api: Ti.Platform.Android.API_LEVEL
 };
@@ -164,8 +162,16 @@ var menuView = Titanium.UI.createView({
     top: 0
 });
 
+Ti.App.Properties.hasProperty("DisplayAds") || Ti.App.Properties.setBool("DisplayAds", true);
+
 var isMenuWindowOpen = false;
 
 var tabGroupGlobalReference = null;
+
+IS_Ios7Plus = false;
+
+IS_iPhoneTall = false;
+
+IS_iPhone4SmallScreen = false;
 
 Alloy.createController("index");

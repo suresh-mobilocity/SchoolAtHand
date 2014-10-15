@@ -33,7 +33,7 @@ exports.definition =
                 db.close();
  
                 collection.trigger('sync');
- 				Ti.API.info("Deleting all recors from contacts");
+ 				//Ti.API.info("Deleting all records from schools");
             },
  
             saveAll : function() {
@@ -60,7 +60,7 @@ exports.definition =
                         q.push("?");
                     }
                     var sqlInsert = "INSERT INTO " + table + " (" + names.join(",") + ") VALUES (" + q.join(",") + ");";
- 
+ 					//Ti.API.info("sqlInsert:" + sqlInsert);
                     db.execute(sqlInsert, values);
  
                 });

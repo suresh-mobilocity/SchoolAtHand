@@ -4,7 +4,7 @@ exports.getaddview = function () {
 		adView = 	Admob.createView({
 				publisherId: "ca-app-pub-3665132116722377/2467198443",
 				keywords: "K-12 SAT tutuion education graduation kids student school books science  math toys sports parent teacher cars bikes",
-        		height: "10%",
+        		height: (Ti.Platform.displayCaps.platformHeight == 480) ? "15%": "10%",
 				testing: false, // default is false
 				width: Ti.UI.FILL,
 						 //left: 0, // optional
@@ -24,6 +24,7 @@ exports.getaddview = function () {
         	    publisherId: "ca-app-pub-3665132116722377/6561150840",
         	    keywords: "K-12 SAT tutuion education graduation kids student school books science  math toys sports parent teacher cars bikes",
 				testing: false, // default is false
+				height: Ti.UI.SIZE,
 				width: Ti.UI.FILL,
 						 //left: 0, // optional
 						//right: 0, // optional

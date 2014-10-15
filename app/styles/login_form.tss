@@ -9,6 +9,9 @@
 //
 "#loginView" : {
 	top: 20
+},
+"#loginView[if=IS_iPhone4SmallScreen]" : {
+	top: 0
 }
 "#signinLabel" :{
 	top: 20,
@@ -37,7 +40,10 @@
  	borderColor:  '#336699',
  	borderRadius: 8
 }
-
+"#buttonLogin[if=IS_iPhone4SmallScreen]": {
+    style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+   height: "50dp"
+}
 //
 // Components
 //
@@ -72,4 +78,9 @@
  	color: "white",
  	borderColor:  '#336699',
  	borderRadius: 8
+}
+"#buttonSignup[if=IS_iPhone4SmallScreen]": {
+    style: Ti.UI.iPhone.SystemButtonStyle.PLAIN,
+    font:{fontSize:12,fontWeight:'bold'},
+    height: "50dp"
 }

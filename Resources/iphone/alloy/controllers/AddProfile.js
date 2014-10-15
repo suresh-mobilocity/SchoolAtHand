@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function initSchoolPickerList() {
         var sql = null;
@@ -21,9 +30,17 @@ function Controller() {
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "AddProfile";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.profileAddWindow = Ti.UI.createWindow({
@@ -58,10 +75,10 @@ function Controller() {
     });
     $.__views.profileInputForm.add($.__views.inputView);
     $.__views.gradeLabelField = Ti.UI.createLabel({
-        left: "10%",
-        color: "blue",
-        height: Ti.UI.SIZE,
         width: "80%",
+        height: Ti.UI.SIZE,
+        color: "blue",
+        left: "10%",
         font: {
             fontSize: 14,
             fontWeight: "bold",
@@ -89,10 +106,10 @@ function Controller() {
     });
     $.__views.profileInputForm.add($.__views.schoolPickerField);
     $.__views.__alloyId0 = Ti.UI.createLabel({
-        left: "10%",
-        color: "blue",
-        height: Ti.UI.SIZE,
         width: Ti.UI.FILL,
+        height: Ti.UI.SIZE,
+        color: "blue",
+        left: "10%",
         font: {
             fontSize: 10,
             fontWeight: "normal",
@@ -114,7 +131,7 @@ function Controller() {
             fontFamily: "Helvetica",
             fontStyle: "normal"
         },
-        hintText: "Enter Teacher Name",
+        hintText: "Enter Teacher's First Name or Lastname",
         color: "black",
         top: 10,
         height: 30,
@@ -122,10 +139,10 @@ function Controller() {
     });
     $.__views.profileInputForm.add($.__views.teacherTextField);
     $.__views.__alloyId1 = Ti.UI.createLabel({
-        left: "10%",
-        color: "blue",
-        height: Ti.UI.SIZE,
         width: Ti.UI.FILL,
+        height: Ti.UI.SIZE,
+        color: "blue",
+        left: "10%",
         font: {
             fontSize: 10,
             fontWeight: "normal",
@@ -180,7 +197,6 @@ function Controller() {
             alert("Error:\nStudent Profiel name field empty");
             return;
         }
-        Ti.API.info("Saving new Profile: " + $.nameTextField.value + "," + $.schoolPickerField.getSelectedRow(0).title + "," + $.gradeLabelField.text + "," + $.teacherTextField.value);
         var profileModel = Alloy.createModel("profile", {
             name: $.nameTextField.value,
             grade: $.gradeLabelField.text,
@@ -188,7 +204,6 @@ function Controller() {
             teacher: $.teacherTextField.value
         });
         profileModel.save();
-        Ti.API.info("Profile: " + $.nameTextField.value + " has been saved");
         profileCollection.fetch();
         $.profileAddWindow.close();
         profileCollection.trigger("change");

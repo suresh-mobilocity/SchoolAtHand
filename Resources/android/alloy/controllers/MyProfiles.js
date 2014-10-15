@@ -1,28 +1,50 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
-    function __alloyId40(e) {
+    function __alloyId41(e) {
         if (e && e.fromAdapter) return;
-        __alloyId40.opts || {};
-        var models = __alloyId39.models;
+        __alloyId41.opts || {};
+        var models = __alloyId40.models;
         var len = models.length;
         var rows = [];
         for (var i = 0; len > i; i++) {
-            var __alloyId36 = models[i];
-            __alloyId36.__transform = {};
-            var __alloyId38 = Alloy.createController("ProfileRow", {
-                $model: __alloyId36,
+            var __alloyId37 = models[i];
+            __alloyId37.__transform = {};
+            var __alloyId39 = Alloy.createController("ProfileRow", {
+                $model: __alloyId37,
                 __parentSymbol: __parentSymbol
             });
-            rows.push(__alloyId38.getViewEx({
+            rows.push(__alloyId39.getViewEx({
                 recurse: true
             }));
         }
         $.__views.profilesTableView.setData(rows);
     }
+    function destroy() {
+        $.profilesWindow.removeEventListener("close", destroy);
+        $.destroy();
+        $.profilesWindow.removeAllChildren();
+        $ = null;
+        Ti.API.info("ProfilesTab: Cleanup Successfully");
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "MyProfiles";
-    var __parentSymbol = arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        var __parentSymbol = __processArg(arguments[0], "__parentSymbol");
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     Alloy.Collections.instance("profile");
@@ -32,22 +54,56 @@ function Controller() {
         title: "MyProfiles",
         layout: "vertical"
     });
-    $.__views.profilesView = Ti.UI.createView({
-        layout: "vertical",
-        height: "85%",
-        id: "profilesView"
-    });
+    $.__views.profilesView = Ti.UI.createView(function() {
+        var o = {};
+        _.extend(o, {
+            layout: "vertical",
+            top: 0,
+            height: "78%"
+        });
+        IS_iPhoneTall && _.extend(o, {
+            layout: "vertical",
+            top: 0,
+            height: "90%"
+        });
+        IS_iPhone4SmallScreen && _.extend(o, {
+            layout: "vertical",
+            top: 0,
+            height: "85%"
+        });
+        _.extend(o, {
+            id: "profilesView"
+        });
+        return o;
+    }());
     $.__views.profilesWindow.add($.__views.profilesView);
     $.__views.profilesTableView = Ti.UI.createTableView({
+        left: 0,
+        width: Ti.UI.FILL,
         separatorColor: "#336699",
-        height: "85%",
+        height: Ti.UI.SIZE,
         backgroundColor: "#33B5E5",
         id: "profilesTableView"
     });
     $.__views.profilesView.add($.__views.profilesTableView);
-    var __alloyId39 = Alloy.Collections["profile"] || profile;
-    __alloyId39.on("fetch destroy change add remove reset", __alloyId40);
-    $.__views.addButton = Ti.UI.createButton({
+    var __alloyId40 = Alloy.Collections["profile"] || profile;
+    __alloyId40.on("fetch destroy change add remove reset", __alloyId41);
+    $.__views.profilesTab = Ti.UI.createTab({
+        window: $.__views.profilesWindow,
+        id: "profilesTab",
+        title: "Profiles",
+        icon: "users.png"
+    });
+    $.__views.profilesTab && $.addTopLevelView($.__views.profilesTab);
+    exports.destroy = function() {
+        __alloyId40.off("fetch destroy change add remove reset", __alloyId41);
+    };
+    _.extend($, $.__views);
+    var args = arguments[0] || {};
+    args.parentTab;
+    var addButton = null;
+    addButton = Ti.UI.createButton({
+        title: "Add Profile",
         backgroundColor: "#336699",
         left: "10%",
         width: "85%",
@@ -57,39 +113,14 @@ function Controller() {
             fontWeight: "bold"
         },
         color: "white",
-        bottom: 20,
-        borderRadius: 10,
-        id: "addButton",
-        title: "Add Profile"
+        borderRadius: 8
     });
-    $.__views.profilesView.add($.__views.addButton);
-    $.__views.adView = Admob.createView({
-        testing: false,
-        keywords: "K-12, education, graduation, kids student school books science  math toys sports parent teacher cars bikes",
-        bottom: 0,
-        adBackgroundColor: "FF8855",
-        backgroundColorTop: "738000",
-        borderColor: "#000000",
-        textColor: "#000000",
-        urlColor: "#00FF00",
-        linkColor: "#0000FF",
-        publisherId: "ca-app-pub-3665132116722377/6561150840",
-        ns: "Admob",
-        id: "adView"
-    });
-    $.__views.profilesWindow.add($.__views.adView);
-    $.__views.profilesTab = Ti.UI.createTab({
-        window: $.__views.profilesWindow,
-        id: "profilesTab",
-        title: "Profiles"
-    });
-    $.__views.profilesTab && $.addTopLevelView($.__views.profilesTab);
-    exports.destroy = function() {
-        __alloyId39.off("fetch destroy change add remove reset", __alloyId40);
-    };
-    _.extend($, $.__views);
-    var args = arguments[0] || {};
-    args.parentTab;
+    $.profilesWindow.add(addButton);
+    if (Ti.App.Properties.getBool("DisplayAds")) {
+        var _admobview = require("admobview");
+        var adMobView = _admobview.getaddview();
+        $.profilesWindow.add(adMobView);
+    }
     profileCollection.fetch({
         query: "SELECT * FROM profiles ;"
     });
@@ -100,7 +131,7 @@ function Controller() {
         });
         $.profilesTab.open(detailController.getView());
     });
-    $.addButton.addEventListener("click", function() {
+    addButton.addEventListener("click", function() {
         var addProfileController = Alloy.createController("AddProfile");
         $.profilesTab.open(addProfileController.getView());
     });
@@ -114,6 +145,7 @@ function Controller() {
             isMenuWindowOpen = false;
         }
     });
+    $.profilesTab.addEventListener("close", destroy);
     _.extend($, exports);
 }
 

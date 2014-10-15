@@ -1,5 +1,5 @@
 <Alloy>
-<Tab id="schoolsTab" title="Schools">
+<Tab id="schoolsTab" title="Schools"  icon="flag.png">
 			<Window id="schoolsWindow" title="Schools">     
 				<TableView id="schoolsView" top="0" left="0" layout="vertical">	
 				 	<TableViewRow onClick="displayElementarySchools">
@@ -43,7 +43,9 @@
 				 		</View>
 				 	</TableViewRow>
 				</TableView>
+				<!--
 				<View ns="Admob" id="adView"/>
+				-->
 			</Window>
 		</Tab>
 </Alloy>

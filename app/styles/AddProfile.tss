@@ -82,7 +82,7 @@
 	//	borderStyle:Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
 		borderWidth: 2,
 		font:{fontSize:14,fontWeight:'bold', fontFamily:'Helvetica',  fontStyle: 'normal'},
-		hintText:'Enter Teacher Name',
+		hintText:'Enter Teacher\'s First Name or Lastname',
 		color: "black"
 },
 "#teacherTextField[platform=android]" : {

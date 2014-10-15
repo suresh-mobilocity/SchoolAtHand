@@ -4,18 +4,17 @@
 	var rowsData = [];
 	var adMobView = null;
 	var tableView = null;
-	var _admobview = require("admobview");
 	$.parentController = args.parentTab;
 	$.schoolEventsWin.title = "Events @ " + args.schoolname;
 	
-	var eventsQuery = "SELECT strftime('%y', eventdate) as eventyear, strftime('%m', eventdate) as eventmonth, " 
+	var eventsQuery = "SELECT strftime('%Y', eventdate) as eventyear, strftime('%m', eventdate) as eventmonth, " 
 		+ "strftime('%d', eventdate) as eventdate , strftime('%w', eventdate) as weekday, eventdescription "
 		+ "from districtcalendar where schoolcode like '"
-		+ scode.toUpperCase() + "' AND eventdate >= date ('now') " +
-		" UNION SELECT strftime('%y', eventdate) as eventyear, strftime('%m', eventdate) as eventmonth , "
+		+ scode.toUpperCase() + "' AND eventdate >= date ('now') "+ 
+		" UNION SELECT strftime('%Y', eventdate) as eventyear, strftime('%m', eventdate) as eventmonth , "
 		+ "strftime('%d', eventdate) as eventdate, strftime('%w', eventdate) as weekday, eventdescription "
 		+ "from districtcalendar where schoolcode like ''"
-		+ " AND eventdate >= date ('now') " + " order by 1"
+		+ " AND eventdate >= date ('now') " + " order by 1 asc"
 					  ;
 	//var eventResults = db.execute(eventsQuery);
 	var eventResults = schoolDB.execute(eventsQuery);
@@ -63,7 +62,7 @@
 											
 						var eventDescLabel = Titanium.UI.createLabel({
 												text: rowDesc,
-												font:{fontSize:14,fontWeight:'bold', color: '#000000'},
+												font:{fontSize:16,fontWeight:'bold', color: '#000000'},
 												width:'auto',
 												left: 10,
 												top: 10,
@@ -120,10 +119,13 @@
 					height: "90%",
 					top: 0 
 	});	
-	adMobView = _admobview.getaddview();
 	
 	$.schoolEventsWin.add(tableView);
-	$.schoolEventsWin.add(adMobView);
+	if ( Ti.App.Properties.getBool("DisplayAds")) {
+		var _admobview = require("admobview");
+		var adMobView = _admobview.getaddview();
+		$.schoolEventsWin.add(adMobView);
+}
 	
 	$.schoolEventsWin.addEventListener("close", function (e){
 		$.schoolEventsWin.remove(tableView);

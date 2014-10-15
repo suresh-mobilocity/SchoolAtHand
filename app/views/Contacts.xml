@@ -1,10 +1,16 @@
 <Alloy>
 	<Collection src="contacts" />
-    <Window id="districtContacts" title="Contacts" class='container'>
+    <Window id="districtContacts" title="Contacts" className='container'>
     	<SearchBar id="searchContacts" />
-        <TableView id="contactsTable" dataCollection="contacts" filterAttribute="filter" >
+        <TableView id="contactsTable" dataCollection="contacts" dataFilter="filterRows" >
+        	<HeaderView>
+                <Label id="noResults">No results found</Label>
+            </HeaderView>
             <Require src="ContactRow"/>
         </TableView>
-        <Require id="loading" type="widget" src="com.appcelerator.loading" message="loading"/>
+        <ActivityIndicator id="activityIndicator" message="Searching..."/>
+        <!--
+        <Require id="loading" type="widget" src="com.appcelerator.loading" message="Searching"/>
+    	-->
     </Window>
 </Alloy>

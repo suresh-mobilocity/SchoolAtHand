@@ -1,20 +1,36 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function destroy() {
         $.lunchMenu.removeEventListener("close", destroy);
         $.destroy();
         $.lunchMenu.removeAllChildren();
         $ = null;
-        Ti.API.info("LunchMenuBySchool| Controller Successfully Cleanedup ");
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "LunchMenuBySchool";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     $.__views.lunchMenu = Ti.UI.createWindow({
-        backgroundColor: "#000",
+        backgroundColor: "#33B5E5",
         id: "lunchMenu",
         title: "Lunch Menu",
         modal: "false",
@@ -40,7 +56,6 @@ function Controller() {
         publisherId: "ca-app-pub-3665132116722377/2467198443",
         width: Ti.UI.FILL,
         height: "10%",
-        ns: "Admob",
         id: "adView"
     });
     $.__views.lunchMenu.add($.__views.adView);

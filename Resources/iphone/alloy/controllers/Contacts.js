@@ -1,28 +1,48 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
-    function __alloyId18(e) {
+    function __alloyId19(e) {
         if (e && e.fromAdapter) return;
-        __alloyId18.opts || {};
-        var models = __alloyId17.models;
+        __alloyId19.opts || {};
+        var models = filterRows(__alloyId18);
         var len = models.length;
         var rows = [];
         for (var i = 0; len > i; i++) {
-            var __alloyId14 = models[i];
-            __alloyId14.__transform = {};
-            var __alloyId16 = Alloy.createController("ContactRow", {
-                $model: __alloyId14,
+            var __alloyId15 = models[i];
+            __alloyId15.__transform = {};
+            var __alloyId17 = Alloy.createController("ContactRow", {
+                $model: __alloyId15,
                 __parentSymbol: __parentSymbol
             });
-            rows.push(__alloyId16.getViewEx({
+            rows.push(__alloyId17.getViewEx({
                 recurse: true
             }));
         }
         $.__views.contactsTable.setData(rows);
     }
+    function filterRows(collection) {
+        var recCount = collection.models.length;
+        $.noResults.text = 0 === recCount ? "No contacts found" : 1 === recCount ? "Found 1contact" : "Found " + recCount + " of contacts";
+        return collection.models;
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "Contacts";
-    var __parentSymbol = arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        var __parentSymbol = __processArg(arguments[0], "__parentSymbol");
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     Alloy.Collections.instance("contacts");
@@ -30,65 +50,89 @@ function Controller() {
         backgroundColor: "#fff",
         layout: "vertical",
         id: "districtContacts",
-        title: "Contacts"
+        title: "Contacts",
+        className: "container"
     });
     $.__views.districtContacts && $.addTopLevelView($.__views.districtContacts);
     $.__views.searchContacts = Ti.UI.createSearchBar({
         barColor: "#000",
         color: "#fff",
+        backgroundColor: "fff",
         showCancel: "true",
-        height: "43",
+        height: "10%",
         top: 0,
         hintText: "Enter title or name or school",
         id: "searchContacts"
     });
     $.__views.districtContacts.add($.__views.searchContacts);
+    $.__views.noResults = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: "50dp",
+        color: "#000",
+        backgroundColor: "#fff",
+        textAlign: "center",
+        text: "No results found",
+        id: "noResults"
+    });
     $.__views.contactsTable = Ti.UI.createTableView({
+        left: 0,
+        width: Ti.UI.FILL,
         separatorColor: "#000000",
-        height: Ti.UI.SIZE,
-        backgroundColor: "#33B5E5",
-        id: "contactsTable",
-        filterAttribute: "filter"
+        height: "90%",
+        backgroundColor: "#ffffff",
+        headerView: $.__views.noResults,
+        id: "contactsTable"
     });
     $.__views.districtContacts.add($.__views.contactsTable);
-    var __alloyId17 = Alloy.Collections["contacts"] || contacts;
-    __alloyId17.on("fetch destroy change add remove reset", __alloyId18);
-    $.__views.loading = Alloy.createWidget("com.appcelerator.loading", "widget", {
-        id: "loading",
-        message: "loading",
-        __parentSymbol: $.__views.districtContacts
+    var __alloyId18 = Alloy.Collections["contacts"] || contacts;
+    __alloyId18.on("fetch destroy change add remove reset", __alloyId19);
+    $.__views.activityIndicator = Ti.UI.createActivityIndicator({
+        color: "black",
+        font: {
+            fontFamily: "Helvetica Neue",
+            fontSize: 16,
+            fontWeight: "bold"
+        },
+        message: "Searching...",
+        top: 20,
+        left: "30%",
+        height: Ti.UI.SIZE,
+        width: Ti.UI.SIZE,
+        style: Ti.UI.iPhone.ActivityIndicatorStyle.DARK,
+        id: "activityIndicator"
     });
-    $.__views.loading.setParent($.__views.districtContacts);
+    $.__views.districtContacts.add($.__views.activityIndicator);
     exports.destroy = function() {
-        __alloyId17.off("fetch destroy change add remove reset", __alloyId18);
+        __alloyId18.off("fetch destroy change add remove reset", __alloyId19);
     };
     _.extend($, $.__views);
     var args = arguments[0] || {};
     $.parentController = args.parentTab;
     $.districtContacts.title = "Contacts";
     var contacts = Alloy.Collections.contacts;
-    var Pager = function() {
-        var page = 1;
-        this.next = function() {
-            page++;
-            return page;
-        };
-    };
-    new Pager();
+    $.contactsTable.visible = false;
     $.searchContacts.addEventListener("change", function() {});
     $.searchContacts.addEventListener("focus", function() {});
     $.searchContacts.addEventListener("search", function(e) {
         $.searchContacts.blur();
-        var sql = "SELECT * FROM contacts where name like '" + e.value + "%'" + "UNION SELECT * FROM contacts where title like + " + "'%" + e.value + "%'" + "UNION SELECT * FROM contacts where building like " + "'" + e.value + "%'";
+        var sql = "SELECT * FROM contacts where name like '" + e.value + "%'UNION SELECT * FROM contacts where title like + '%" + e.value + "%'UNION SELECT * FROM contacts where building like '" + e.value + "%'";
         contacts.fetch({
-            query: sql
+            query: sql,
+            success: function() {
+                $.loading.setOpacity(0);
+            }
         });
     });
     $.searchContacts.addEventListener("return", function(e) {
+        $.activityIndicator.show();
         $.searchContacts.blur();
-        var sql = "SELECT * FROM contacts where name like '%" + e.value + "%'" + "UNION SELECT * FROM contacts where title like + " + "'%" + e.value + "%'" + "UNION SELECT * FROM contacts where building like " + "'" + e.value + "%'";
+        var sql = "SELECT * FROM contacts where name like '%" + e.value + "%'UNION SELECT * FROM contacts where title like + '%" + e.value + "%'UNION SELECT * FROM contacts where building like '" + e.value + "%'";
         contacts.fetch({
-            query: sql
+            query: sql,
+            success: function() {
+                $.contactsTable.visible = true;
+                $.activityIndicator.hide();
+            }
         });
     });
     $.searchContacts.addEventListener("cancel", function() {
@@ -98,9 +142,7 @@ function Controller() {
     $.contactsTable.addEventListener("scroll", function() {
         if ("" != $.searchContacts.value) return;
     });
-    $.districtContacts.addEventListener("blur", function() {
-        $.destroy();
-    });
+    $.districtContacts.addEventListener("blur", function() {});
     _.extend($, exports);
 }
 

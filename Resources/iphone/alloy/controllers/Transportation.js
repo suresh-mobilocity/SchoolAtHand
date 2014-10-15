@@ -1,3 +1,12 @@
+function __processArg(obj, key) {
+    var arg = null;
+    if (obj) {
+        arg = obj[key] || null;
+        delete obj[key];
+    }
+    return arg;
+}
+
 function Controller() {
     function dialPhoneNumber() {
         $.phonelabel.text.replace(/[^0-9]/g, "");
@@ -18,22 +27,36 @@ function Controller() {
             sqlRS.close();
         }
     }
+    function destroy() {
+        $.transportationWindow.removeEventListener("close", destroy);
+        $.destroy();
+        $.transportationWindow.removeAllChildren();
+        $ = null;
+    }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "Transportation";
-    arguments[0] ? arguments[0]["__parentSymbol"] : null;
-    arguments[0] ? arguments[0]["$model"] : null;
-    arguments[0] ? arguments[0]["__itemTemplate"] : null;
+    if (arguments[0]) {
+        {
+            __processArg(arguments[0], "__parentSymbol");
+        }
+        {
+            __processArg(arguments[0], "$model");
+        }
+        {
+            __processArg(arguments[0], "__itemTemplate");
+        }
+    }
     var $ = this;
     var exports = {};
     var __defers = {};
     $.__views.transportationWindow = Ti.UI.createWindow({
-        backgroundColor: "white",
+        backgroundColor: "#33B5E5",
         title: "Transportation",
         layout: "vertical",
         id: "transportationWindow"
     });
     $.__views.transportationWindow && $.addTopLevelView($.__views.transportationWindow);
-    var __alloyId104 = [];
+    var __alloyId103 = [];
     $.__views.department = Ti.UI.createTableViewRow({
         layout: "vertical",
         width: Ti.UI.FILL,
@@ -42,14 +65,15 @@ function Controller() {
         right: "2%",
         id: "department"
     });
-    __alloyId104.push($.__views.department);
+    __alloyId103.push($.__views.department);
     $.__views.namelabel = Ti.UI.createLabel({
-        font: {
-            fontWeight: "normal",
-            fontSize: 18
-        },
-        color: "black",
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "black",
+        font: {
+            fontSize: 18,
+            fontWeight: "normal"
+        },
         id: "namelabel",
         text: "Department of Transportation"
     });
@@ -69,37 +93,45 @@ function Controller() {
     });
     $.__views.contactsView.add($.__views.address);
     $.__views.addresslabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         font: {
             fontSize: 14
         },
-        color: "#000",
         id: "addresslabel",
         left: "10"
     });
     $.__views.address.add($.__views.addresslabel);
     $.__views.citylabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         font: {
             fontSize: 14
         },
-        color: "#000",
         id: "citylabel",
         left: "10"
     });
     $.__views.address.add($.__views.citylabel);
     $.__views.stateandziplabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         font: {
             fontSize: 14
         },
-        color: "#000",
         id: "stateandziplabel",
         left: "10"
     });
     $.__views.address.add($.__views.stateandziplabel);
     $.__views.phonelabel = Ti.UI.createLabel({
+        width: Ti.UI.SIZE,
+        height: Ti.UI.SIZE,
+        color: "#000",
         font: {
             fontSize: 14
         },
-        color: "#000",
         id: "phonelabel",
         left: "10"
     });
@@ -130,14 +162,15 @@ function Controller() {
         top: 5,
         id: "supervisorView"
     });
-    __alloyId104.push($.__views.supervisorView);
+    __alloyId103.push($.__views.supervisorView);
     $.__views.supervisorlabel = Ti.UI.createLabel({
-        font: {
-            fontWeight: "normal",
-            fontSize: 18
-        },
-        color: "black",
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "black",
+        font: {
+            fontSize: 18,
+            fontWeight: "normal"
+        },
         id: "supervisorlabel",
         top: "10",
         text: "Supervisor of Transportation"
@@ -151,14 +184,14 @@ function Controller() {
     });
     $.__views.supervisorView.add($.__views.supervisor);
     $.__views.supervisorname = Ti.UI.createLabel({
-        font: {
-            fontWeight: "normal",
-            fontSize: 14
-        },
-        color: "blue",
-        left: "5%",
-        height: Ti.UI.SIZE,
         width: 100,
+        height: Ti.UI.SIZE,
+        color: "blue",
+        font: {
+            fontSize: 14,
+            fontWeight: "normal"
+        },
+        left: "5%",
         id: "supervisorname"
     });
     $.__views.supervisor.add($.__views.supervisorname);
@@ -179,14 +212,15 @@ function Controller() {
         top: 5,
         id: "secretaryView"
     });
-    __alloyId104.push($.__views.secretaryView);
+    __alloyId103.push($.__views.secretaryView);
     $.__views.secretarylabel = Ti.UI.createLabel({
-        font: {
-            fontWeight: "normal",
-            fontSize: 18
-        },
-        color: "black",
+        width: Ti.UI.SIZE,
         height: Ti.UI.SIZE,
+        color: "black",
+        font: {
+            fontSize: 18,
+            fontWeight: "normal"
+        },
         id: "secretarylabel",
         text: "Transportation Secretary"
     });
@@ -199,14 +233,14 @@ function Controller() {
     });
     $.__views.secretaryView.add($.__views.secretary);
     $.__views.secretaryname = Ti.UI.createLabel({
-        font: {
-            fontWeight: "normal",
-            fontSize: 14
-        },
-        color: "blue",
-        left: "5%",
-        height: Ti.UI.SIZE,
         width: 100,
+        height: Ti.UI.SIZE,
+        color: "blue",
+        font: {
+            fontSize: 14,
+            fontWeight: "normal"
+        },
+        left: "5%",
         id: "secretaryname"
     });
     $.__views.secretary.add($.__views.secretaryname);
@@ -218,14 +252,16 @@ function Controller() {
         id: "emailsecretary"
     });
     $.__views.secretary.add($.__views.emailsecretary);
-    $.__views.__alloyId103 = Ti.UI.createTableView({
-        separatorColor: "#000000",
-        height: Ti.UI.SIZE,
+    $.__views.__alloyId102 = Ti.UI.createTableView({
+        left: 0,
+        width: Ti.UI.FILL,
+        separatorColor: "#336699",
+        height: "90%",
         backgroundColor: "#33B5E5",
-        data: __alloyId104,
-        id: "__alloyId103"
+        data: __alloyId103,
+        id: "__alloyId102"
     });
-    $.__views.transportationWindow.add($.__views.__alloyId103);
+    $.__views.transportationWindow.add($.__views.__alloyId102);
     exports.destroy = function() {};
     _.extend($, $.__views);
     var secretaryEmailAddr = "";
@@ -251,18 +287,12 @@ function Controller() {
         emailDialog.toRecipients = [ secretaryEmailAddr ];
         emailDialog.open();
     });
-    var adMobView = Admob.createView({
-        publisherId: "ca-app-pub-3665132116722377/6561150840",
-        testing: false,
-        bottom: 0,
-        adBackgroundColor: "FF8855",
-        backgroundColorTop: "738000",
-        borderColor: "#000000",
-        textColor: "#000000",
-        urlColor: "#00FF00",
-        linkColor: "#0000FF"
-    });
-    $.transportationWindow.add(adMobView);
+    if (true == Ti.App.Properties.getBool("DisplayAds")) {
+        var _admobview = require("admobview");
+        var adMobView = _admobview.getaddview();
+        $.transportationWindow.add(adMobView);
+    }
+    $.transportationWindow.addEventListener("close", destroy);
     __defers["$.__views.phonelabel!click!dialPhoneNumber"] && $.__views.phonelabel.addEventListener("click", dialPhoneNumber);
     __defers["$.__views.phonebutton!click!dialPhoneNumber"] && $.__views.phonebutton.addEventListener("click", dialPhoneNumber);
     _.extend($, exports);
