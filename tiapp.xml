@@ -60,6 +60,7 @@
             </dict>
         </plist>
     </ios>
+    <!---Updated Today -->
     <android xmlns:android="http://schemas.android.com/apk/res/android">
         <manifest android:installLocation="preferExternal"
             android:versionCode="5" android:versionName="1.0.4 ">
